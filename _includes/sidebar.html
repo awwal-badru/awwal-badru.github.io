@@ -24,13 +24,16 @@
 </div>
 
 <div class="jumbotron">
-  <h4>News</h4>
+  {% include news-alert.html %}
 
-  {% for article in site.data.news limit:3 %}
-  <b>{{ article.date }}</b>
-    <p>{{ article.headline }}</p>
-  {% endfor %}
-  
-  <h5><a href="{{ site.url }}{{ site.baseurl }}/allnews.html">... see all News</a></h5>
+  <div class="news-list mt-2">
+    {% for article in site.data.news limit:3 %}
+      <div class="news-item">
+        <strong class="news-date">{{ article.date }}</strong>
+        <div class="news-headline">{{ article.headline }}</div>
+      </div>
+    {% endfor %}
+  </div>
 
+  <h5 class="mt-2"><a href="{{ site.url }}{{ site.baseurl }}/allnews.html">... see all News</a></h5>
 </div>

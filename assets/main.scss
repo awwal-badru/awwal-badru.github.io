@@ -4,10 +4,599 @@
 
 $baseurl: "{{ site.url }}{{ site.baseurl }}";
 
-// @import "variables";
+/* Imports (existing) */
 @import "bootstrap/bootstrap";
-// @import "syntax-highlighting";
 @import "bootstrap-4-jekyll/bootstrap-4-jekyll";
-// @import "bootstrap_customization";
 @import "bootstrap";
 @import "SHB_css";
+
+/* --- Custom overrides --- */
+
+/* White page background and readable text */
+html, body {
+  background: #ffffff !important;
+  color: #111;
+}
+
+/* UA crimson background utility used by header and footer */
+:root { --ua-crimson: #9E1B32; }
+
+.bg-ua-crimson {
+  background: linear-gradient(135deg, var(--ua-crimson) 0%, #b8203c 55%, #c73249 100%) !important;
+  color: #fff;
+}
+
+/* Header: crimson */
+.site-header {
+  background: linear-gradient(135deg, var(--ua-crimson) 0%, #b8203c 55%, #c73249 100%);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.site-header-inner {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding:.7rem 0;
+}
+.site-title { color:#fff; font-weight:700; text-decoration:none; }
+.site-nav { display:flex; gap:.6rem; align-items:center; }
+.site-nav-link {
+  color:#fff; text-decoration:none; padding:.35rem .6rem; border-radius:.35rem; font-weight:600;
+}
+.site-nav-link:hover { background: rgba(255,255,255,0.12); }
+
+/* Footer: crimson */
+.site-footer {
+  margin-top: 2.5rem;
+  background: linear-gradient(135deg, var(--ua-crimson) 0%, #b8203c 55%, #c73249 100%);
+  color: #fff;
+  padding: 2rem 0 1.2rem;
+}
+.site-footer-inner { display:flex; flex-direction:column; gap:1rem; align-items:stretch; }
+.footer-cols { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.footer-block h5 { margin:0 0 .35rem; color:#fff; font-weight:700; }
+.footer-text { color:#fff; opacity:.95; }
+.footer-copy { text-align:center; font-size:.9rem; opacity:.9; margin-top:.5rem; }
+
+/* Make footer contact text and links clearly legible (white on crimson) */
+.site-footer .footer-text,
+.site-footer .footer-text p,
+.site-footer .footer-text li {
+  color: #ffffff !important;
+  opacity: 0.98;
+}
+
+/* Ensure any inline elements (icons, spans) inside contact block are white too */
+.site-footer .footer-text * {
+  color: #ffffff !important;
+}
+
+/* Links inside footer contact */
+.site-footer .footer-text a,
+.site-footer .footer-text a:visited {
+  color: #ffffff !important;
+  text-decoration: underline;
+}
+
+.site-footer .footer-text a:hover,
+.site-footer .footer-text a:focus {
+  color: #ffe8ea !important; /* subtle highlight on hover */
+}
+
+/* Ensure footer copyright is readable */
+.site-footer .footer-copy {
+  color: rgba(255,255,255,0.95);
+}
+
+/* Ensure Bootstrap navbar shows (do not hide .navbar globally) */
+.navbar { display: block !important; }
+
+/* Make footer toggler blend with crimson footer */
+.site-footer .navbar {
+  background: transparent;
+  padding: 0;
+}
+.site-footer .navbar-toggler {
+  border-color: rgba(255,255,255,0.18);
+}
+.site-footer .navbar-toggler-icon {
+  filter: invert(100%) brightness(150%);
+}
+
+/* Nav link styles (header + footer) */
+.navbar .nav-link {
+  color: rgba(255,255,255,0.95);
+  font-weight: 600;
+  padding: .35rem .6rem;
+}
+.site-footer .nav-link {
+  color: rgba(255,255,255,0.92);
+  padding: .25rem .45rem;
+}
+
+/* Ensure footer collapse shows links stacked on small screens */
+@media (max-width: 767px) {
+  .site-footer .navbar-collapse .navbar-nav {
+    flex-direction: column;
+    gap: .25rem;
+  }
+}
+
+/* Sidebar jumbotron — match University of Alabama crimson */
+#newsid .jumbotron {
+  background: linear-gradient(180deg, rgba(158,27,50,0.98) 0%, rgba(184,32,60,0.95) 60%, rgba(199,50,73,0.95) 100%);
+  color: #fff;
+  border-radius: 0.6rem;
+  padding: 1.1rem 1rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Headings and small text inside the sidebar */
+#newsid .jumbotron h4,
+#newsid .jumbotron h5,
+#newsid .jumbotron .jumbotron-title {
+  color: #fff;
+  margin-bottom: .4rem;
+}
+
+/* Profile image center and circular look */
+#newsid .jumbotron a img {
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.14);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  display: block;
+  margin: 0 auto .6rem;
+}
+
+/* Social icons styling */
+#newsid .jumbotron a i.fa,
+#newsid .jumbotron a i.ai {
+  color: var(--ua-crimson);
+  background: #fff;
+  border-radius: 50%;
+  padding: .35rem;
+  font-size: 1.05rem;
+  margin: 0 .25rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  vertical-align: middle;
+}
+#newsid .jumbotron a:hover i.fa,
+#newsid .jumbotron a:hover i.ai {
+  transform: translateY(-2px);
+  transition: transform .18s ease;
+}
+
+/* Make icon background crimson-on-hover for contrast */
+#newsid .jumbotron a:hover i.fa,
+#newsid .jumbotron a:hover i.ai {
+  background: rgba(255,255,255,0.95);
+  color: var(--ua-crimson);
+}
+
+/* Education list inside jumbotron */
+#newsid .jumbotron ul {
+  margin-top: .6rem;
+  padding-left: 1.1rem;
+  color: rgba(255,255,255,0.95);
+}
+#newsid .jumbotron ul li {
+  margin-bottom: .25rem;
+  line-height: 1.25;
+}
+
+/* News section below profile — lighter crimson card */
+#newsid > .jumbotron + .jumbotron {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.02) 100%);
+  color: #111;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+#newsid > .jumbotron + .jumbotron h4 { color: var(--ua-crimson); }
+
+/* Ensure links inside sidebar remain readable */
+#newsid a, #newsid a:visited {
+  color: #fff;
+  text-decoration: underline;
+}
+#newsid a:hover { color: #ffe8ea; }
+
+/* Small-screen tweaks */
+@media (max-width: 767px) {
+  #newsid .jumbotron { padding: .9rem; }
+  #newsid .jumbotron a img { width: 48%; }
+}
+
+/* --- About / page cards: white background with crimson accents --- */
+.jumbotron {
+  background: #ffffff;
+  color: #111;
+  border: 1px solid rgba(158,27,50,0.10); /* subtle crimson border */
+  border-radius: 0.6rem;
+  padding: 1.25rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  margin-bottom: 1rem;
+}
+
+.jumbotron h3,
+.jumbotron h4 {
+  color: var(--ua-crimson);
+  margin-top: 0;
+  font-weight: 700;
+}
+
+.jumbotron p,
+.jumbotron ul,
+.jumbotron li {
+  color: #222;
+}
+
+.jumbotron a {
+  color: var(--ua-crimson);
+  text-decoration: none;
+}
+
+.jumbotron a:hover,
+.jumbotron a:focus {
+  color: #8f172e;
+  text-decoration: underline;
+}
+
+/* Sponsor strip: keep images visible on white card */
+.jumbotron img {
+  max-width: 100%;
+  box-shadow: none;
+}
+
+/* Ensure sidebar jumbotron (newsid) uses crimson style kept earlier */
+#newsid .jumbotron { /* keep earlier crimson styles if present */ }
+
+/* Keep global page background white and header/footer crimson (if already set) */
+html, body { background: #ffffff !important; color: #111; }
+
+/* Sidebar (newsid) — ensure education list is white on crimson jumbotron */
+#newsid .jumbotron {
+  /* ...existing styles... */
+}
+
+#newsid .jumbotron ul,
+#newsid .jumbotron li {
+  color: #ffffff !important;
+}
+
+/* Links inside the sidebar jumbotron */
+#newsid .jumbotron a,
+#newsid .jumbotron a:visited {
+  color: #ffffff !important;
+}
+
+/* Employment / rubric styling: crimson headings, dark body text */
+:root { --ua-crimson: #9E1B32; }
+
+.rubric,
+.employment-history {
+  background: transparent;
+  color: #111;
+}
+
+.rubric h3,
+.rubric .entry-title,
+.employment-history h3,
+.employment-history .entry-title {
+  color: var(--ua-crimson) !important;
+  font-weight: 700;
+}
+
+.rubric .entry-period,
+.employment-history .entry-period {
+  color: rgba(0,0,0,0.6);
+  font-weight: 600;
+  margin-right: .5rem;
+}
+
+.rubric .entry-details,
+.employment-history .entry-details,
+.rubric li,
+.employment-history li {
+  color: #222;
+  margin-bottom: .45rem;
+}
+
+.rubric a,
+.employment-history a {
+  color: var(--ua-crimson);
+}
+.rubric a:hover,
+.employment-history a:hover {
+  color: #7f111f;
+}
+
+/* Teaching experience — crimson headings, readable body */
+.jumbotron.teaching {
+  background: #ffffff;
+  border: 1px solid rgba(158,27,50,0.08);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: #000; /* ensure default text in the teaching card is black */
+}
+
+.jumbotron.teaching h3,
+.jumbotron.teaching .teaching-period,
+.jumbotron.teaching .teaching-title {
+  color: var(--ua-crimson, #9E1B32) !important; /* keep headings crimson */
+  font-weight: 700;
+}
+
+.jumbotron.teaching .teaching-list,
+.jumbotron.teaching .teaching-list li,
+.jumbotron.teaching .teaching-entry,
+.jumbotron.teaching .teaching-title,
+.jumbotron.teaching .teaching-period,
+.jumbotron.teaching .teaching-courses,
+.jumbotron.teaching .teaching-courses .course {
+  color: #000 !important; /* force black for all teaching body text and course items */
+}
+
+/* Apply Employment styling to Teaching entries for consistent look */
+.jumbotron.teaching .teaching-entry {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: .6rem 0;
+  border-bottom: 1px dashed rgba(0,0,0,0.04);
+}
+.jumbotron.teaching .teaching-entry:last-child { border-bottom: none; }
+
+.jumbotron.teaching .teaching-period {
+  min-width: 120px;
+  color: rgba(0,0,0,0.6);
+  font-weight: 700;
+}
+.jumbotron.teaching .teaching-content { flex: 1; }
+
+.jumbotron.teaching .teaching-title {
+  color: #111;
+  font-weight: 700;
+  margin-bottom: .25rem;
+}
+
+.jumbotron.teaching .teaching-courses {
+  margin-top: .45rem;
+  padding-left: 1rem;
+  color: #333;
+  list-style: disc inside;
+}
+
+/* keep course chips styling if present but ensure text color consistent */
+.jumbotron.teaching .teaching-courses .course {
+  background: rgba(158,27,50,0.06);
+  color: var(--ua-crimson);
+  border: 1px solid rgba(158,27,50,0.12);
+  padding: .28rem .5rem;
+  border-radius: .35rem;
+  font-weight: 600;
+  font-size: .92rem;
+}
+
+/* Responsive: mirror employment behavior on small screens */
+@media (max-width: 767px) {
+  .jumbotron.teaching .teaching-entry { flex-direction: column; }
+  .jumbotron.teaching .teaching-period { min-width: auto; margin-bottom:.35rem; display:block; }
+}
+
+/* --- About page unified styles --- */
+.about-section {
+  background: #ffffff;
+  border: 1px solid rgba(158,27,50,0.07);
+  border-radius: 0.6rem;
+  padding: 1.15rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+  color: #222; /* consistent body text color */
+}
+
+/* Section heading */
+.about-section h3,
+.about-section h4 {
+  color: var(--ua-crimson);
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+/* Subtle divider */
+.about-section + .about-section {
+  border-top: 2px solid rgba(158,27,50,0.03);
+}
+
+/* Paragraphs and lists */
+.about-section p,
+.about-section ul,
+.about-section li {
+  color: #222;
+  line-height: 1.5;
+}
+
+/* Timeline / employment list */
+.employment-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.employment-entry {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: .6rem 0;
+  border-bottom: 1px dashed rgba(0,0,0,0.04);
+}
+.employment-entry:last-child { border-bottom: none; }
+
+.entry-period {
+  min-width: 120px;
+  color: rgba(0,0,0,0.6);
+  font-weight: 700;
+}
+.entry-content { flex: 1; }
+.entry-title { color: #111; font-weight: 700; margin-bottom: .25rem; }
+.entry-details { margin: 0; padding-left: 1rem; color: #333; }
+
+/* Teaching courses as chips */
+.teaching-courses { margin: .5rem 0 0; padding-left: 0; list-style:none; display:flex; flex-wrap:wrap; gap:.45rem; }
+.teaching-courses .course {
+  background: rgba(158,27,50,0.06);
+  color: var(--ua-crimson);
+  border: 1px solid rgba(158,27,50,0.12);
+  padding: .28rem .5rem;
+  border-radius: .35rem;
+  font-weight: 600;
+  font-size: .92rem;
+}
+
+/* Awards list */
+.awards-list { list-style:none; padding-left:0; margin:0; }
+.award-entry {
+  display:flex; gap:.75rem; align-items:flex-start; padding:.5rem 0; border-bottom:1px dashed rgba(0,0,0,0.04);
+}
+.award-entry:last-child { border-bottom:none; }
+.award-year {
+  background: rgba(158,27,50,0.09);
+  color: var(--ua-crimson);
+  padding:.2rem .45rem;
+  border-radius:.35rem;
+  font-weight:700;
+  min-width:72px;
+  text-align:center;
+}
+
+/* Links inside about sections */
+.about-section a { color: var(--ua-crimson); text-decoration:underline; }
+.about-section a:hover { color: #7f111f; }
+
+/* Unified card style: white background with UA crimson accents (matches Awards & Scholarships) */
+/* Exclude sidebar jumbotrons (#newsid) which are intentionally crimson */
+.jumbotron,
+.about-section {
+  background: #ffffff;
+  color: #222;
+  border: 1px solid rgba(158,27,50,0.08);
+  border-radius: 0.6rem;
+  padding: 1.15rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+}
+
+/* Keep #newsid crimson jumbotron unchanged */
+#newsid .jumbotron { /* keep existing crimson styles */ }
+
+/* Headings use UA crimson */
+.jumbotron h3,
+.jumbotron h4,
+.about-section h3,
+.about-section h4 {
+  color: var(--ua-crimson);
+  margin-top: 0;
+  font-weight: 800;
+}
+
+/* Award-like year badge reused for entries */
+.award-year,
+.entry-period {
+  background: rgba(158,27,50,0.09);
+  color: var(--ua-crimson);
+  padding: .2rem .45rem;
+  border-radius: .35rem;
+  font-weight: 700;
+  min-width: 72px;
+  text-align: center;
+  display: inline-block;
+}
+
+/* Consistent body text and list styles */
+.jumbotron p,
+.jumbotron ul,
+.jumbotron li,
+.about-section p,
+.about-section ul,
+.about-section li {
+  color: #222;
+  line-height: 1.5;
+}
+
+/* Teaching course chips */
+.teaching-courses .course {
+  background: rgba(158,27,50,0.06);
+  color: var(--ua-crimson);
+  border: 1px solid rgba(158,27,50,0.12);
+  padding: .28rem .5rem;
+  border-radius: .35rem;
+  font-weight: 600;
+  font-size: .92rem;
+}
+
+/* Small-screen adjustments */
+@media (max-width:767px) {
+  .employment-entry { flex-direction: column; }
+  .entry-period { min-width: auto; margin-bottom:.35rem; display:block; }
+}
+
+/* News alert (crimson-accent banner + sliding message) */
+.news-alert {
+  display:block;
+  background: linear-gradient(90deg, rgba(158,27,50,0.98) 0%, rgba(184,32,60,0.95) 55%);
+  color:#fff;
+  padding:.6rem .9rem;
+  border-radius: .45rem;
+  margin-bottom: .9rem;
+  overflow: hidden;
+  align-items: center;
+  gap:.6rem;
+}
+.news-alert .news-badge {
+  display:inline-block;
+  background: rgba(255,255,255,0.12);
+  padding:.2rem .5rem;
+  border-radius:.35rem;
+  font-weight:700;
+  margin-right:.6rem;
+  white-space:nowrap;
+}
+.news-alert .news-message {
+  display:inline-block;
+  white-space:nowrap;
+  min-width:0;
+  animation: news-slide 10s linear infinite;
+  font-weight:600;
+  vertical-align:middle;
+}
+
+/* prefer reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .news-alert .news-message { animation: none; }
+}
+
+/* sliding keyframes: enter -> hold -> exit */
+@keyframes news-slide {
+  0% { transform: translateX(100%); opacity:0; }
+  10% { transform: translateX(0); opacity:1; }
+  85% { transform: translateX(0); opacity:1; }
+  100% { transform: translateX(-100%); opacity:0; }
+}
+
+/* make sure sidebar text remains legible */
+#newsid .news-alert { margin-bottom: .9rem; }
+/* Ensure teaching period uses same badge style as award-year / entry-period */
+.jumbotron.teaching .teaching-period {
+  background: rgba(158,27,50,0.09);
+  color: var(--ua-crimson);
+  padding: .2rem .45rem;
+  border-radius: .35rem;
+  font-weight: 700;
+  min-width: 72px;
+  text-align: center;
+  display: inline-block;
+}

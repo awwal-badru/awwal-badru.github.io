@@ -1,27 +1,30 @@
 <br/>
-<section id="footer">
-<div class="container-footer">
-  <div class="panel-footer">
-	  <div class="row">
-		<div class="col-sm-4">
-		    <h5>About</h5>	
-            <p>{{ site.affiliation }}</p>
-		</div>
+<footer class="site-footer">
+  <div class="site-footer-inner container">
+    <div class="footer-cols">
+      <div class="footer-block">
+        <h5>Contact</h5>
+        <div class="footer-text">{{ site.contact }}</div>
+      </div>
 
-		<div class="col-sm-4">
-		    <h5>Contact</h5>	
-            <p>{{ site.contact }}</p>
-		</div>
+      <div class="footer-block">
+        <h5>Location</h5>
+        <div class="footer-text">{{ site.location }}</div>
+      </div>
+    </div>
 
-		<div class="col-sm-4">
-		    <h5>Coordinates</h5>	
-            <p>{{ site.location }}</p>
-		</div>
-	  </div>
+    <!-- Simple footer nav (no hamburger) -->
+    <nav class="footer-nav mt-3" aria-label="Footer navigation">
+      <ul class="navbar-nav d-flex flex-row flex-wrap justify-content-center gap-2">
+        <li class="nav-item"><a class="nav-link" href="{{ '/' | relative_url }}">Home</a></li>
+        {% for p in site.nav_pages %}
+          <li class="nav-item"><a class="nav-link" href="{{ '/' | append: p.name | append: '/' | relative_url }}">{{ p.name | capitalize }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
 
-      <center><p>&copy {{ "now" | date: "%Y" }} {{site.title | escape }} </p></center>
-	</div>
+    <div class="footer-copy">© {{ "now" | date: "%Y" }} {{ site.title | escape }}</div>
   </div>
-</div>
+</footer>
 
 <script src="{{ "/assets/javascript/bootstrap/bootstrap.bundle.min.js" | relative_url }}"></script>

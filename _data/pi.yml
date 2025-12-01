@@ -1,17 +1,19 @@
-- name: Dr. Richard Feynman
-  photo: headshot.jpg
-  info: Richard C. Tolman Professor, California Institute of Technology
-  email: richard@university.edu
-  github: https://github.com/
-  researchgate: https://www.researchgate.net/
-  scholar: https://scholar.google.com/citations?user=B7vSqZsAAAAJ
-  cv: cv/cv.pdf
+- name: Awwal Badru
+  photo: awwalpro.jpg
+  info: PhD Candidate, University of Alabama
+  email: lobadru@crimson.ua.edu
+  github: https://github.com/hamasoasis
+  researchgate: https://www.researchgate.net/profile/Awwal-Badru
+  scholar: https://scholar.google.com/citations?user=DW7LA8sAAAAJ&hl
+  cv: "/assets/files/AwwalBadru_CV.pdf"
   # Change the items in "education" you have (up to 6)
   education:
     [
-      "(1942) Ph.D. Physics, Princeton University",
-      "(1939) B.S. Physics, Massachusetts Institute of Technology",
+      "(2023--Present) Ph.D. Candidate, University of Alabama",
+      "(2025) M.S. Computer Science, University of Alabama",
+      "(2023) MSc. Computing Science, University of South Pacific, Fiji",
+      "(2008) B.Ed. Computer Science with Mathematics, University of Ibadan, Nigeria",
     ]
 
   educationshort:
-    ["(1942) Ph.D. Physics, Princeton", "(1939) B.S. Physics, MIT"]
+    ["(2023--Present) Ph.D. Candidate, Alabama", "(2025) M.S. Computer Science, Alabama", "(2023) MSc. Computing Science, Fiji", "(2008) B.Ed. Computer Science with Mathematics, Nigeria"]

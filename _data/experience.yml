@@ -1,0 +1,55 @@
+# File commented out per request
+# - name: Student Here
+#   location: University Here
+#   degree: Ph.D.
+#   year: 2022
+#
+# - name: Student Here
+#   location: University Here
+#   degree: Ph.D.
+#   year: 2021
+#
+# - name: Student Here
+#   location: University Here
+#   degree: Ph.D.
+#   year: 2020
+#
+# - name: Student Here
+#   location: University Here
+#   degree: M.S.
+#   year: 2020
+#
+# - name: Student Here
+#   location: University Here
+#   degree: B.S.
+#   year: 2020
+
+- period: "2023 -- Present"
+  title: "Research Assistant"
+  organization: "Computer Science Department, University of Alabama"
+  details:
+    - "Research Assistant."
+
+- period: "2014 -- 2022"
+  title: "Senior Education Officer / Acting Head, State EMIS"
+  organization: "Ministry of Education, Science and Technology, Abeokuta, Nigeria"
+  details:
+    - "Led the design and maintenance of the Education Management Information System (EMIS) for 1,500+ schools and 500,000 students."
+    - "Implemented an automated Result Analyzer for the Unified Promotion Examination, enhancing data integrity and efficiency."
+    - "Contributed to the Education Policy & Strategy Simulation and State Education Sector Plan (2017–2030)."
+    - "Trained 1,000+ personnel as a UNICEF Master Trainer on school record-keeping and census data management."
+
+- period: "2016 -- 2018"
+  title: "Assistant Lecturer (on secondment)"
+  organization: "D.S Adegbenro ICT Polytechnic, Itori, Ogun State, Nigeria"
+  details: []
+
+- period: "2014 -- 2016"
+  title: "Computer Instructor (on secondment)"
+  organization: "Staff Development Center, Bureau of Establishment & Trainings, Nigeria"
+  details: []
+
+- period: "2010 -- 2014"
+  title: "Master Grade II / Program Analyst"
+  organization: "Teaching Service Commission, Abeokuta, Nigeria"
+  details: []

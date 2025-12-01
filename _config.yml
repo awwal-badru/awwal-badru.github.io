@@ -1,29 +1,25 @@
 # Site settings
-title: Richard Feynman
-email: richard@university.edu
-description: Academic webpage of Dr. Richard Feynman
+title: Awwal Badru, PhD Candidate in Computer Science
+email: lobadru@crimson.ua.edu
+description: Academic webpage of Awwal Badru
 baseurl: ""
 url: ""
 
-# Google analytics ID: Uncomment and your own, if you like
-# google_analytics: XX
-# google_analytics_4: XXX
-# google_tag_manager: XXX
-
 # Footer info
 affiliation: >
-  Richard Feynman<br/>
-  Professor of Physics<br/>
-  California Institute of Technology
+  Awwal Badru<br/>
+  Ph.D. Candidate, Computer Science<br/>
+  University of Alabama
 
 location: >
-  California Institute of Technology<br/>
-  1200 E California Blvd<br/>
-  Pasadena, CA 91125
+  University of Alabama<br/>
+  Tuscaloosa, AL 35487
 
 contact: >
-  <a href="mailto:richard@university.edu" target="_blank"><i class="fa fa-envelope fa-1x"></i> Contact Richard via email</a> <br/>
-  <a href="https://github.com/sbryngelson/academic-website-template"><i class="fa fa-github fa-1x"></i> Use this site as a template!</a>
+  <a href="mailto:lobadru@crimson.ua.edu" target="_blank"><i class="fa fa-envelope fa-1x"></i> Email</a> <br/>
+  <a href="https://github.com/hamasoasis" target="_blank"><i class="fa fa-github fa-1x"></i> GitHub</a> <br/>
+  <a href="https://www.researchgate.net/profile/Awwal-Badru" target="_blank"><i class="ai ai-researchgate ai-1x"></i> ResearchGate</a> <br/>
+  <a href="https://scholar.google.com/citations?user=DW7LA8sAAAAJ&hl" target="_blank"><i class="ai ai-google-scholar ai-1x"></i> Google Scholar</a>
 
 # Pages shown in navbar
 nav_pages:
@@ -32,7 +28,7 @@ nav_pages:
   - name: talks
   - name: research
   - name: software
-  - name: team
+  #- name: team
   - name: teaching
   - name: blogs
 
@@ -57,32 +53,25 @@ kramdown:
   toc_levels: 1..6
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   enable_coderay: false
-  parse_block_html: true # default for kramdown is false. This will enable using Markdown links
+  parse_block_html: true
 
-plugins: ["jekyll/scholar"]
+plugins:
+  - jekyll-scholar
 
 scholar:
-  last_name: Doe
-  first_name: [John]
-
   style: citesty
   locale: en
-
   source: /assets/
   bibliography: ref.bib
   bibliography_template: bibtemplate
   sort_by: year, month
   order: descending
-
   replace_strings: true
   join_strings: true
-
   details_dir: bibliography
   details_layout: bibtex.html
   details_link: Details
-
   query: "@*"
-
   bibliography_list_attributes:
     reversed: "reversed"
 

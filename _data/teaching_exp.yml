@@ -1,0 +1,45 @@
+# File commented out per request
+# - name: Student Here
+#   location: University Here
+#   degree: Ph.D.
+#   year: 2022
+#
+# - name: Student Here
+#   location: University Here
+#   degree: Ph.D.
+#   year: 2021
+#
+# - name: Student Here
+#   location: University Here
+#   degree: Ph.D.
+#   year: 2020
+#
+# - name: Student Here
+#   location: University Here
+#   degree: M.S.
+#   year: 2020
+#
+# - name: Student Here
+#   location: University Here
+#   degree: B.S.
+#   year: 2020
+
+
+- period: "2016 -- 2018"
+  title: "Undergraduate Courses"
+  organization: "D.S Adegbenro ICT Polytechnic / various"
+  courses:
+    - "Advanced Calculus"
+    - "Assembly Language"
+    - "Management Information System"
+    - "Mathematics Methods I"
+    - "Mathematics Methods II"
+    - "Functions and Geometry"
+    - "Object Oriented Visual Basic Programming"
+
+- period: "2014 -- 2016"
+  title: "Continuing Education & Training Services (Confidential Secretaries course)"
+  organization: "Staff Development / Training Services"
+  courses:
+    - "Computer Application and Appreciation"
+    - "Advanced Computer Application"

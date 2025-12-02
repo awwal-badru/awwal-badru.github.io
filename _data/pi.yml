@@ -1,6 +1,6 @@
 - name: Awwal Badru
   photo: awwalpro.jpg
-  info: PhD Candidate, University of Alabama
+  info: PhD Candidate, The University of Alabama
   email: lobadru@crimson.ua.edu
   github: https://github.com/hamasoasis
   researchgate: https://www.researchgate.net/profile/Awwal-Badru
@@ -9,8 +9,8 @@
   # Change the items in "education" you have (up to 6)
   education:
     [
-      "(2023--Present) Ph.D. Candidate, University of Alabama",
-      "(2025) M.S. Computer Science, University of Alabama",
+      "(2023--Present) Ph.D. Candidate, The University of Alabama",
+      "(2025) M.S. Computer Science, TheUniversity of Alabama",
       "(2023) MSc. Computing Science, University of South Pacific, Fiji",
       "(2008) B.Ed. Computer Science with Mathematics, University of Ibadan, Nigeria",
     ]

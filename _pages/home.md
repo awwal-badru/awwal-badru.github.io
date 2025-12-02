@@ -20,9 +20,9 @@ This work brings together machine learning, human–computer interaction, and ed
 <div class="container">
 <div class="row">
 <center>
-<img src="{{ site.url }}{{ site.baseurl }}/images/banner.jpg" width="100%"/><br/>
-Examples of Feynman diagrams. <br/>
-Feynman R., The theory of positrons. <i>Phys. Rev.</i> (1949)
+<img src="{{ site.url }}{{ site.baseurl }}/images/screen.png" width="70%"/><br/>
+Learning Platform <br/>
+YouTube video supplement
 </center>
 </div>
 </div>

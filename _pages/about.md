@@ -91,11 +91,20 @@ Teaching experience placed directly below Employment History
 
 {% if site.data.grants %}
 
-<div class="jumbotron">
+<div class="about-section grants jumbotron">
   <h3>Grants</h3>
-  <ul>
+  <ul class="awards-list grants-list">
     {% for grant in site.data.grants %}
-      <li>{{ grant.name }}</li>
+      <li class="award-entry">
+        <div class="award-year">{% if grant.year %}{{ grant.year }}{% endif %}</div>
+        <div class="award-body">
+          <strong>{{ grant.title }}</strong>
+          {% if grant.program %}, {{ grant.program }}{% endif %}
+          {% if grant.institution %}, {{ grant.institution }}{% endif %}
+          {% if grant.country %} — {{ grant.country }}{% endif %}
+          {% if grant.value %} — {{ grant.value }}{% endif %}
+        </div>
+      </li>
     {% endfor %}
   </ul>
 </div>

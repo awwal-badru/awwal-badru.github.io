@@ -1,5 +1,5 @@
 # Site settings
-title: Awwal Badru, PhD Candidate in Computer Science
+title: Awwal Badru, PhD Candidate, Computer Science
 email: lobadru@crimson.ua.edu
 description: Academic webpage of Awwal Badru
 baseurl: ""
@@ -13,7 +13,7 @@ affiliation: >
 
 location: >
   University of Alabama<br/>
-  Tuscaloosa, AL 35487
+  Cyber Hall 3055, Tuscaloosa, AL 35487
 
 contact: >
   <a href="mailto:lobadru@crimson.ua.edu" target="_blank"><i class="fa fa-envelope fa-1x"></i> Email</a> <br/>

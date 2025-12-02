@@ -473,6 +473,12 @@ html, body { background: #ffffff !important; color: #111; }
   text-align:center;
 }
 
+/* Ensure grants use the same typography and colors as awards */
+.grants-list .award-entry { display:flex; gap:.75rem; align-items:flex-start; padding:.5rem 0; border-bottom:1px dashed rgba(0,0,0,0.04); }
+.grants-list .award-entry:last-child { border-bottom:none; }
+.grants-list .award-year { background: rgba(158,27,50,0.09); color: var(--ua-crimson); padding:.2rem .45rem; border-radius:.35rem; font-weight:700; min-width:72px; text-align:center; }
+.grants-list .award-body { color: #222; line-height:1.4; font-weight:600; }
+
 /* Links inside about sections */
 .about-section a { color: var(--ua-crimson); text-decoration:underline; }
 .about-section a:hover { color: #7f111f; }

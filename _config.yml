@@ -2,8 +2,8 @@
 title: Awwal Badru, PhD Candidate, Computer Science
 email: lobadru@crimson.ua.edu
 description: Academic webpage of Awwal Badru
-baseurl: ""
-url: ""
+url: "https://awwal-badru.github.io"      # ← your main domain
+baseurl: "/home"                          # ← the subpath (folder name)
 
 # Footer info
 affiliation: >

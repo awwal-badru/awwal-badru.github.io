@@ -606,3 +606,26 @@ html, body { background: #ffffff !important; color: #111; }
   text-align: center;
   display: inline-block;
 }
+
+/* Added: styles previously inline in _pages/research.md */
+img {
+  border-radius: 10px;
+}
+.col-md-3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 0;
+  display: table-cell;
+  overflow: hidden;
+  text-align: center;
+  background: white;
+  border-radius: 20px;
+  height: auto;
+}
+iframe {
+  margin: 0;
+  padding: 0;
+  width: 175px;
+  display: inline;
+  vertical-align: middle;
+}

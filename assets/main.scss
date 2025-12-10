@@ -629,3 +629,18 @@ iframe {
   display: inline;
   vertical-align: middle;
 }
+
+/* PDF embed styles */
+.pdf-container { margin: 0; padding: 0; }
+.embedded-pdf {
+  width: 100%;
+  height: calc(100vh - 220px); /* adjust 220px to account for header/footer height */
+  min-height: 600px;
+  border: none;
+  display: block;
+}
+
+/* Responsive tweak for small screens */
+@media (max-width: 700px) {
+  .embedded-pdf { height: calc(100vh - 160px); min-height: 480px; }
+}

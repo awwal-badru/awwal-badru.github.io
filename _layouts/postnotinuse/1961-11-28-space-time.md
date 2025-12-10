@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: 
 title: "Space-Time"
 date: 1961-11-28
 categories: "Lecture Notes"

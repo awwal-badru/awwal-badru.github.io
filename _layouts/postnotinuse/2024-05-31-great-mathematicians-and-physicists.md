@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: 
 title: "Great Mathematicians and Physicists"
 date: 2024-05-31
 categories: "Fun"

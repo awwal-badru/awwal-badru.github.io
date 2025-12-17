@@ -30,12 +30,11 @@ iframe { width: 175px; display: inline; vertical-align: middle; }
 <div class="jumbotron">
 <div class="row align-items-end">
 <div class="col-md-12 col-sm-12">
-<h4><b>Sample Software Projects</b></h4>
+<h4><b>Software Projects</b></h4>
 <a href="https://myalp.cs.ua.edu" target="_blank" rel="noopener">
-  <button class="btn btn-success btn-sm custom-crimson">WEBSITE</button>
+  <button class="btn btn-success btn-sm custom-crimson">Learning Hub</button>
 </a>
-<a href="https://github.com" target="_blank"><button class="btn btn-info btn-sm">EMIS GIT</button></a>
-<a href="https://github.com" target="_blank"><button class="btn btn-info btn-sm">ALP GIT</button></a>
+<a href="https://github.com/awwal-badru" target="_blank"><button class="btn btn-info btn-sm">GitHub Repos</button></a>
 <a href="https://adaptiveexperiments.github.io" target="_blank"><button class="btn btn-info btn-sm">EASI Project</button></a>
 <a href="{{ site.url }}{{ site.baseurl }}/papers/example_proceeding.pdf" target="_blank"><button class="btn btn-danger btn-sm">PAPER</button></a> 
 </div>

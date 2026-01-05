@@ -23,8 +23,16 @@
       </ul>
     </nav>
 
-    <div class="footer-copy">© {{ "now" | date: "%Y" }} {{ site.title | escape }}</div>
+    <div class="footer-copy">© <span id="now-year">{{ "now" | date: "%Y" }}</span> {{ site.title | escape }}</div>
   </div>
 </footer>
 
 <script src="{{ "/assets/javascript/bootstrap/bootstrap.bundle.min.js" | relative_url }}"></script>
+
+<script>
+  // ensure the year is current in the client (works even if site wasn't rebuilt)
+  (function(){
+    var el = document.getElementById('now-year');
+    if (el) el.textContent = new Date().getFullYear();
+  })();
+</script>

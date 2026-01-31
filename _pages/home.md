@@ -7,7 +7,7 @@ permalink: /
 
 ### Welcome
 
-My research focuses on developing and evaluating personalized, adaptive delivery systems for supplementary learning materials to support diverse student knowledge levels and preferences in Software Engineering Education, a method termed the AI-driven Adaptive Learning Platform.
+My research focuses on developing and evaluating personalized, adaptive delivery systems for supplementary learning materials to support diverse student knowledge levels and preferences in Software Engineering Education, a method termed the real time data-driven Adaptive Learning Platform.
 
 #### Research focus
 - Continuously assess student knowledge states and learning preferences.

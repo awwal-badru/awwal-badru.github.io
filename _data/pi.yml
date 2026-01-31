@@ -1,19 +1,18 @@
 - name: Awwal Badru
   photo: awwalfull.jpeg
-  info: PhD Candidate, The University of Alabama
+  info: PhD Candidate (ABD), The University of Alabama
   email: lobadru@crimson.ua.edu
   github: https://github.com/awwal-badru
   researchgate: https://www.researchgate.net/profile/Awwal-Badru
   scholar: https://scholar.google.com/citations?user=DW7LA8sAAAAJ&hl
   cv: "/assets/files/AwwalBadru_CV1.pdf"
-  # Change the items in "education" you have (up to 6)
   education:
-    [
-      "(2023--Present) Ph.D. Candidate, The University of Alabama",
-      "(2025) M.S. Computer Science, The University of Alabama",
-      "(2023) MSc. Computing Science, University of South Pacific, Fiji",
-      "(2008) B.Ed. Computer Science with Mathematics, University of Ibadan, Nigeria",
-    ]
-
+    - "(2023--Present) Ph.D. Candidate (ABD), The University of Alabama"
+    - "(2025) M.S. Computer Science, The University of Alabama"
+    - "(2023) MSc. Computing Science, University of South Pacific, Fiji"
+    - "(2008) B.Ed. Computer Science with Mathematics, University of Ibadan, Nigeria"
   educationshort:
-    ["(2023--Present) Ph.D. Candidate, Alabama", "(2025) M.S. Computer Science, Alabama", "(2023) MSc. Computing Science, Fiji", "(2008) B.Ed. Computer Science with Mathematics, Nigeria"]
+    - "(2023--Present) Ph.D. Candidate (ABD), Alabama"
+    - "(2025) M.S. Computer Science, Alabama"
+    - "(2023) MSc. Computing Science, Fiji"
+    - "(2008) B.Ed. Computer Science with Mathematics, Nigeria"

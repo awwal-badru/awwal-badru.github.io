@@ -34,6 +34,9 @@ iframe { width: 175px; display: inline; vertical-align: middle; }
 <a href="https://myalp.cs.ua.edu" target="_blank" rel="noopener">
   <button class="btn btn-success btn-sm custom-crimson">Learning Hub</button>
 </a>
+<a href="https://mtcfs.netlify.app/" target="_blank" rel="noopener">
+  <button class="btn btn-warning btn-sm">Cooperative Financial System</button>
+</a>
 <a href="https://github.com/awwal-badru" target="_blank"><button class="btn btn-info btn-sm">GitHub Repos</button></a>
 <a href="https://adaptiveexperiments.github.io" target="_blank"><button class="btn btn-info btn-sm">EASI Project</button></a>
 <a href="{{ site.url }}{{ site.baseurl }}/papers/example_proceeding.pdf" target="_blank"><button class="btn btn-danger btn-sm">PAPER</button></a> 
@@ -47,7 +50,7 @@ iframe { width: 175px; display: inline; vertical-align: middle; }
 A deployed system that uses contextual Thompson Sampling to deliver vetted, preference-aligned supplementary resources to students in real time. The system relies on live student ratings (no generative-AI content generation for core materials) and emphasizes transparency, instructor control, and lightweight, interpretable algorithms.
 
 - Short summary: Real-time personalization of curated learning resources to improve engagement and perceived usefulness in software engineering courses.
-- Role: Students, Researcher, Instructor, and Learning Science Analyst.
+- Role: Researcher, Developer, Maintainer, Instructor, and Learning Science Analyst.
 - Website:
   <a href="https://myalp.cs.ua.edu" target="_blank" rel="noopener noreferrer" class="btn btn-outline-success btn-sm" style="margin-right:.5rem">Participate in my Adaptive Learning Platofrm experiment</a>
   <span style="font-family:monospace; color:#333">https://myalp.cs.ua.edu</span>
@@ -58,3 +61,19 @@ A deployed system that uses contextual Thompson Sampling to deliver vetted, pref
   - Instructor dashboard for curation and monitoring
   - Live student rating collection and analytics
   - Exportable data for qualitative and quantitative research
+
+
+### Financial System for Cooperative Society
+
+A web-based financial management system for cooperative societies to manage member accounts, transactions, savings, and loans.
+
+- Short summary: Lightweight cooperative finance management with member accounting and reporting.
+- Role: Developer / Maintainer.
+- Website:
+  <a href="https://mtcfs.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm" style="margin-right:.5rem">View Financial System</a>
+  <span style="font-family:monospace; color:#333">https://mtcfs.netlify.app/</span>
+
+- Tech stack: MERN — MongoDB, Express, React, Node.js; Netlify-hosted frontend (client) and Node/Express backend with MongoDB (Atlas).
+- Key features:
+  - Member account management
+  - Transaction logging and summaries

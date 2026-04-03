@@ -1,39 +1,44 @@
 <div>
 {% for member in site.data.pi %}
-<div class="jumbotron">
-   <center>
-   <a href="{{site.url}}{{site.baseurl}}/about"><img src="{{site.url}}{{site.baseurl}}/images/{{ member.photo }}" width="60%" style="block:inline; margin-left:auto; margin-right:auto; margin-bottom:5px;"/></a>
-   <h4>{{ member.name }}</h4>
-   <div style="margin-bottom:5px">
-   {% if member.email %}<a href="mailto:{{ member.email }}" target="_blank"><i class="fa fa-envelope-square fa-3x"></i></a> {% endif %}
-   {% if member.cv %} <a href="{{ site.url }}{{ site.baseurl }}/{{ member.cv }}" target="_blank"><i class="ai ai-cv-square ai-3x"></i></a> {% endif %}
-   {% if member.scholar %} <a href="{{ member.scholar }}" target="_blank"><i class="ai ai-google-scholar-square ai-3x"></i></a> {% endif %}
-   {% if member.github %} <a href="{{ member.github }}" target="_blank"><i class="fa fa-github-square fa-3x"></i></a> {% endif %}
-   {% if member.researchgate %} <a href="{{ member.researchgate }}" target="_blank"><i class="ai ai-researchgate-square ai-3x"></i></a> {% endif %}
-  </div>
-  </center>
+<div class="modern-sidebar-card mb-4">
+   <div class="text-center">
+     <a href="{{site.url}}{{site.baseurl}}/about">
+       <img src="{{site.url}}{{site.baseurl}}/images/{{ member.photo }}" class="profile-img" alt="Profile Photo"/>
+     </a>
+     <h4 class="profile-name">{{ member.name }}</h4>
+     <div class="profile-socials">
+       {% if member.email %}<a href="mailto:{{ member.email }}" target="_blank"><i class="fa fa-envelope-square"></i></a>{% endif %}
+       {% if member.cv %} <a href="{{ site.url }}{{ site.baseurl }}/{{ member.cv }}" target="_blank"><i class="ai ai-cv-square"></i></a>{% endif %}
+       {% if member.scholar %} <a href="{{ member.scholar }}" target="_blank"><i class="ai ai-google-scholar-square"></i></a>{% endif %}
+       {% if member.github %} <a href="{{ member.github }}" target="_blank"><i class="fa fa-github-square"></i></a>{% endif %}
+       {% if member.linkedin %} <a href="{{ member.linkedin }}" target="_blank"><i class="fa fa-linkedin-square"></i></a>{% endif %}
+       {% if member.researchgate %} <a href="{{ member.researchgate }}" target="_blank"><i class="ai ai-researchgate-square"></i></a>{% endif %}
+     </div>
+   </div>
 
-  <ul style="overflow: hidden">
-    {% for education in member.educationshort %}
-      <li>{{ education | replace: "-","&#8211;" }}</li>
-    {% endfor %}
-  </ul>
-
+   <ul class="profile-education group">
+     {% for education in member.educationshort %}
+       <li>{{ education | replace: "-","&#8211;" }}</li>
+     {% endfor %}
+   </ul>
 </div>
 {% endfor %}
 </div>
 
-<div class="jumbotron">
+<div class="modern-sidebar-card">
+  <h4 class="sidebar-heading"><i class="fa fa-newspaper-o mr-2"></i>Latest News</h4>
   {% include news-alert.html %}
 
-  <div class="news-list mt-2">
+  <div class="news-list mt-3">
     {% for article in site.data.news limit:3 %}
-      <div class="news-item">
-        <strong class="news-date">{{ article.date }}</strong>
+      <a href="{{ site.url }}{{ site.baseurl }}/allnews.html" class="news-item">
+        <div class="news-date"><i class="fa fa-calendar mr-1"></i> {{ article.date }}</div>
         <div class="news-headline">{{ article.headline }}</div>
-      </div>
+      </a>
     {% endfor %}
   </div>
 
-  <h5 class="mt-2"><a href="{{ site.url }}{{ site.baseurl }}/allnews.html">... see all News</a></h5>
+  <div class="text-center mt-4">
+    <a href="{{ site.url }}{{ site.baseurl }}/allnews.html" class="news-see-all">View All News &rarr;</a>
+  </div>
 </div>

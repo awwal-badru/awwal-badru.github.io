@@ -38,4 +38,4 @@ I will pursue a phased research program as a faculty member:
 
 This agenda aligns with Computer Science Department priorities in computing education research and human-centered systems. I plan to pursue NSF and industry funding, mentor students in mixed-methods education research, and integrate adaptive tools into SE pedagogy.
 
-My research reimagines supplementary learning in SE education through transparent, preference-driven, real-time personalization—offering a robust, scalable alternative to AI-heavy platforms. By joining the department, I will advance a sustainable, inclusive model for computing education that empowers students, equips instructors, and evolves with classroom needs.
+My research reimagines supplementary learning in SE education through transparent, preference-driven, real-time personalization—offering a robust, scalable alternative to AI-heavy platforms. By joining as a faculty, I will advance a sustainable, inclusive model for computing education that empowers students, equips instructors, and evolves with classroom needs.

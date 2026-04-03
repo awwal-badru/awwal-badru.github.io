@@ -1,36 +1,49 @@
-<br/>
-<footer class="site-footer">
-  <div class="site-footer-inner container">
-    <div class="footer-cols">
-      <div class="footer-block">
-        <h5>Contact</h5>
-        <div class="footer-text">{{ site.contact }}</div>
-      </div>
+<footer class="site-footer modern-footer">
+  <div class="container">
+    <div class="row justify-content-around text-center text-md-left">
+      <!-- Contact & Office -->
+      <div class="col-12 col-md-5 mb-5 mb-md-0 text-md-left">
+        <h5 class="footer-heading">Office Address</h5>
+        <div class="footer-body mb-4">
+          {{ site.location }}
+        </div>
 
-      <div class="footer-block">
-        <h5>Office Address</h5>
-        <div class="footer-text">{{ site.location }}</div>
+        <h5 class="footer-heading mt-2">Connect & Contact</h5>
+        <div class="contact-links">
+          {{ site.contact }}
+          <a href="https://www.linkedin.com/in/awwal-b-389887198/" target="_blank">
+            <i class="fa fa-linkedin-square"></i> LinkedIn
+          </a>
+        </div>
+      </div>
+      
+      <!-- Quick Links -->
+      <div class="col-12 col-md-5 mb-4 mb-md-0 text-center text-md-right">
+        <h5 class="footer-heading">Quick Links</h5>
+        <nav aria-label="Footer navigation" class="quick-links d-flex flex-wrap justify-content-center justify-content-md-end" style="gap: 1rem;">
+          <a class="footer-nav-link" href="{{ '/' | relative_url }}">Home</a>
+          {% for p in site.nav_pages %}
+            <a class="footer-nav-link" href="{{ '/' | append: p.name | append: '/' | relative_url }}">{{ p.name | capitalize }}</a>
+          {% endfor %}
+        </nav>
       </div>
     </div>
 
-    <!-- Simple footer nav (no hamburger) -->
-    <nav class="footer-nav mt-3" aria-label="Footer navigation">
-      <ul class="navbar-nav d-flex flex-row flex-wrap justify-content-center gap-2">
-        <li class="nav-item"><a class="nav-link" href="{{ '/' | relative_url }}">Home</a></li>
-        {% for p in site.nav_pages %}
-          <li class="nav-item"><a class="nav-link" href="{{ '/' | append: p.name | append: '/' | relative_url }}">{{ p.name | capitalize }}</a></li>
-        {% endfor %}
-      </ul>
-    </nav>
-
-    <div class="footer-copy">© <span id="now-year">{{ "now" | date: "%Y" }}</span> {{ site.title | escape }}</div>
+    <!-- Divider & Copyright -->
+    <div class="footer-divider"></div>
+    
+    <div class="footer-copy">
+      © <span id="now-year">{{ "now" | date: "%Y" }}</span> {{ site.title | escape }}. All rights reserved.
+    </div>
   </div>
 </footer>
 
+<!-- jQuery is absolutely required for Bootstrap 4 interactive components -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="{{ "/assets/javascript/bootstrap/bootstrap.bundle.min.js" | relative_url }}"></script>
 
 <script>
-  // ensure the year is current in the client (works even if site wasn't rebuilt)
+  // ensure the year is current in the client
   (function(){
     var el = document.getElementById('now-year');
     if (el) el.textContent = new Date().getFullYear();

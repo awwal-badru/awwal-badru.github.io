@@ -3,16 +3,17 @@
   info: PhD Candidate (ABD), The University of Alabama
   email: lobadru@crimson.ua.edu
   github: https://github.com/awwal-badru
+  linkedin: https://www.linkedin.com/in/awwal-b-389887198/
   researchgate: https://www.researchgate.net/profile/Awwal-Badru
   scholar: https://scholar.google.com/citations?user=DW7LA8sAAAAJ&hl
   cv: "/assets/files/AwwalBadru_CV1.pdf"
   education:
     - "(2023--Present) Ph.D. Candidate (ABD), The University of Alabama"
-    - "(2025) M.S. Computer Science, The University of Alabama"
-    - "(2023) MSc. Computing Science, University of South Pacific, Fiji"
-    - "(2008) B.Ed. Computer Science with Mathematics, University of Ibadan, Nigeria"
+    - "M.S. Computer Science, The University of Alabama"
+    - "MSc. Computing Science, University of South Pacific, Fiji"
+    - "B.Ed. Computer Science with Mathematics, University of Ibadan, Nigeria"
   educationshort:
-    - "(2023--Present) Ph.D. Candidate (ABD), Alabama"
-    - "(2025) M.S. Computer Science, Alabama"
-    - "(2023) MSc. Computing Science, Fiji"
-    - "(2008) B.Ed. Computer Science with Mathematics, Nigeria"
+    - "Ph.D. Candidate (ABD), UA"
+    - "M.S. Computer Science, UA"
+    - "MSc. Computing Science, USP"
+    - "B.Ed. Computer Science with Mathematics, UI"

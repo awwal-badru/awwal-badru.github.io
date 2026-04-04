@@ -5,7 +5,7 @@ sitemap: false
 permalink: /allnews.html
 ---
 
-<div class="modern-sidebar-card">
+<div class="modern-sidebar-card" markdown="0">
   <h4 class="sidebar-heading"><i class="fa fa-newspaper-o mr-2"></i>News Archive</h4>
 
   <div class="news-list mt-4">

@@ -33,7 +33,7 @@
     {% for article in site.data.news limit:3 %}
       <a href="{{ site.url }}{{ site.baseurl }}/allnews.html" class="news-item">
         <div class="news-date"><i class="fa fa-calendar mr-1"></i> {{ article.date }}</div>
-        <div class="news-headline">{{ article.headline }}</div>
+        <div class="news-headline" title="{{ article.headline | escape }}">{{ article.headline | truncate: 80 }}</div>
       </a>
     {% endfor %}
   </div>

@@ -32,6 +32,9 @@ This work brings together machine learning, human–computer interaction, and ed
           <li data-bs-target="#platformCarousel" data-bs-slide-to="4"></li>
           <li data-bs-target="#platformCarousel" data-bs-slide-to="5"></li>
           <li data-bs-target="#platformCarousel" data-bs-slide-to="6"></li>
+          <li data-bs-target="#platformCarousel" data-bs-slide-to="7"></li>
+          <li data-bs-target="#platformCarousel" data-bs-slide-to="8"></li>
+          <li data-bs-target="#platformCarousel" data-bs-slide-to="9"></li>
         </ol>
 
         <!-- Wrapper for slides -->
@@ -45,13 +48,12 @@ This work brings together machine learning, human–computer interaction, and ed
           <div class="carousel-item">
             <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/Register2.png" alt="Register Step 2">
             <div class="carousel-caption d-none d-md-block caption-modern">
-              <h5>Registration Step 2</h5>
+        
             </div>
           </div>
           <div class="carousel-item">
             <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/SignIn.png" alt="Sign In">
             <div class="carousel-caption d-none d-md-block caption-modern">
-              <h5>Sign In</h5>
             </div>
           </div>
           <div class="carousel-item">
@@ -77,6 +79,23 @@ This work brings together machine learning, human–computer interaction, and ed
             <div class="carousel-caption d-none d-md-block caption-modern">
               <h5>Quiz Feedback</h5>
             </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/screen.png" alt="Platform Screen">
+            <div class="carousel-caption d-none d-md-block caption-modern">
+              <h5>Platform Screen</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/AI_ReviewCap.png" alt="AI Review">
+            <div class="carousel-caption d-none d-md-block caption-modern">
+              <h5>AI Review</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/Admin_Topic_Mgt.png" alt="Admin Topic Management">
+            <div class="carousel-caption d-none d-md-block caption-modern">
+              <h5>Admin Topic Management</h5>            </div>
           </div>
         </div>
 

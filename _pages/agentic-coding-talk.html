@@ -8,6 +8,7 @@ permalink: /agentic-coding-talk/
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agentic Coding Talk</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.css">
     <style>
         :root {
             --bg: oklch(0.98 0.006 280);
@@ -26,16 +27,16 @@ permalink: /agentic-coding-talk/
             align-items: center;
             justify-content: center;
         }
-        #canvas-container {
+        #viewerContainer {
             width: 100vw;
             height: 100vh;
+            position: absolute;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        canvas {
-            max-width: 100%;
-            max-height: 100%;
+        .pdfViewer {
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         /* Navigation Zones */
@@ -43,7 +44,7 @@ permalink: /agentic-coding-talk/
             position: absolute;
             top: 0;
             bottom: 0;
-            width: 50%;
+            width: 15%; /* Reduce width so we don't cover middle links */
             z-index: 10;
             cursor: pointer;
         }
@@ -81,14 +82,17 @@ permalink: /agentic-coding-talk/
     </style>
     <!-- PDF.js from CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.js"></script>
 </head>
 <body>
     <div id="loading">Loading Presentation...</div>
     <div id="nav-left"></div>
     <div id="nav-right"></div>
-    <div id="canvas-container">
-        <canvas id="pdf-render"></canvas>
+    
+    <div id="viewerContainer">
+        <div id="viewer" class="pdfViewer"></div>
     </div>
+
     <div id="slide-counter">
         <span id="page_num"></span> / <span id="page_count"></span>
     </div>
@@ -99,76 +103,54 @@ permalink: /agentic-coding-talk/
         // Configure PDF.js worker
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        let pdfDoc = null,
-            pageNum = 1,
-            pageIsRendering = false,
-            pageNumIsPending = null;
+        const container = document.getElementById('viewerContainer');
+        const loading = document.getElementById('loading');
+        
+        const eventBus = new pdfjsViewer.EventBus();
 
-        const scale = 2.0; // Higher scale for better resolution
-        const canvas = document.getElementById('pdf-render'),
-              ctx = canvas.getContext('2d'),
-              loading = document.getElementById('loading');
+        // Create the single page viewer
+        const pdfViewer = new pdfjsViewer.PDFSinglePageViewer({
+            container: container,
+            eventBus: eventBus,
+            removePageBorders: true
+        });
 
-        // Render the page
-        const renderPage = num => {
-            pageIsRendering = true;
+        // Create the link service to handle internal and external links
+        const pdfLinkService = new pdfjsViewer.PDFLinkService({
+            eventBus: eventBus
+        });
+        pdfViewer.setLinkService(pdfLinkService);
 
-            // Get page
-            pdfDoc.getPage(num).then(page => {
-                const viewport = page.getViewport({ scale });
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
+        eventBus.on('pagesinit', function () {
+            // Fit to page width/height
+            pdfViewer.currentScaleValue = 'page-fit';
+        });
 
-                const renderCtx = {
-                    canvasContext: ctx,
-                    viewport
-                };
+        eventBus.on('pagechanging', function (evt) {
+            document.getElementById('page_num').textContent = evt.pageNumber;
+        });
 
-                page.render(renderCtx).promise.then(() => {
-                    pageIsRendering = false;
-
-                    if(pageNumIsPending !== null) {
-                        renderPage(pageNumIsPending);
-                        pageNumIsPending = null;
-                    }
-                });
-
-                document.getElementById('page_num').textContent = num;
-            });
-        };
-
-        // Queue rendering if another page is rendering
-        const queueRenderPage = num => {
-            if(pageIsRendering) {
-                pageNumIsPending = num;
-            } else {
-                renderPage(num);
-            }
-        };
+        // Load Document
+        pdfjsLib.getDocument(url).promise.then(function(pdfDocument) {
+            document.getElementById('page_count').textContent = pdfDocument.numPages;
+            pdfViewer.setDocument(pdfDocument);
+            pdfLinkService.setDocument(pdfDocument, null);
+            loading.style.display = 'none';
+        }).catch(err => {
+            loading.textContent = 'Error loading presentation: ' + err.message;
+        });
 
         // Go to Previous Page
         const showPrevPage = () => {
-            if(pageNum <= 1) return;
-            pageNum--;
-            queueRenderPage(pageNum);
+            if (pdfViewer.currentPageNumber <= 1) return;
+            pdfViewer.currentPageNumber--;
         };
 
         // Go to Next Page
         const showNextPage = () => {
-            if(pageNum >= pdfDoc.numPages) return;
-            pageNum++;
-            queueRenderPage(pageNum);
+            if (pdfViewer.currentPageNumber >= pdfViewer.pagesCount) return;
+            pdfViewer.currentPageNumber++;
         };
-
-        // Load PDF Document
-        pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
-            pdfDoc = pdfDoc_;
-            document.getElementById('page_count').textContent = pdfDoc.numPages;
-            loading.style.display = 'none';
-            renderPage(pageNum);
-        }).catch(err => {
-            loading.textContent = 'Error loading presentation: ' + err.message;
-        });
 
         // Event Listeners
         document.getElementById('nav-left').addEventListener('click', showPrevPage);
@@ -181,11 +163,9 @@ permalink: /agentic-coding-talk/
             } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
                 showNextPage();
             } else if (e.key === 'Home') {
-                pageNum = 1;
-                queueRenderPage(pageNum);
+                pdfViewer.currentPageNumber = 1;
             } else if (e.key === 'End') {
-                pageNum = pdfDoc.numPages;
-                queueRenderPage(pageNum);
+                pdfViewer.currentPageNumber = pdfViewer.pagesCount;
             }
         });
     </script>

@@ -1,0 +1,193 @@
+---
+layout: none
+permalink: /agentic-coding-talk/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Coding Talk</title>
+    <style>
+        :root {
+            --bg: oklch(0.98 0.006 280);
+            --fg: oklch(0.22 0.02 280);
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            color: var(--fg);
+            overflow: hidden;
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        canvas {
+            max-width: 100%;
+            max-height: 100%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        /* Navigation Zones */
+        #nav-left, #nav-right {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            z-index: 10;
+            cursor: pointer;
+        }
+        #nav-left { left: 0; }
+        #nav-right { right: 0; }
+        
+        /* Slide Counter */
+        #slide-counter {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 20;
+            user-select: none;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        #slide-counter:hover {
+            opacity: 1;
+        }
+
+        /* Loading Indicator */
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            z-index: 5;
+        }
+    </style>
+    <!-- PDF.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+    <div id="loading">Loading Presentation...</div>
+    <div id="nav-left"></div>
+    <div id="nav-right"></div>
+    <div id="canvas-container">
+        <canvas id="pdf-render"></canvas>
+    </div>
+    <div id="slide-counter">
+        <span id="page_num"></span> / <span id="page_count"></span>
+    </div>
+
+    <script>
+        const url = '{{ "/assets/files/Agentic Coding.pdf" | relative_url }}';
+
+        // Configure PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        let pdfDoc = null,
+            pageNum = 1,
+            pageIsRendering = false,
+            pageNumIsPending = null;
+
+        const scale = 2.0; // Higher scale for better resolution
+        const canvas = document.getElementById('pdf-render'),
+              ctx = canvas.getContext('2d'),
+              loading = document.getElementById('loading');
+
+        // Render the page
+        const renderPage = num => {
+            pageIsRendering = true;
+
+            // Get page
+            pdfDoc.getPage(num).then(page => {
+                const viewport = page.getViewport({ scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderCtx = {
+                    canvasContext: ctx,
+                    viewport
+                };
+
+                page.render(renderCtx).promise.then(() => {
+                    pageIsRendering = false;
+
+                    if(pageNumIsPending !== null) {
+                        renderPage(pageNumIsPending);
+                        pageNumIsPending = null;
+                    }
+                });
+
+                document.getElementById('page_num').textContent = num;
+            });
+        };
+
+        // Queue rendering if another page is rendering
+        const queueRenderPage = num => {
+            if(pageIsRendering) {
+                pageNumIsPending = num;
+            } else {
+                renderPage(num);
+            }
+        };
+
+        // Go to Previous Page
+        const showPrevPage = () => {
+            if(pageNum <= 1) return;
+            pageNum--;
+            queueRenderPage(pageNum);
+        };
+
+        // Go to Next Page
+        const showNextPage = () => {
+            if(pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queueRenderPage(pageNum);
+        };
+
+        // Load PDF Document
+        pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
+            pdfDoc = pdfDoc_;
+            document.getElementById('page_count').textContent = pdfDoc.numPages;
+            loading.style.display = 'none';
+            renderPage(pageNum);
+        }).catch(err => {
+            loading.textContent = 'Error loading presentation: ' + err.message;
+        });
+
+        // Event Listeners
+        document.getElementById('nav-left').addEventListener('click', showPrevPage);
+        document.getElementById('nav-right').addEventListener('click', showNextPage);
+        
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                showPrevPage();
+            } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                showNextPage();
+            } else if (e.key === 'Home') {
+                pageNum = 1;
+                queueRenderPage(pageNum);
+            } else if (e.key === 'End') {
+                pageNum = pdfDoc.numPages;
+                queueRenderPage(pageNum);
+            }
+        });
+    </script>
+</body>
+</html>

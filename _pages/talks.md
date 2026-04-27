@@ -23,7 +23,7 @@ permalink: /talks/
 </style>
 
 <div class="jumbotron">
-### <a href="{{ '/assets/files/Agentic%20Coding.pdf' | relative_url }}" target="_blank">Invited talks</a>
+### <a href="{{ '/agentic-coding-talk/' | relative_url }}" target="_blank">Invited talks</a>
 {% bibliography --query @incollection[keywords ^= invited] %}
 </div>
 

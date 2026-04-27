@@ -23,7 +23,7 @@ permalink: /talks/
 </style>
 
 <div class="jumbotron">
-### Invited talks
+### <a href="https://view.officeapps.live.com/op/view.aspx?src=https://awwal-badru.github.io/assets/files/Agentic%20Coding.pptx" target="_blank">Invited talks</a>
 {% bibliography --query @incollection[keywords ^= invited] %}
 </div>
 

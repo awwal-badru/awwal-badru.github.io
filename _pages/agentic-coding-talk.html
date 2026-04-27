@@ -108,18 +108,20 @@ permalink: /agentic-coding-talk/
         
         const eventBus = new pdfjsViewer.EventBus();
 
-        // Create the single page viewer
-        const pdfViewer = new pdfjsViewer.PDFSinglePageViewer({
-            container: container,
-            eventBus: eventBus,
-            removePageBorders: true
-        });
-
         // Create the link service to handle internal and external links
         const pdfLinkService = new pdfjsViewer.PDFLinkService({
             eventBus: eventBus
         });
-        pdfViewer.setLinkService(pdfLinkService);
+
+        // Create the single page viewer
+        const pdfViewer = new pdfjsViewer.PDFSinglePageViewer({
+            container: container,
+            eventBus: eventBus,
+            linkService: pdfLinkService,
+            removePageBorders: true
+        });
+
+        pdfLinkService.setViewer(pdfViewer);
 
         eventBus.on('pagesinit', function () {
             // Fit to page width/height

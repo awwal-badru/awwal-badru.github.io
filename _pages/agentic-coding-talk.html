@@ -169,7 +169,7 @@ permalink: /agentic-coding-talk/
     </div>
 
     <script>
-        const url = '{{ "/assets/files/Agentic Coding.pdf" | relative_url }}';
+        const url = '{{ "/assets/files/Agentic Coding.pdf" | relative_url }}?v={{ site.time | date: "%s" }}';
 
         // Configure PDF.js worker
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';

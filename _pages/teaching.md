@@ -28,7 +28,7 @@ Prepared to teach a range of courses from introductory to advanced, including:
 - Introductory programming and computer science fundamentals
 - Data structures and algorithms (introductory-level)
 - Core software engineering courses: requirements engineering, software architecture and design, software testing and verification, software project planning and management
-- Web programming and modern programming languages
+- Web and mobile application development
 - Specialized or forward-looking offerings such as software security in the AI era and software supply chain and defensive coding
 
 ### Commitment to Mentorship and Student Success

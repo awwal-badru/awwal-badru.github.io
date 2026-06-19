@@ -20,7 +20,7 @@ I validated this approach through three rigorous classroom-based studies:
 
 - **Study 1 — TS vs Randomization:** Compared TS-driven adaptation to random selection in an SE course, showing superior median usefulness and improved positive/negative rating ratios across topics and quizzes.
 - **Study 2 — Personalization Factors:** Examined learner preferences, visual/verbal tendencies, and gender via adaptive experiments with IRB-approved protocols. Learner preferences were the strongest predictor of perceived usefulness; relevance, clarity, detail, and examples emerged as key mediators. Visual learners rated personalized materials higher when aligned with preferences; verbal learners assigned lower ratings overall. Aligning delivery mode by learning style had minimal effect on perceived usefulness, reinforcing critiques of strict learning-style matching. Gender showed no significant effects.
-- **Study 3 — Student Preferences Survey:** A comprehensive survey of SE students identified nuanced preferences for material design (e.g., concise examples, structured explanations), which directly informed algorithm refinement. All studies included thorough validity assessments (internal, construct, external).
+- **Study 3 — Student Preferences SLR & Survey:** A comprehensive survey of SE students identified nuanced preferences for material design (e.g., concise examples, structured explanations), which directly informed algorithm refinement. All studies included thorough validity assessments (internal, construct, external).
 
 ### Current Platform Work
 
@@ -36,6 +36,6 @@ I will pursue a phased research program as a faculty member:
 
 ### Impact, Funding, and Mentorship
 
-This agenda aligns with Computer Science Department priorities in computing education research and human-centered systems. I plan to pursue NSF and industry funding, mentor students in mixed-methods education research, and integrate adaptive tools into SE pedagogy.
+This agenda aligns with Computer Science Department priorities in computing education research and human-centered systems. I plan to pursue both internal and external funding, mentor students in mixed-methods education research, and integrate adaptive tools into SE pedagogy.
 
 My research reimagines supplementary learning in SE education through transparent, preference-driven, real-time personalization—offering a robust, scalable alternative to AI-heavy platforms. By joining as a faculty, I will advance a sustainable, inclusive model for computing education that empowers students, equips instructors, and evolves with classroom needs.

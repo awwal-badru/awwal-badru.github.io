@@ -25,6 +25,54 @@
 {% endfor %}
 </div>
 
+<div class="modern-sidebar-card" id="scholar-stats-card">
+  <h4 class="sidebar-heading"><i class="ai ai-google-scholar mr-2"></i>Citation Metrics</h4>
+  {% if site.data.scholar %}
+  <div class="scholar-metrics-grid">
+    <div class="scholar-metric">
+      <span class="scholar-metric-value">{{ site.data.scholar.citations }}</span>
+      <span class="scholar-metric-label">Citations</span>
+    </div>
+    <div class="scholar-metric">
+      <span class="scholar-metric-value">{{ site.data.scholar.h_index }}</span>
+      <span class="scholar-metric-label">h-index</span>
+    </div>
+    <div class="scholar-metric">
+      <span class="scholar-metric-value">{{ site.data.scholar.i10_index }}</span>
+      <span class="scholar-metric-label">i10-index</span>
+    </div>
+  </div>
+
+  {% if site.data.scholar.papers.size > 0 %}
+  <div class="scholar-paper-list">
+    <h5 class="scholar-papers-heading">Most Cited</h5>
+    {% for paper in site.data.scholar.papers %}
+    <a href="{{ paper.url }}" target="_blank" class="scholar-paper-item">
+      <span class="scholar-paper-title">{{ paper.title }}</span>
+      <span class="scholar-paper-cites"><i class="fa fa-quote-right"></i> {{ paper.citations }}</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="text-center mt-3">
+    <a href="https://scholar.google.com/citations?user=DW7LA8sAAAAJ&hl" target="_blank" class="scholar-profile-link">
+      <i class="ai ai-google-scholar mr-1"></i> View Google Scholar Profile &rarr;
+    </a>
+  </div>
+  <div class="text-center mt-2" style="font-size:0.72rem;color:#aaa;">
+    Updated: {{ site.data.scholar.last_updated }}
+  </div>
+  {% else %}
+  <div class="text-center">
+    <p style="color:#888;font-size:0.85rem;margin-bottom:0.75rem;">Citation data unavailable.</p>
+    <a href="https://scholar.google.com/citations?user=DW7LA8sAAAAJ&hl" target="_blank" class="scholar-profile-link">
+      <i class="ai ai-google-scholar mr-1"></i> View on Google Scholar &rarr;
+    </a>
+  </div>
+  {% endif %}
+</div>
+
 <div class="modern-sidebar-card">
   <h4 class="sidebar-heading"><i class="fa fa-newspaper-o mr-2"></i>Latest News</h4>
   {% include news-alert.html %}

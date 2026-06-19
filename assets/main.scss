@@ -893,3 +893,284 @@ iframe {
     height: 300px;
   }
 }
+
+/* --- Scholar Citation Metrics Widget --- */
+.scholar-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.scholar-metric {
+  text-align: center;
+  padding: 0.75rem 0.25rem;
+  background: rgba(158, 27, 50, 0.04);
+  border-radius: 10px;
+  border: 1px solid rgba(158, 27, 50, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.scholar-metric:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(158, 27, 50, 0.1);
+}
+.scholar-metric-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ua-crimson);
+  line-height: 1.2;
+}
+.scholar-metric-label {
+  display: block;
+  font-size: 0.72rem;
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 0.2rem;
+}
+
+.scholar-papers-heading {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ua-crimson);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scholar-paper-list {
+  margin-top: 0.75rem;
+  border-top: 1px solid rgba(158, 27, 50, 0.08);
+  padding-top: 0.75rem;
+}
+.scholar-paper-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.6rem 0.5rem;
+  text-decoration: none !important;
+  border-left: 3px solid transparent;
+  border-radius: 0 6px 6px 0;
+  transition: all 0.3s ease;
+  margin-bottom: 0.25rem;
+}
+.scholar-paper-item:hover {
+  background: rgba(158, 27, 50, 0.04);
+  border-left-color: var(--ua-crimson);
+  transform: translateX(3px);
+}
+.scholar-paper-title {
+  flex: 1;
+  font-size: 0.82rem;
+  color: #333;
+  font-weight: 500;
+  line-height: 1.35;
+}
+.scholar-paper-item:hover .scholar-paper-title {
+  color: var(--ua-crimson);
+}
+.scholar-paper-cites {
+  white-space: nowrap;
+  font-size: 0.78rem;
+  color: var(--ua-crimson);
+  font-weight: 700;
+  background: rgba(158, 27, 50, 0.06);
+  padding: 0.15rem 0.45rem;
+  border-radius: 12px;
+  min-width: fit-content;
+}
+.scholar-paper-cites i {
+  font-size: 0.65rem;
+  margin-right: 0.15rem;
+}
+
+.scholar-profile-link {
+  display: inline-block;
+  padding: 0.45rem 1.2rem;
+  background: var(--ua-crimson);
+  color: #fff !important;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  text-decoration: none !important;
+  box-shadow: 0 4px 15px rgba(158, 27, 50, 0.2);
+  transition: all 0.3s ease;
+}
+.scholar-profile-link:hover {
+  background: #821024;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(158, 27, 50, 0.3);
+}
+
+/* ============================================
+   Responsive Home Page Layout (CSS Grid)
+   ============================================ */
+.home-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 2rem 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* Desktop: main left (60%), sidebar right (40%) */
+@media (min-width: 992px) {
+  .home-layout {
+    grid-template-columns: 1fr 380px;
+    gap: 2.5rem;
+    padding: 2.5rem 2rem;
+  }
+  /* On desktop, sidebar appears second in DOM order but visually on the right */
+  .home-sidebar { order: 2; }
+  .home-main    { order: 1; }
+}
+
+/* Large desktops */
+@media (min-width: 1400px) {
+  .home-layout {
+    grid-template-columns: 1fr 420px;
+    gap: 3rem;
+    padding: 3rem 2rem;
+  }
+}
+
+/* On mobile, sidebar comes first (profile on top) */
+@media (max-width: 991px) {
+  .home-sidebar { order: -1; }
+  .home-main    { order: 1; }
+}
+
+/* --- Main Content Area --- */
+.home-main {
+  min-width: 0; /* prevents grid blowout */
+}
+
+.home-main h3 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--ua-crimson);
+  margin-bottom: 0.75rem;
+  position: relative;
+  padding-bottom: 0.6rem;
+}
+.home-main h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 3px;
+  background: var(--ua-crimson);
+  border-radius: 3px;
+}
+
+.home-main h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ua-crimson);
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.home-main p {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.home-main ul {
+  padding-left: 1.2rem;
+}
+.home-main ul li {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 0.35rem;
+  position: relative;
+}
+
+/* --- Sidebar Refinements --- */
+.home-sidebar {
+  position: sticky;
+  top: 80px; /* below the sticky navbar */
+  min-width: 0;
+}
+
+@media (max-width: 991px) {
+  .home-sidebar {
+    position: static;
+  }
+}
+
+/* Entrance animation for sidebar cards */
+.home-sidebar .modern-sidebar-card {
+  animation: fadeSlideUp 0.5s ease both;
+}
+.home-sidebar .modern-sidebar-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.home-sidebar .modern-sidebar-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-sidebar .modern-sidebar-card {
+    animation: none;
+  }
+}
+
+/* --- Carousel Responsive Tweaks for Home --- */
+.home-main .modern-carousel {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 575px) {
+  .home-main .modern-carousel .carousel-item img {
+    height: 220px;
+    padding: 0.5rem;
+  }
+  .caption-modern {
+    padding: 0.3rem 0.8rem;
+    bottom: 0.5rem;
+  }
+  .caption-modern h5 {
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991px) {
+  .home-main .modern-carousel .carousel-item img {
+    height: 380px;
+  }
+}
+
+/* Neutralize the Bootstrap container-fluid > row wrapper from default.html
+   so the CSS Grid layout works without interference */
+.container-fluid:has(.home-layout) {
+  padding: 0;
+  max-width: 100%;
+}
+.container-fluid > .row:has(.home-layout) {
+  display: block; /* override Bootstrap row flexbox */
+  margin: 0;
+}
+/* Fallback for browsers without :has() support */
+.home-layout .container {
+  padding-left: 0;
+  padding-right: 0;
+}

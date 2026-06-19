@@ -1,0 +1,16 @@
+# Google Scholar citation metrics for Awwal Badru
+# Google Scholar ID: DW7LA8sAAAAJ
+# Auto-updated by GitHub Actions (see .github/workflows/update-scholar.yml)
+
+citations: 28
+h_index: 1
+i10_index: 1
+last_updated: "2026-06-19"
+
+papers:
+  - title: "MERN stack web-based education management information systems for Pacific Island countries"
+    citations: 27
+    url: "https://doi.org/10.1007/s42979-022-01437-0"
+  - title: "State of Education Management Information System (EMIS) in Pacific Melanesia Small Island Developing States (SIDS)"
+    citations: 1
+    url: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DW7LA8sAAAAJ&citation_for_view=DW7LA8sAAAAJ:MXK_kJrjxJIC"

@@ -56,6 +56,21 @@ html, body {
   font-size: 1.4rem;
   letter-spacing: -0.3px;
   color: #fff !important;
+  white-space: normal;
+  display: flex !important;
+  align-items: center;
+  
+  .brand-text {
+    white-space: normal;
+    line-height: 1.25;
+    display: inline-block;
+  }
+}
+@media (max-width: 991px) {
+  .navbar-brand {
+    font-size: 1.05rem;
+    max-width: calc(100% - 60px); /* Leave room for toggle button */
+  }
 }
 
 /* Nav Link Styling & Hover Effects */
@@ -855,12 +870,35 @@ iframe {
   border: 1px solid rgba(0,0,0,0.05);
   background: #fdfdfd;
 }
-.modern-carousel .carousel-item img {
-  height: 480px;
-  object-fit: contain; /* ensures images are exactly the same size bounds without stretching */
-  padding: 1rem;
+.slide-text-top {
+  background: rgba(158, 27, 50, 0.04);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(158, 27, 50, 0.08);
+  text-align: center;
+  border-radius: 12px 12px 0 0;
+}
+.slide-text-top h5 {
+  color: var(--ua-crimson);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  font-size: 1.05rem;
+}
+.slide-text-top p {
+  color: #555;
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.modern-carousel .carousel-item img,
+.modern-carousel .carousel-item canvas {
+  height: 420px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain; /* ensures images/canvases are exactly the same size bounds without stretching */
+  padding: 0.75rem;
   background: #f8f9fa;
-  border-radius: 12px;
+  border-radius: 0 0 12px 12px;
 }
 .caption-modern {
   background: rgba(158, 27, 50, 0.85);
@@ -889,8 +927,9 @@ iframe {
 }
 
 @media (max-width: 768px) {
-  .modern-carousel .carousel-item img {
-    height: 300px;
+  .modern-carousel .carousel-item img,
+  .modern-carousel .carousel-item canvas {
+    height: 260px;
   }
 }
 
@@ -1140,9 +1179,16 @@ iframe {
 }
 
 @media (max-width: 575px) {
-  .home-main .modern-carousel .carousel-item img {
-    height: 220px;
+  .home-main .modern-carousel .carousel-item img,
+  .home-main .modern-carousel .carousel-item canvas {
+    height: 180px;
     padding: 0.5rem;
+  }
+  .slide-text-top h5 {
+    font-size: 0.95rem;
+  }
+  .slide-text-top p {
+    font-size: 0.75rem;
   }
   .caption-modern {
     padding: 0.3rem 0.8rem;
@@ -1154,8 +1200,9 @@ iframe {
 }
 
 @media (min-width: 576px) and (max-width: 991px) {
-  .home-main .modern-carousel .carousel-item img {
-    height: 380px;
+  .home-main .modern-carousel .carousel-item img,
+  .home-main .modern-carousel .carousel-item canvas {
+    height: 320px;
   }
 }
 

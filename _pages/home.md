@@ -33,69 +33,72 @@ This work brings together machine learning, human–computer interaction, and ed
           <li data-bs-target="#platformCarousel" data-bs-slide-to="5"></li>
           <li data-bs-target="#platformCarousel" data-bs-slide-to="6"></li>
           <li data-bs-target="#platformCarousel" data-bs-slide-to="7"></li>
-          <li data-bs-target="#platformCarousel" data-bs-slide-to="8"></li>
-          <li data-bs-target="#platformCarousel" data-bs-slide-to="9"></li>
         </ol>
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/Register1.png" alt="Register Step 1">
-            <div class="carousel-caption d-none d-md-block caption-modern">
-              <h5>Registration Step 1</h5>
+            <div class="slide-text-top">
+              <h5>Step 1: Navigate to Registration & Consent</h5>
+              <p>Navigate to the registration page and review the consent form details.</p>
             </div>
+            <img class="d-block placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/extracted_main/page_0.png?v={{ site.time | date: '%s' }}" alt="Step 1: Registration & Consent">
           </div>
+          
           <div class="carousel-item">
-            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/Register2.png" alt="Register Step 2">
-            <div class="carousel-caption d-none d-md-block caption-modern">
-        
+            <div class="slide-text-top">
+              <h5>Step 2: Accept Consent & Register</h5>
+              <p>Click the "I Agree" button to navigate to the sign-up form and register your account.</p>
             </div>
+            <img class="d-block placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/extracted_main/page_1.png?v={{ site.time | date: '%s' }}" alt="Step 2: Sign Up & Register">
           </div>
+          
           <div class="carousel-item">
-            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/SignIn.png" alt="Sign In">
-            <div class="carousel-caption d-none d-md-block caption-modern">
+            <div class="slide-text-top">
+              <h5>Step 3: Secure Login</h5>
+              <p>Log in using your credentials to securely access your learning workspace.</p>
             </div>
+            <img class="d-block placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/extracted_main/page_2.png?v={{ site.time | date: '%s' }}" alt="Step 3: Secure Login">
           </div>
+          
           <div class="carousel-item">
-            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/Dashboard.png" alt="Dashboard">
-            <div class="carousel-caption d-none d-md-block caption-modern">
-              <h5>Dashboard</h5>
+            <div class="slide-text-top">
+              <h5>Steps 4-5: Select Topics & Take Pre-Test</h5>
+              <p>Select available course topics for your institution and take a Pre-Test to evaluate your initial understanding.</p>
             </div>
+            <img class="d-block placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/extracted_main/page_3.png?v={{ site.time | date: '%s' }}" alt="Steps 4-5: Select Topics & Pre-Test">
           </div>
+          
           <div class="carousel-item">
-            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/Topic_overview.png" alt="Topic Overview">
-            <div class="carousel-caption d-none d-md-block caption-modern">
-              <h5>Topic Overview</h5>
+            <div class="slide-text-top">
+              <h5>Steps 6-7: Access Material & Learn</h5>
+              <p>Access learning materials for the chosen topic. View supplementary material adaptively rendered based on prior data.</p>
             </div>
+            <img class="d-block placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/extracted_main/page_4.png?v={{ site.time | date: '%s' }}" alt="Steps 6-7: Access Material & Learn">
           </div>
+          
           <div class="carousel-item">
-            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/AI_generated_Quiz.png" alt="AI Generated Quiz">
-            <div class="carousel-caption d-none d-md-block caption-modern">
-              <h5>AI Generated Quiz</h5>
+            <div class="slide-text-top">
+              <h5>Step 8: Complete Requirements</h5>
+              <p>Read or watch the material to the end, rate its usefulness, take the post-test quiz, and review AI generated concepts.</p>
             </div>
+            <img class="d-block placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/extracted_main/page_5.png?v={{ site.time | date: '%s' }}" alt="Step 8: Complete Requirements">
           </div>
+          
           <div class="carousel-item">
-            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/AI_generated_Quiz2.png" alt="AI Generated Quiz 2">
-            <div class="carousel-caption d-none d-md-block caption-modern">
-              <h5>Quiz Feedback</h5>
+            <div class="slide-text-top">
+              <h5>Concept Mapping & Review</h5>
+              <p>Review the conceptual layout and map of your learning progress to reinforce core concepts.</p>
             </div>
+            <img class="d-block placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/extracted_main/page_6.png?v={{ site.time | date: '%s' }}" alt="Concept Mapping & Review">
           </div>
+          
           <div class="carousel-item">
-            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/screen.png" alt="Platform Screen">
-            <div class="carousel-caption d-none d-md-block caption-modern">
-              <h5>Platform Screen</h5>
+            <div class="slide-text-top">
+              <h5>Step 9: Monitor Performance</h5>
+              <p>Use the personalized student dashboard to track your overall learning progress and scores.</p>
             </div>
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/AI_ReviewCap.png" alt="AI Review">
-            <div class="carousel-caption d-none d-md-block caption-modern">
-              <h5>AI Review</h5>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100 placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/Admin_Topic_Mgt.png" alt="Admin Topic Management">
-            <div class="carousel-caption d-none d-md-block caption-modern">
-              <h5>Admin Topic Management</h5>            </div>
+            <img class="d-block placeholder-bg" src="{{ site.url }}{{ site.baseurl }}/images/extracted_main/page_7.png?v={{ site.time | date: '%s' }}" alt="Step 9: Monitor Performance">
           </div>
         </div>
 
@@ -114,6 +117,6 @@ This work brings together machine learning, human–computer interaction, and ed
         <em>Learning Platform Walkthrough</em><br/>
       </div>
 
-    </div>
-  </div>
+</div>
+</div>
 </div>

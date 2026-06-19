@@ -23,7 +23,12 @@ pre{
 </style>
 
 
-<div class="text-justify">{{reference}}</div>
+<div class="text-justify">
+  {{reference}}
+  {% if entry.note %}
+    <br><em>{{ entry.note }}</em>
+  {% endif %}
+</div>
 
 <!-- You can use the below to make your name bold -->
 <!-- {{reference | replace_first: 'Bryngelson, S. H.', '<b>Bryngelson, S. H.</b>' | replace_first: 'Bryngelson, S.', '<b>Bryngelson, S.</b>' }}</div> -->

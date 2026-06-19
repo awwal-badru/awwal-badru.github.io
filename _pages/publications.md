@@ -28,6 +28,10 @@ years: [2016, 2017, 2018, 2019, 2020, 2021]
 
 <div class="jumbotron">
 ### Preprints
-{% bibliography --query @unpublished %}
+{% bibliography --query @unpublished[keywords=preprint] %}
+</div>
 
+<div class="jumbotron">
+### Work in Progress
+{% bibliography --query @unpublished[keywords=wip] %}
 </div>

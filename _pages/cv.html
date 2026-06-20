@@ -1,0 +1,201 @@
+---
+layout: none
+permalink: /cv/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awwal Badru - Curriculum Vitae</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f3f3f3;
+            overflow: auto;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        #viewer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            gap: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .pdf-page {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            background-color: white;
+            max-width: 100%;
+            border-radius: 4px;
+            transition: transform 0.2s;
+        }
+
+        /* High-contrast dark theme for the document viewer background */
+        html[data-theme="dark"] {
+            background-color: #121212;
+        }
+        html[data-theme="dark"] body {
+            background-color: #121212;
+        }
+        
+        /* Premium feature: Invert the PDF colors in dark mode to blend with the dark theme */
+        html[data-theme="dark"] .pdf-page {
+            filter: invert(1) hue-rotate(180deg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.1rem;
+            font-weight: 500;
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            color: #555;
+        }
+        
+        html[data-theme="dark"] #loading {
+            color: #ccc;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #9E1B32;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        html[data-theme="dark"] .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #ff6b81;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-msg {
+            color: #9E1B32;
+            font-weight: 600;
+        }
+    </style>
+    <!-- Load PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+    <div id="loading">
+        <div class="spinner"></div>
+        <span>Rendering CV...</span>
+    </div>
+
+    <div id="viewer-container"></div>
+
+    <script>
+        // Set dark theme if saved in localStorage
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+
+        // Configure PDF.js worker URL
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        // Load the PDF CV file dynamically from configuration
+        const url = '{{ site.data.pi[0].cv_pdf | relative_url }}?v={{ site.time | date: "%s" }}';
+        const container = document.getElementById('viewer-container');
+        const loading = document.getElementById('loading');
+
+        pdfjsLib.getDocument(url).promise.then(function(pdf) {
+            loading.style.display = 'none';
+            
+            // Loop through and render all pages
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const canvas = document.createElement('canvas');
+                canvas.className = 'pdf-page';
+                container.appendChild(canvas);
+                
+                renderPage(pdf, pageNum, canvas);
+            }
+        }).catch(function(error) {
+            loading.innerHTML = '<span class="error-msg"><i class="fa fa-exclamation-triangle"></i> Error loading CV: ' + error.message + '</span>';
+        });
+
+        function renderPage(pdf, pageNum, canvas) {
+            pdf.getPage(pageNum).then(function(page) {
+                const ctx = canvas.getContext('2d');
+                
+                // Calculate responsive scale based on viewport width
+                const containerWidth = container.clientWidth - 32; // padding
+                const unscaledViewport = page.getViewport({ scale: 1.0 });
+                let scale = 1.5;
+                if (unscaledViewport.width > containerWidth) {
+                    scale = containerWidth / unscaledViewport.width;
+                }
+                
+                const viewport = page.getViewport({ scale: scale });
+                
+                // Support high-DPI screens for crisp rendering
+                const outputScale = window.devicePixelRatio || 1;
+                canvas.width = Math.floor(viewport.width * outputScale);
+                canvas.height = Math.floor(viewport.height * outputScale);
+                canvas.style.width = Math.floor(viewport.width) + "px";
+                canvas.style.height = Math.floor(viewport.height) + "px";
+                
+                const transform = outputScale !== 1
+                    ? [outputScale, 0, 0, outputScale, 0, 0]
+                    : null;
+                    
+                const renderContext = {
+                    canvasContext: ctx,
+                    transform: transform,
+                    viewport: viewport
+                };
+                
+                page.render(renderContext);
+            });
+        }
+
+        // Security measures: prevent direct saving/printing/copying
+        // Disable context menu (right-click)
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Disable standard save / print / copy shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Check for Ctrl+S (Save), Ctrl+P (Print), Ctrl+C (Copy), Ctrl+Shift+I / F12 (Inspect)
+            if (e.ctrlKey && (e.key === 's' || e.key === 'S' || e.key === 'p' || e.key === 'P' || e.key === 'c' || e.key === 'C')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'PrintScreen') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -14,8 +14,8 @@ $baseurl: "";
 
 /* White page background and readable text */
 html, body {
-  background: #fdfdfd !important;
-  color: #1a1a1a;
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -516,7 +516,6 @@ html, body {
 /* Ensure sidebar jumbotron (newsid) uses crimson style kept earlier */
 
 /* Keep global page background white and header/footer crimson (if already set) */
-html, body { background: #ffffff !important; color: #111; }
 
 /* Sidebar (newsid) — ensure education list is white on crimson jumbotron */
 
@@ -1123,53 +1122,67 @@ iframe {
   .home-main    { order: 1; }
 }
 
-/* --- Main Content Area --- */
-.home-main {
+/* --- Main Content Typography (Unified across all pages) --- */
+.home-main, #gridid, #textid, #picid, .post, .post-content, #publications, #research, #team {
   min-width: 0; /* prevents grid blowout */
-}
 
-.home-main h3 {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--ua-crimson);
-  margin-bottom: 0.75rem;
-  position: relative;
-  padding-bottom: 0.6rem;
-}
-.home-main h3::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 50px;
-  height: 3px;
-  background: var(--ua-crimson);
-  border-radius: 3px;
-}
+  h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--ua-crimson);
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.6rem;
+  }
 
-.home-main h4 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--ua-crimson);
-  margin-top: 1.5rem;
-  margin-bottom: 0.6rem;
-}
+  h2, h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--ua-crimson);
+    margin-top: 2.2rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+    padding-bottom: 0.6rem;
 
-.home-main p {
-  font-size: 0.98rem;
-  line-height: 1.7;
-  color: #333;
-}
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--ua-crimson);
+      border-radius: 3px;
+    }
+  }
 
-.home-main ul {
-  padding-left: 1.2rem;
-}
-.home-main ul li {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #444;
-  margin-bottom: 0.35rem;
-  position: relative;
+  h4, h5, h6 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ua-crimson);
+    margin-top: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  p {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  ul, ol {
+    padding-left: 1.2rem;
+    margin-bottom: 1rem;
+
+    li {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #444;
+      margin-bottom: 0.35rem;
+      position: relative;
+    }
+  }
 }
 
 /* --- Sidebar Refinements --- */
@@ -1265,11 +1278,13 @@ iframe {
 /* ============================================
    Dark Mode Overrides
    ============================================ */
+html[data-theme="dark"],
+html[data-theme="dark"] body {
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
 [data-theme="dark"] {
-  html, body {
-    background: var(--bg-color) !important;
-    color: var(--text-color) !important;
-  }
 
   /* Sidebar styling */
   .modern-sidebar-card {
@@ -1480,9 +1495,9 @@ iframe {
     }
   }
 
-  /* Home layout text overrides */
-  .home-main {
-    h3, h4 {
+  /* Unified page layout overrides in Dark Mode */
+  .home-main, #gridid, #textid, #picid, .post, .post-content, #publications, #research, #team {
+    h1, h2, h3, h4, h5, h6 {
       color: var(--card-heading-text) !important;
       
       &::after {
@@ -1494,7 +1509,7 @@ iframe {
       color: var(--text-secondary) !important;
     }
     
-    ul li {
+    ul li, ol li {
       color: var(--text-tertiary) !important;
     }
   }

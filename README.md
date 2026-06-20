@@ -20,7 +20,7 @@ This website is statically generated using **Jekyll**, **Liquid**, and **Sass** 
 
 ## 🛠️ Local Development
 
-For quick local setup and running on Windows, follow these commands. For more detailed instructions on toolchain dependencies, see [RUN_LOCALLY.md](file:///c:/Users/hamas/awwal-badru.github.io/RUN_LOCALLY.md).
+For quick local setup and running on Windows, follow these commands. For more detailed instructions on toolchain dependencies, see [RUN_LOCALLY.md](RUN_LOCALLY.md).
 
 1. Install dependencies:
    ```powershell

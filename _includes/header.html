@@ -17,12 +17,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="collapse navbar-collapse" id="mainNavbar">
       <!-- Fix: align items using ml-auto -->
-      <ul class="navbar-nav ml-auto text-center mt-3 mt-lg-0 pt-2 pt-lg-0">
+      <ul class="navbar-nav ml-auto text-center mt-3 mt-lg-0 pt-2 pt-lg-0 align-items-center">
         <li class="nav-item"><a class="nav-link" href="{{ '/' | relative_url }}">Home</a></li>
         {% for page in site.nav_pages %}
           <li class="nav-item"><a class="nav-link" href="{{ '/' | append: page.name | append: '/' | relative_url }}">{{ page.name | capitalize }}</a></li>
         {% endfor %}
+        <li class="nav-item d-flex align-items-center justify-content-center">
+          <button id="theme-toggle" class="btn btn-link nav-link" style="border: none; padding: 0.4rem 0.65rem !important; cursor: pointer; display: flex; align-items: center; text-decoration: none;" aria-label="Toggle theme">
+            <i class="fa fa-moon-o" id="theme-toggle-icon" style="font-size: 1.15rem;"></i>
+          </button>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const toggleBtn = document.getElementById('theme-toggle');
+  const toggleIcon = document.getElementById('theme-toggle-icon');
+  
+  if (!toggleBtn || !toggleIcon) return;
+  
+  function updateToggleIcon(theme) {
+    if (theme === 'dark') {
+      toggleIcon.classList.remove('fa-moon-o');
+      toggleIcon.classList.add('fa-sun-o');
+    } else {
+      toggleIcon.classList.remove('fa-sun-o');
+      toggleIcon.classList.add('fa-moon-o');
+    }
+  }
+
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  updateToggleIcon(currentTheme);
+
+  toggleBtn.addEventListener('click', function() {
+    const activeTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateToggleIcon(newTheme);
+  });
+});
+</script>

@@ -1,7 +1,7 @@
 ---
 ---
 
-$baseurl: "{{ site.url }}{{ site.baseurl }}";
+$baseurl: "";
 
 /* Imports (existing) */
 @import "bootstrap/bootstrap";
@@ -25,6 +25,52 @@ html, body {
   --ua-crimson: #9E1B32; 
   --glass-bg: rgba(158, 27, 50, 0.92); /* Rich crimson with slight transparency */
   --footer-bg: #821024;
+
+  /* Theme variables - Light Mode */
+  --bg-color: #fdfdfd;
+  --text-color: #1a1a1a;
+  --card-bg: #ffffff;
+  --card-border: rgba(158, 27, 50, 0.08);
+  --card-text: #222;
+  --card-heading-text: var(--ua-crimson);
+  --entry-period-bg: rgba(158, 27, 50, 0.09);
+  --badge-text: var(--ua-crimson);
+  --news-item-bg: rgba(158, 27, 50, 0.03);
+  --news-headline-color: #1a1a1a;
+  --muted-text: rgba(0, 0, 0, 0.6);
+  --border-dashed: rgba(0, 0, 0, 0.04);
+  --body-link-color: var(--ua-crimson);
+  --body-link-hover: #7f111f;
+  --sidebar-shadow: rgba(0, 0, 0, 0.06);
+  --sidebar-shadow-hover: rgba(0, 0, 0, 0.08);
+  --jumbotron-shadow: rgba(0, 0, 0, 0.04);
+  --text-primary: #111;
+  --text-secondary: #333;
+  --text-tertiary: #444;
+}
+
+[data-theme="dark"] {
+  /* Theme variables - Dark Mode */
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --card-bg: #1e1e1e;
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-text: #e0e0e0;
+  --card-heading-text: #ff6b81; /* high contrast bright crimson/coral for dark mode heading */
+  --entry-period-bg: rgba(255, 255, 255, 0.1);
+  --badge-text: #ff6b81;
+  --news-item-bg: rgba(255, 255, 255, 0.05);
+  --news-headline-color: #e0e0e0;
+  --muted-text: rgba(255, 255, 255, 0.6);
+  --border-dashed: rgba(255, 255, 255, 0.1);
+  --body-link-color: #ff6b81;
+  --body-link-hover: #ff8797;
+  --sidebar-shadow: rgba(0, 0, 0, 0.5);
+  --sidebar-shadow-hover: rgba(0, 0, 0, 0.6);
+  --jumbotron-shadow: rgba(0, 0, 0, 0.3);
+  --text-primary: #e0e0e0;
+  --text-secondary: #ccc;
+  --text-tertiary: #bbb;
 }
 
 /* -------------------------------------
@@ -1214,4 +1260,272 @@ iframe {
 .home-layout .container {
   padding-left: 0;
   padding-right: 0;
+}
+
+/* ============================================
+   Dark Mode Overrides
+   ============================================ */
+[data-theme="dark"] {
+  html, body {
+    background: var(--bg-color) !important;
+    color: var(--text-color) !important;
+  }
+
+  /* Sidebar styling */
+  .modern-sidebar-card {
+    background: var(--card-bg) !important;
+    border-color: var(--card-border) !important;
+    box-shadow: 0 8px 30px var(--sidebar-shadow) !important;
+    
+    &:hover {
+      box-shadow: 0 12px 40px var(--sidebar-shadow-hover) !important;
+    }
+    
+    .sidebar-heading {
+      color: var(--card-heading-text) !important;
+      border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .profile-name {
+      color: var(--text-color) !important;
+    }
+    
+    .profile-education {
+      color: var(--muted-text) !important;
+    }
+  }
+  
+  .news-item {
+    background: var(--news-item-bg) !important;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.08) !important;
+    }
+    
+    .news-date {
+      color: var(--card-heading-text) !important;
+    }
+    
+    .news-headline {
+      color: var(--news-headline-color) !important;
+    }
+  }
+  
+  .news-see-all {
+    background: var(--ua-crimson) !important;
+    color: #fff !important;
+    
+    &:hover {
+      background: #b8203c !important;
+    }
+  }
+
+  /* Scholar metrics */
+  .scholar-metric {
+    background: var(--news-item-bg) !important;
+    border-color: var(--card-border) !important;
+    
+    &:hover {
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05) !important;
+    }
+  }
+  
+  .scholar-metric-value {
+    color: var(--card-heading-text) !important;
+  }
+  
+  .scholar-metric-label {
+    color: var(--muted-text) !important;
+  }
+  
+  .scholar-papers-heading {
+    color: var(--card-heading-text) !important;
+  }
+  
+  .scholar-paper-list {
+    border-top-color: var(--card-border) !important;
+  }
+  
+  .scholar-paper-title {
+    color: var(--text-color) !important;
+  }
+  
+  .scholar-paper-item {
+    &:hover {
+      background: var(--news-item-bg) !important;
+      border-left-color: var(--card-heading-text) !important;
+      
+      .scholar-paper-title {
+        color: var(--card-heading-text) !important;
+      }
+    }
+  }
+  
+  .scholar-paper-cites {
+    color: var(--badge-text) !important;
+    background: var(--entry-period-bg) !important;
+  }
+  
+  .scholar-profile-link {
+    background: var(--ua-crimson) !important;
+    color: #fff !important;
+    
+    &:hover {
+      background: #b8203c !important;
+    }
+  }
+
+  /* Jumbotrons and About Sections */
+  .jumbotron,
+  .about-section {
+    background: var(--card-bg) !important;
+    color: var(--card-text) !important;
+    border-color: var(--card-border) !important;
+    box-shadow: 0 8px 20px var(--jumbotron-shadow) !important;
+    
+    p, ul, li {
+      color: var(--card-text) !important;
+    }
+    
+    h3, h4 {
+      color: var(--card-heading-text) !important;
+    }
+    
+    a {
+      color: var(--body-link-color) !important;
+      
+      &:hover {
+        color: var(--body-link-hover) !important;
+      }
+    }
+  }
+
+  /* Teaching layout and lists */
+  .jumbotron.teaching {
+    background: var(--card-bg) !important;
+    border-color: var(--card-border) !important;
+    color: var(--card-text) !important;
+    
+    h3, .teaching-period, .teaching-title {
+      color: var(--card-heading-text) !important;
+    }
+    
+    .teaching-list,
+    .teaching-list li,
+    .teaching-entry,
+    .teaching-title,
+    .teaching-period,
+    .teaching-courses,
+    .teaching-courses .course {
+      color: var(--card-text) !important;
+    }
+  }
+  
+  .teaching-courses .course,
+  .jumbotron.teaching .teaching-courses .course {
+    background: var(--entry-period-bg) !important;
+    color: var(--badge-text) !important;
+    border-color: var(--card-border) !important;
+  }
+  
+  .award-year,
+  .entry-period,
+  .jumbotron.teaching .teaching-period {
+    background: var(--entry-period-bg) !important;
+    color: var(--badge-text) !important;
+  }
+  
+  .employment-entry,
+  .award-entry,
+  .grants-list .award-entry {
+    border-bottom-color: var(--border-dashed) !important;
+  }
+  
+  .entry-title {
+    color: var(--text-primary) !important;
+  }
+  
+  .entry-details {
+    color: var(--text-secondary) !important;
+  }
+  
+  .award-body,
+  .grants-list .award-body {
+    color: var(--card-text) !important;
+  }
+
+  /* Rubric & Employment History */
+  .rubric,
+  .employment-history {
+    color: var(--text-color) !important;
+    
+    h3, .entry-title {
+      color: var(--card-heading-text) !important;
+    }
+    
+    .entry-period {
+      color: var(--badge-text) !important;
+    }
+    
+    .entry-details, li {
+      color: var(--text-color) !important;
+    }
+    
+    a {
+      color: var(--body-link-color) !important;
+      
+      &:hover {
+        color: var(--body-link-hover) !important;
+      }
+    }
+  }
+
+  /* Home layout text overrides */
+  .home-main {
+    h3, h4 {
+      color: var(--card-heading-text) !important;
+      
+      &::after {
+        background: var(--card-heading-text) !important;
+      }
+    }
+    
+    p {
+      color: var(--text-secondary) !important;
+    }
+    
+    ul li {
+      color: var(--text-tertiary) !important;
+    }
+  }
+
+  /* Carousel */
+  .modern-carousel {
+    border-color: var(--card-border) !important;
+    box-shadow: 0 8px 30px var(--jumbotron-shadow) !important;
+    background: var(--card-bg) !important;
+  }
+  
+  .slide-text-top {
+    background: var(--news-item-bg) !important;
+    border-bottom-color: var(--card-border) !important;
+    
+    h5 {
+      color: var(--card-heading-text) !important;
+    }
+    
+    p {
+      color: var(--muted-text) !important;
+    }
+  }
+  
+  .modern-carousel .carousel-item img,
+  .modern-carousel .carousel-item canvas {
+    background: var(--card-bg) !important;
+  }
+  
+  /* Additional grid items */
+  .col-md-3 {
+    background: var(--card-bg) !important;
+  }
 }

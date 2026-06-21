@@ -28,16 +28,27 @@ permalink: /cv/
             flex-direction: column;
             align-items: center;
             padding: 2rem 1rem;
-            gap: 1.5rem;
+            gap: 2rem;
             box-sizing: border-box;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pdf-page-container {
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            background-color: white;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
         }
 
         .pdf-page {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            background-color: white;
-            max-width: 100%;
-            border-radius: 4px;
-            transition: transform 0.2s;
+            display: block;
+            width: 100%;
+            height: auto;
         }
 
         /* High-contrast dark theme for the document viewer background */
@@ -48,10 +59,14 @@ permalink: /cv/
             background-color: #121212;
         }
         
-        /* Premium feature: Invert the PDF colors in dark mode to blend with the dark theme */
+        html[data-theme="dark"] .pdf-page-container {
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+            background-color: #000000;
+        }
+
+        /* Invert only the page content, not the shadow container, to avoid white glow */
         html[data-theme="dark"] .pdf-page {
             filter: invert(1) hue-rotate(180deg);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         #loading {
@@ -133,9 +148,14 @@ permalink: /cv/
             
             // Loop through and render all pages
             for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const pageContainer = document.createElement('div');
+                pageContainer.className = 'pdf-page-container';
+                
                 const canvas = document.createElement('canvas');
                 canvas.className = 'pdf-page';
-                container.appendChild(canvas);
+                
+                pageContainer.appendChild(canvas);
+                container.appendChild(pageContainer);
                 
                 renderPage(pdf, pageNum, canvas);
             }
@@ -147,26 +167,16 @@ permalink: /cv/
             pdf.getPage(pageNum).then(function(page) {
                 const ctx = canvas.getContext('2d');
                 
-                // Calculate responsive scale based on viewport width
-                const containerWidth = container.clientWidth - 32; // padding
-                const unscaledViewport = page.getViewport({ scale: 1.0 });
-                let scale = 1.5;
-                if (unscaledViewport.width > containerWidth) {
-                    scale = containerWidth / unscaledViewport.width;
-                }
-                
+                // Render at a high fixed scale for crispness on all screens
+                const scale = 2.0;
                 const viewport = page.getViewport({ scale: scale });
                 
                 // Support high-DPI screens for crisp rendering
                 const outputScale = window.devicePixelRatio || 1;
                 canvas.width = Math.floor(viewport.width * outputScale);
                 canvas.height = Math.floor(viewport.height * outputScale);
-                canvas.style.width = Math.floor(viewport.width) + "px";
-                canvas.style.height = Math.floor(viewport.height) + "px";
                 
-                const transform = outputScale !== 1
-                    ? [outputScale, 0, 0, outputScale, 0, 0]
-                    : null;
+                const transform = [outputScale, 0, 0, outputScale, 0, 0];
                     
                 const renderContext = {
                     canvasContext: ctx,

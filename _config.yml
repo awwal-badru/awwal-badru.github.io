@@ -4,6 +4,7 @@ email: lobadru@crimson.ua.edu
 description: Academic webpage of Awwal Badru
 url: "https://awwal-badru.github.io"      # ← your main domain
 baseurl: ""                         
+goatcounter_code: "awwal-badru"           # Set your GoatCounter subdomain here (e.g., 'awwal-badru' for awwal-badru.goatcounter.com)                         
 
 # Footer info
 affiliation: >

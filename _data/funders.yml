@@ -6,3 +6,21 @@
   #url: https://www.onr.navy.mil/
 #- #image: NIH-logo.png
   #url: https://www.nih.gov/
+
+
+
+- name: "Association for Computing Machinery (ACM)"
+  url: "https://www.acm.org/"
+  image: ACM.png
+  description: "The world's largest educational and scientific computing society. Offers journals, conferences, and career resources for computing professionals."
+
+- name: "IEEE Computer Society"
+  url: "https://www.computer.org/"
+  image: IEEE.png
+  description: "The world's leading computing society. Offers journals, conferences, and career resources for computing professionals."
+
+- name: "SIGCSE"
+  url: "https://sigcse.org/"
+  image: SIGCSE.png
+  description: "The world's leading computing society. Provides access to journals, conferences, and professional development resources for computing professionals."
+

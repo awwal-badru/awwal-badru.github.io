@@ -137,7 +137,7 @@ Teaching experience placed directly below Employment History
 {% endif %}
 
 <div class="jumbotron">
-  <h4>Sponsors</h4>
+  <h4>Professional Memberships</h4>
   <div style='display:block; text-align:center; margin-left:auto; margin-right:auto;'>
   {% for funder in site.data.funders %}<a href="{{ funder.url }}" target="_blank"><img src='{{ site.url }}{{ site.baseurl }}/images/{{ funder.image }}' style='max-height: 80px; max-width: 200px; margin: 1%'/></a>{% endfor %}
   </div>

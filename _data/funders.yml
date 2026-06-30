@@ -11,7 +11,7 @@
 
 - name: "Association for Computing Machinery (ACM)"
   url: "https://www.acm.org/"
-  image: ACM.png
+  image: acm.png
   description: "The world's largest educational and scientific computing society. Offers journals, conferences, and career resources for computing professionals."
 
 - name: "IEEE Computer Society"

@@ -73,20 +73,23 @@
   {% endif %}
 </div>
 
-<div class="modern-sidebar-card">
-  <h4 class="sidebar-heading"><i class="fa fa-newspaper-o mr-2"></i>Latest News</h4>
-  {% include news-alert.html %}
-
-  <div class="news-list mt-3">
-    {% for article in site.data.news limit:3 %}
-      <a href="{{ site.url }}{{ site.baseurl }}/allnews.html" class="news-item">
-        <div class="news-date"><i class="fa fa-calendar mr-1"></i> {{ article.date }}</div>
-        <div class="news-headline" title="{{ article.headline | escape }}">{{ article.headline | truncate: 80 }}</div>
+<div class="modern-sidebar-card mb-4" id="verified-credentials-card">
+  <h4 class="sidebar-heading"><i class="fa fa-certificate mr-2"></i>Verified Badge</h4>
+  <div class="text-center py-2">
+    <a href="https://www.credential.net/6c1ae8a7-d579-4950-bafa-afbaadaedff3?utm_source=whatsapp&utm_medium=social" target="_blank" class="credential-badge-link" style="display: inline-block;">
+      <img src="{{ site.url }}{{ site.baseurl }}/images/ieee_membership_badge.png" class="credential-badge-img" alt="IEEE Computer Society 80th Anniversary - Member Badge" />
+    </a>
+    <div style="font-weight: 700; font-size: 1.05rem; color: var(--text-primary); margin-top: 1rem; line-height: 1.3;">
+      IEEE Computer Society
+    </div>
+    <div style="font-size: 0.85rem; color: var(--muted-text); margin-top: 0.25rem;">
+      80th Anniversary - Member
+    </div>
+    <div class="mt-3">
+      <a href="https://www.credential.net/6c1ae8a7-d579-4950-bafa-afbaadaedff3?utm_source=whatsapp&utm_medium=social" target="_blank" class="verify-badge-link">
+        Verify Credential <i class="fa fa-external-link ml-1"></i>
       </a>
-    {% endfor %}
-  </div>
-
-  <div class="text-center mt-4">
-    <a href="{{ site.url }}{{ site.baseurl }}/allnews.html" class="news-see-all">View All News &rarr;</a>
+    </div>
   </div>
 </div>
+

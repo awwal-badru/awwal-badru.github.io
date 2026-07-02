@@ -117,6 +117,25 @@ This work brings together machine learning, human–computer interaction, and ed
         <em>Learning Platform Walkthrough</em><br/>
       </div>
 
+      <div class="modern-sidebar-card mt-4" markdown="0">
+        <h4 class="sidebar-heading"><i class="fa fa-newspaper-o mr-2"></i>Latest News</h4>
+        {% include news-alert.html %}
+
+        <div class="news-list mt-3">
+          {% for article in site.data.news limit:3 %}
+            <a href="{{ site.url }}{{ site.baseurl }}/allnews.html" class="news-item">
+              <div class="news-date"><i class="fa fa-calendar mr-1"></i> {{ article.date }}</div>
+              <div class="news-headline" title="{{ article.headline | escape }}">{{ article.headline }}</div>
+            </a>
+          {% endfor %}
+        </div>
+
+        <div class="text-center mt-4">
+          <a href="{{ site.url }}{{ site.baseurl }}/allnews.html" class="news-see-all">View All News &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
-</div>
-</div>
+

@@ -1275,6 +1275,45 @@ iframe {
   padding-right: 0;
 }
 
+/* Verified Badge styles */
+.credential-badge-img {
+  max-width: 140px;
+  height: auto;
+  border-radius: 8px;
+  filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.06));
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+}
+.credential-badge-link:hover .credential-badge-img {
+  transform: scale(1.06);
+  filter: drop-shadow(0px 12px 24px rgba(158, 27, 50, 0.12));
+}
+
+.verify-badge-link {
+  display: inline-block;
+  padding: 0.45rem 1.2rem;
+  background: transparent;
+  color: var(--body-link-color) !important;
+  border: 2px solid var(--body-link-color);
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+.verify-badge-link:hover {
+  background: var(--body-link-color);
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(158, 27, 50, 0.2);
+}
+
+.home-sidebar .modern-sidebar-card:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+
 /* ============================================
    Dark Mode Overrides
    ============================================ */
@@ -1389,6 +1428,12 @@ html[data-theme="dark"] body {
       background: #b8203c !important;
     }
   }
+
+  .verify-badge-link:hover {
+    color: #121212 !important;
+    box-shadow: 0 6px 20px rgba(255, 107, 129, 0.3) !important;
+  }
+
 
   /* Jumbotrons and About Sections */
   .jumbotron,

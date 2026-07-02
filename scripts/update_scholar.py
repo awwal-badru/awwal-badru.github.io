@@ -7,6 +7,7 @@ This script is called by the GitHub Actions workflow (.github/workflows/update-s
 
 import yaml
 import time
+import urllib.request
 from datetime import date
 import scholarly as scholarly_module
 from scholarly import ProxyGenerator
@@ -16,39 +17,56 @@ scholarly = scholarly_module.scholarly
 GOOGLE_SCHOLAR_ID = "DW7LA8sAAAAJ"
 OUTPUT_FILE = "_data/scholar.yml"
 
-def fetch_profile_with_retry(max_retries=3):
-    """Fetch the author profile, retrying with proxy fallback if needed."""
-    use_proxy_next = False
-    
-    for attempt in range(1, max_retries + 1):
-        print(f"Attempt {attempt} of {max_retries} to fetch profile (use_proxy={use_proxy_next})...")
+def fetch_profile_with_retry():
+    """Fetch the author profile, retrying with public proxy rotation if blocked."""
+    # First attempt: Try directly without proxy (useful for local runs)
+    print("Attempting to fetch profile directly without proxy...")
+    try:
+        scholarly.set_timeout(5)
+        author = scholarly.search_author_id(GOOGLE_SCHOLAR_ID)
+        if author:
+            print("Successfully fetched profile directly without proxy!")
+            return scholarly.fill(author)
+    except Exception as e:
+        print(f"Direct fetch failed: {e}. Moving to proxy rotation.")
+
+    # Second attempt: Fetch fresh public proxies and try them
+    print("Fetching active proxy list from proxyscrape...")
+    proxies = []
+    try:
+        # Fetch up to 100 free proxies
+        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=5000&country=all&ssl=all&anonymity=all"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        res = urllib.request.urlopen(req).read().decode('utf-8')
+        proxies = [line.strip() for line in res.splitlines() if line.strip()]
+        print(f"Retrieved {len(proxies)} proxies from proxyscrape.")
+    except Exception as pe:
+        print(f"Could not retrieve proxy list: {pe}")
+
+    if not proxies:
+        raise ValueError("Failed to fetch Google Scholar profile because no proxies could be retrieved.")
+
+    # Try rotating through the proxies (limit to first 30 to prevent long runs)
+    max_proxies_to_try = min(len(proxies), 30)
+    for idx, proxy in enumerate(proxies[:max_proxies_to_try]):
+        print(f"Trying proxy {idx + 1}/{max_proxies_to_try}: {proxy}")
         try:
-            if use_proxy_next:
-                try:
-                    print("Setting up Free Proxies...")
-                    pg = ProxyGenerator()
-                    pg.FreeProxies()
-                    scholarly.use_proxy(pg)
-                except Exception as pe:
-                    print(f"Could not initialize proxy generator: {pe}. Proceeding without proxy.")
+            pg = ProxyGenerator()
+            pg.SingleProxy(http=f"http://{proxy}", https=f"http://{proxy}")
+            scholarly.use_proxy(pg)
+            scholarly.set_timeout(5)
             
             author = scholarly.search_author_id(GOOGLE_SCHOLAR_ID)
-            if not author:
-                raise ValueError(f"No author found for ID: {GOOGLE_SCHOLAR_ID}")
-                
-            author = scholarly.fill(author)
-            return author
-            
+            if author:
+                # Set a slightly larger timeout for filling detailed publication data
+                scholarly.set_timeout(8)
+                filled_author = scholarly.fill(author)
+                print(f"Successfully fetched and filled profile using proxy: {proxy}!")
+                return filled_author
         except Exception as e:
-            print(f"Error on attempt {attempt}: {e}")
-            if attempt < max_retries:
-                # Next attempt will try with proxy
-                use_proxy_next = True
-                sleep_time = attempt * 5
-                print(f"Waiting {sleep_time} seconds before retrying...")
-                time.sleep(sleep_time)
-            else:
-                raise e
+            print(f"Proxy {proxy} failed: {e}")
+            
+    raise ValueError(f"Failed to fetch Google Scholar profile for ID {GOOGLE_SCHOLAR_ID} after trying all available methods.")
 
 def main():
     print(f"Fetching Google Scholar profile for ID: {GOOGLE_SCHOLAR_ID}")

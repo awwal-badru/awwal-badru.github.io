@@ -37,9 +37,12 @@ iframe { width: 175px; display: inline; vertical-align: middle; }
 <a href="https://mtcfs.netlify.app/" target="_blank" rel="noopener">
   <button class="btn btn-warning btn-sm">Cooperative Financial System</button>
 </a>
+<a href="https://github.com/awwal-badru/geolocation-alert" target="_blank" rel="noopener">
+  <button class="btn btn-primary btn-sm">Eagle Geolocation Alert</button>
+</a>
 <a href="https://github.com/awwal-badru" target="_blank"><button class="btn btn-info btn-sm">GitHub Repos</button></a>
 <a href="https://adaptiveexperiments.github.io" target="_blank"><button class="btn btn-info btn-sm">EASI Project</button></a>
-<a href="{{ site.url }}{{ site.baseurl }}/papers/example_proceeding.pdf" target="_blank"><button class="btn btn-danger btn-sm">PAPER</button></a> 
+<!-- <a href="{{ site.url }}{{ site.baseurl }}/papers/example_proceeding.pdf" target="_blank"><button class="btn btn-danger btn-sm">PAPER</button></a> -->
 </div>
 </div>
 </div>
@@ -77,3 +80,39 @@ A web-based financial management system for cooperative societies to manage memb
 - Key features:
   - Member account management
   - Transaction logging and summaries
+
+
+### Eagle — Geolocation Alert & Emergency Response System
+
+A cross-platform mobile and web application designed to connect citizens in distress with nearby emergency response units (Police, Medical, Fire/FRSC, Amotekun) in real time. The platform features an event-driven serverless architecture, live GPS navigation, and localized spatial querying to ensure fast, reliable emergency routing.
+
+- Short summary: Geolocation-based emergency alert and tracking system enabling citizens to broadcast one-touch SOS signals and responders to navigate to incidents in real time.
+- Role: Developer / Maintainer.
+- Website:
+  <a href="https://github.com/awwal-badru/geolocation-alert" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark btn-sm" style="margin-right:.5rem">View GitHub Repository</a>
+  <span style="font-family:monospace; color:#333">https://github.com/awwal-badru/geolocation-alert</span>
+
+- Tech stack: Flutter & Dart (iOS, Android, Web), Riverpod (state management), Firebase (Auth, Cloud Firestore, Cloud Storage, Node.js Cloud Functions), Google Maps Platform (Maps SDK, Geocoding, Places, Directions), `geoflutterfire_plus` (geohash indexing), and an offline mock engine for developer testing.
+- Key features:
+  - One-touch SOS alerting with agency categories (Police, Medical, Fire, Crime, Accident).
+  - Real-time location streaming and routing navigation for citizens and active emergency units.
+  - Interactive web-based dispatcher command center console with active ticket tracking and responder map.
+  - Spatial responder querying (e.g. searching within 5km radius) using Firestore-compatible geohashing.
+  - Clean serverless backend validation using Firestore Security Rules and Firebase App Check.
+  - Fully simulated offline mock mode enabling end-to-end flow execution without active API tokens.
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.5rem; margin-bottom: 1.5rem;">
+<div style="flex: 1 1 280px; text-align: center;">
+<p style="margin-bottom: 5px; font-weight: bold; color: #555;">Citizen SOS (Mobile)</p>
+<img src="{{ site.url }}{{ site.baseurl }}/images/eagle_citizen_sos_mobile.png" alt="Citizen SOS Mobile View" style="max-width: 100%; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
+</div>
+<div style="flex: 1 1 280px; text-align: center;">
+<p style="margin-bottom: 5px; font-weight: bold; color: #555;">Responder Portal (Mobile)</p>
+<img src="{{ site.url }}{{ site.baseurl }}/images/eagle_responder_portal_mobile.png" alt="Responder Portal Mobile View" style="max-width: 100%; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
+</div>
+<div style="flex: 2 1 450px; text-align: center;">
+<p style="margin-bottom: 5px; font-weight: bold; color: #555;">Dispatcher Command Center (Desktop)</p>
+<img src="{{ site.url }}{{ site.baseurl }}/images/eagle_command_center_desktop.png" alt="Command Center Desktop View" style="max-width: 100%; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
+</div>
+</div>
+

@@ -34,8 +34,8 @@ def fetch_profile_with_retry():
     print("Fetching active proxy list from proxyscrape...")
     proxies = []
     try:
-        # Fetch up to 100 free proxies
-        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=5000&country=all&ssl=all&anonymity=all"
+        # Fetch high-quality SSL-enabled elite anonymous proxies
+        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=3000&country=all&ssl=yes&anonymity=elite"
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         res = urllib.request.urlopen(req).read().decode('utf-8')
         proxies = [line.strip() for line in res.splitlines() if line.strip()]
@@ -46,20 +46,20 @@ def fetch_profile_with_retry():
     if not proxies:
         raise ValueError("Failed to fetch Google Scholar profile because no proxies could be retrieved.")
 
-    # Try rotating through the proxies (limit to first 30 to prevent long runs)
-    max_proxies_to_try = min(len(proxies), 30)
+    # Try rotating through the proxies (limit to first 15 to prevent long runs)
+    max_proxies_to_try = min(len(proxies), 15)
     for idx, proxy in enumerate(proxies[:max_proxies_to_try]):
         print(f"Trying proxy {idx + 1}/{max_proxies_to_try}: {proxy}")
         try:
             pg = ProxyGenerator()
             pg.SingleProxy(http=f"http://{proxy}", https=f"http://{proxy}")
             scholarly.use_proxy(pg)
-            scholarly.set_timeout(5)
+            scholarly.set_timeout(3)
             
             author = scholarly.search_author_id(GOOGLE_SCHOLAR_ID)
             if author:
                 # Set a slightly larger timeout for filling detailed publication data
-                scholarly.set_timeout(8)
+                scholarly.set_timeout(5)
                 filled_author = scholarly.fill(author)
                 print(f"Successfully fetched and filled profile using proxy: {proxy}!")
                 return filled_author

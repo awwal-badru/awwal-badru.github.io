@@ -68,56 +68,121 @@ def fetch_profile_with_retry():
             
     raise ValueError(f"Failed to fetch Google Scholar profile for ID {GOOGLE_SCHOLAR_ID} after trying all available methods.")
 
-def main():
-    print(f"Fetching Google Scholar profile for ID: {GOOGLE_SCHOLAR_ID}")
-    try:
-        author = fetch_profile_with_retry()
-    except Exception as err:
-        print(f"Failed to fetch profile after multiple attempts: {err}")
-        print("Exiting gracefully to prevent breaking CI workflows.")
-        return
+def fetch_profile_with_serpapi(api_key):
+    """Fetch the author profile and citation details using SerpApi."""
+    print("Attempting to fetch profile using SerpApi...")
+    import json
+    import urllib.parse
+    import urllib.request
 
-    # Use flexible lookups for citedby/hindex/i10index properties to handle scholarly library updates
-    citations = author.get("citedby", author.get("cited_by", 0))
-    h_index = author.get("hindex", author.get("h_index", 0))
-    i10_index = author.get("i10index", author.get("i10_index", 0))
-
-    print(f"Citations: {citations}, h-index: {h_index}, i10-index: {i10_index}")
-
-    # Get top cited papers (up to 5)
-    pubs = author.get("publications", [])
-    papers = []
-    
-    # Sort publications by citation count
-    sorted_pubs = sorted(pubs, key=lambda p: p.get("num_citations", 0), reverse=True)[:5]
-    
-    for pub in sorted_pubs:
-        citations_count = pub.get("num_citations", 0)
-        if citations_count > 0:
-            bib = pub.get("bib", {})
-            cid = pub.get("author_pub_id", "")
-            url = (
-                f"https://scholar.google.com/citations?view_op=view_citation"
-                f"&hl=en&user={GOOGLE_SCHOLAR_ID}&citation_for_view={cid}"
-            )
-            
-            # Clean paper title (remove newlines and multiple spaces)
-            title = bib.get("title", "Untitled")
-            title_clean = " ".join(title.split())
-            
-            papers.append({
-                "title": title_clean,
-                "citations": citations_count,
-                "url": url,
-            })
-
-    data = {
-        "citations": citations,
-        "h_index": h_index,
-        "i10_index": i10_index,
-        "last_updated": date.today().isoformat(),
-        "papers": papers,
+    params = {
+        "engine": "google_scholar_author",
+        "author_id": GOOGLE_SCHOLAR_ID,
+        "api_key": api_key,
     }
+    url = f"https://serpapi.com/search.json?{urllib.parse.urlencode(params)}"
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    
+    try:
+        with urllib.request.urlopen(req, timeout=10) as response:
+            results = json.loads(response.read().decode('utf-8'))
+            
+            # Extract citation stats
+            cited_by_table = results.get("cited_by", {}).get("table", [])
+            citations = 0
+            h_index = 0
+            i10_index = 0
+            for row in cited_by_table:
+                if "citations" in row:
+                    citations = row["citations"].get("all", 0)
+                elif "h_index" in row:
+                    h_index = row["h_index"].get("all", 0)
+                elif "i10_index" in row:
+                    i10_index = row["i10_index"].get("all", 0)
+            
+            # Extract top cited papers
+            articles = results.get("articles", [])
+            papers = []
+            
+            # Sort publications by citation count
+            sorted_articles = sorted(articles, key=lambda a: a.get("cited_by", {}).get("value", 0), reverse=True)[:5]
+            for art in sorted_articles:
+                citations_count = art.get("cited_by", {}).get("value", 0)
+                if citations_count > 0:
+                    title = art.get("title", "Untitled")
+                    title_clean = " ".join(title.split())
+                    url = art.get("link", "")
+                    papers.append({
+                        "title": title_clean,
+                        "citations": citations_count,
+                        "url": url,
+                    })
+                    
+            print(f"Successfully fetched profile using SerpApi! Citations: {citations}, h-index: {h_index}, i10-index: {i10_index}")
+            return {
+                "citations": citations,
+                "h_index": h_index,
+                "i10_index": i10_index,
+                "papers": papers
+            }
+    except Exception as e:
+        print(f"SerpApi fetch failed: {e}")
+        raise
+
+def main():
+    import os
+    print(f"Fetching Google Scholar profile for ID: {GOOGLE_SCHOLAR_ID}")
+    
+    serpapi_key = os.environ.get("SERPAPI_KEY")
+    data = None
+    
+    if serpapi_key:
+        try:
+            data = fetch_profile_with_serpapi(serpapi_key)
+        except Exception as err:
+            print(f"SerpApi failed, falling back to direct/proxy scraping: {err}")
+            
+    if data is None:
+        try:
+            author = fetch_profile_with_retry()
+            citations = author.get("citedby", author.get("cited_by", 0))
+            h_index = author.get("hindex", author.get("h_index", 0))
+            i10_index = author.get("i10index", author.get("i10_index", 0))
+            print(f"Citations: {citations}, h-index: {h_index}, i10-index: {i10_index}")
+
+            pubs = author.get("publications", [])
+            papers = []
+            sorted_pubs = sorted(pubs, key=lambda p: p.get("num_citations", 0), reverse=True)[:5]
+            
+            for pub in sorted_pubs:
+                citations_count = pub.get("num_citations", 0)
+                if citations_count > 0:
+                    bib = pub.get("bib", {})
+                    cid = pub.get("author_pub_id", "")
+                    url = (
+                        f"https://scholar.google.com/citations?view_op=view_citation"
+                        f"&hl=en&user={GOOGLE_SCHOLAR_ID}&citation_for_view={cid}"
+                    )
+                    title = bib.get("title", "Untitled")
+                    title_clean = " ".join(title.split())
+                    
+                    papers.append({
+                        "title": title_clean,
+                        "citations": citations_count,
+                        "url": url,
+                    })
+            data = {
+                "citations": citations,
+                "h_index": h_index,
+                "i10_index": i10_index,
+                "papers": papers,
+            }
+        except Exception as err:
+            print(f"Failed to fetch profile after multiple attempts: {err}")
+            print("Exiting gracefully to prevent breaking CI workflows.")
+            return
+
+    data["last_updated"] = date.today().isoformat()
 
     header = (
         "# Google Scholar citation metrics for Awwal Badru\n"
@@ -136,4 +201,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

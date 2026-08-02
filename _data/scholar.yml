@@ -2,12 +2,12 @@
 # Google Scholar ID: DW7LA8sAAAAJ
 # Auto-updated by GitHub Actions (see .github/workflows/update-scholar.yml)
 
-citations: 29
+citations: 30
 h_index: 1
 i10_index: 1
 papers:
 - title: MERN stack web-based education management information systems for Pacific Island countries
-  citations: 27
+  citations: 28
   url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DW7LA8sAAAAJ&citation_for_view=DW7LA8sAAAAJ:hqOjcs7Dif8C
 - title: 'Optimizing Learning: A Comparative Study of Adaptive Experiments and Randomization in a Software Engineering Course'
   citations: 1
@@ -15,4 +15,4 @@ papers:
 - title: State of Education Management Information System (EMIS) in Pacific Melanesia Small Island Developing States (SIDS)
   citations: 1
   url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DW7LA8sAAAAJ&citation_for_view=DW7LA8sAAAAJ:MXK_kJrjxJIC
-last_updated: '2026-07-19'
+last_updated: '2026-08-02'

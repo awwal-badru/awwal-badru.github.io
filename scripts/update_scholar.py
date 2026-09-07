@@ -1,186 +1,275 @@
 """
 Fetch Google Scholar metrics for Awwal Badru and update _data/scholar.yml.
 
-Uses the `scholarly` library to scrape the public Google Scholar profile.
+Uses robust direct scraping of the public Google Scholar profile with fallback
+to the Google Scholar pagination endpoint and optional SerpApi.
 This script is called by the GitHub Actions workflow (.github/workflows/update-scholar.yml).
 """
 
+import os
+import re
+import sys
 import yaml
-import time
+import json
 import urllib.request
+import urllib.parse
 from datetime import date
-import scholarly as scholarly_module
-from scholarly import ProxyGenerator
-
-scholarly = scholarly_module.scholarly
 
 GOOGLE_SCHOLAR_ID = "DW7LA8sAAAAJ"
 OUTPUT_FILE = "_data/scholar.yml"
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+)
 
-def fetch_profile_with_retry():
-    """Fetch the author profile, retrying with public proxy rotation if blocked."""
-    # First attempt: Try directly without proxy (useful for local runs)
-    print("Attempting to fetch profile directly without proxy...")
-    try:
-        scholarly.set_timeout(5)
-        author = scholarly.search_author_id(GOOGLE_SCHOLAR_ID)
-        if author:
-            print("Successfully fetched profile directly without proxy!")
-            return scholarly.fill(author)
-    except Exception as e:
-        print(f"Direct fetch failed: {e}. Moving to proxy rotation.")
+def fetch_profile_direct():
+    """
+    Fetch the public Google Scholar profile page directly with browser headers.
+    Extracts citation metrics (total citations, h-index, i10-index) and papers.
+    """
+    print("Attempting direct fetch of Google Scholar profile...")
+    url = f"https://scholar.google.com/citations?user={GOOGLE_SCHOLAR_ID}&hl=en"
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+    req = urllib.request.Request(url, headers=headers)
+    with urllib.request.urlopen(req, timeout=15) as response:
+        html = response.read().decode("utf-8")
 
-    # Second attempt: Fetch fresh public proxies and try them
-    print("Fetching active proxy list from proxyscrape...")
-    proxies = []
-    try:
-        # Fetch high-quality SSL-enabled elite anonymous proxies
-        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=3000&country=all&ssl=yes&anonymity=elite"
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        res = urllib.request.urlopen(req).read().decode('utf-8')
-        proxies = [line.strip() for line in res.splitlines() if line.strip()]
-        print(f"Retrieved {len(proxies)} proxies from proxyscrape.")
-    except Exception as pe:
-        print(f"Could not retrieve proxy list: {pe}")
+    # Verify we didn't receive a CAPTCHA page
+    if "Please show you&#39;re not a robot" in html or "recaptcha" in html.lower():
+        raise RuntimeError("Google Scholar presented a CAPTCHA challenge.")
 
-    if not proxies:
-        raise ValueError("Failed to fetch Google Scholar profile because no proxies could be retrieved.")
+    # Citation table contains: Citations (All, Since), h-index (All, Since), i10-index (All, Since)
+    matches = re.findall(r'<td class="gsc_rsb_std">(\d+)</td>', html)
+    if not matches:
+        raise ValueError("Could not find citation statistics in profile HTML.")
 
-    # Try rotating through the proxies (limit to first 15 to prevent long runs)
-    max_proxies_to_try = min(len(proxies), 15)
-    for idx, proxy in enumerate(proxies[:max_proxies_to_try]):
-        print(f"Trying proxy {idx + 1}/{max_proxies_to_try}: {proxy}")
-        try:
-            pg = ProxyGenerator()
-            pg.SingleProxy(http=f"http://{proxy}", https=f"http://{proxy}")
-            scholarly.use_proxy(pg)
-            scholarly.set_timeout(3)
-            
-            author = scholarly.search_author_id(GOOGLE_SCHOLAR_ID)
-            if author:
-                # Set a slightly larger timeout for filling detailed publication data
-                scholarly.set_timeout(5)
-                filled_author = scholarly.fill(author)
-                print(f"Successfully fetched and filled profile using proxy: {proxy}!")
-                return filled_author
-        except Exception as e:
-            print(f"Proxy {proxy} failed: {e}")
-            
-    raise ValueError(f"Failed to fetch Google Scholar profile for ID {GOOGLE_SCHOLAR_ID} after trying all available methods.")
+    if len(matches) >= 6:
+        citations = int(matches[0])
+        h_index = int(matches[2])
+        i10_index = int(matches[4])
+    elif len(matches) >= 3:
+        citations = int(matches[0])
+        h_index = int(matches[1])
+        i10_index = int(matches[2])
+    else:
+        raise ValueError(f"Unexpected number of stats matches: {len(matches)}")
+
+    # Extract papers from <tr class="gsc_a_tr">
+    paper_rows = re.findall(r'<tr class="gsc_a_tr">(.*?)</tr>', html, re.DOTALL)
+    papers = []
+    for row in paper_rows:
+        title_match = re.search(
+            r'<a[^>]+href="([^"]*citation_for_view=[^"]*)"[^>]*class="gsc_a_at"[^>]*>(.*?)</a>',
+            row,
+            re.DOTALL,
+        )
+        cites_match = re.search(
+            r'<td class="gsc_a_c">.*?<a[^>]*class="gsc_a_ac[^"]*"[^>]*>(\d*)</a>',
+            row,
+            re.DOTALL,
+        )
+
+        if title_match:
+            raw_url = title_match.group(1).replace("&amp;", "&")
+            p_url = "https://scholar.google.com" + raw_url if raw_url.startswith("/") else raw_url
+            p_title = re.sub(r"<[^>]+>", "", title_match.group(2)).strip()
+            # Normalize whitespace in title
+            p_title = " ".join(p_title.split())
+            p_cites = (
+                int(cites_match.group(1))
+                if (cites_match and cites_match.group(1).isdigit())
+                else 0
+            )
+
+            # Only include papers with at least 1 citation in the most-cited list
+            if p_cites > 0:
+                papers.append({
+                    "title": p_title,
+                    "citations": p_cites,
+                    "url": p_url,
+                })
+
+    # Sort papers descending by citation count and take top 5
+    papers = sorted(papers, key=lambda p: p["citations"], reverse=True)[:5]
+
+    return {
+        "citations": citations,
+        "h_index": h_index,
+        "i10_index": i10_index,
+        "papers": papers,
+    }
+
+def fetch_profile_post_endpoint():
+    """
+    Fallback: Fetch papers via Google Scholar's POST pagination endpoint.
+    Used if the main page structure changes.
+    """
+    print("Attempting POST endpoint fetch of Google Scholar records...")
+    url = f"https://scholar.google.com/citations?user={GOOGLE_SCHOLAR_ID}&cstart=0&pagesize=100"
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        "X-Requested-With": "XMLHttpRequest",
+    }
+    req = urllib.request.Request(url, data=b"json=1", headers=headers)
+    with urllib.request.urlopen(req, timeout=15) as response:
+        res = json.loads(response.read().decode("utf-8"))
+
+    html = res.get("B", "")
+    if not html:
+        raise ValueError("POST endpoint returned empty HTML body.")
+
+    paper_rows = re.findall(r'<tr class="gsc_a_tr">(.*?)</tr>', html, re.DOTALL)
+    papers = []
+    for row in paper_rows:
+        title_match = re.search(
+            r'<a[^>]+href="([^"]*citation_for_view=[^"]*)"[^>]*class="gsc_a_at"[^>]*>(.*?)</a>',
+            row,
+            re.DOTALL,
+        )
+        cites_match = re.search(
+            r'<td class="gsc_a_c">.*?<a[^>]*class="gsc_a_ac[^"]*"[^>]*>(\d*)</a>',
+            row,
+            re.DOTALL,
+        )
+        if title_match:
+            raw_url = title_match.group(1).replace("&amp;", "&")
+            p_url = "https://scholar.google.com" + raw_url if raw_url.startswith("/") else raw_url
+            p_title = re.sub(r"<[^>]+>", "", title_match.group(2)).strip()
+            p_title = " ".join(p_title.split())
+            p_cites = (
+                int(cites_match.group(1))
+                if (cites_match and cites_match.group(1).isdigit())
+                else 0
+            )
+            if p_cites > 0:
+                papers.append({
+                    "title": p_title,
+                    "citations": p_cites,
+                    "url": p_url,
+                })
+
+    papers = sorted(papers, key=lambda p: p["citations"], reverse=True)[:5]
+    return papers
 
 def fetch_profile_with_serpapi(api_key):
-    """Fetch the author profile and citation details using SerpApi."""
+    """
+    Fetch the author profile and citation details using SerpApi (if configured).
+    """
     print("Attempting to fetch profile using SerpApi...")
-    import json
-    import urllib.parse
-    import urllib.request
-
     params = {
         "engine": "google_scholar_author",
         "author_id": GOOGLE_SCHOLAR_ID,
         "api_key": api_key,
     }
     url = f"https://serpapi.com/search.json?{urllib.parse.urlencode(params)}"
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-    
-    try:
-        with urllib.request.urlopen(req, timeout=10) as response:
-            results = json.loads(response.read().decode('utf-8'))
-            
-            # Extract citation stats
-            cited_by_table = results.get("cited_by", {}).get("table", [])
-            citations = 0
-            h_index = 0
-            i10_index = 0
-            for row in cited_by_table:
-                if "citations" in row:
-                    citations = row["citations"].get("all", 0)
-                elif "h_index" in row:
-                    h_index = row["h_index"].get("all", 0)
-                elif "i10_index" in row:
-                    i10_index = row["i10_index"].get("all", 0)
-            
-            # Extract top cited papers
-            articles = results.get("articles", [])
-            papers = []
-            
-            # Sort publications by citation count
-            sorted_articles = sorted(articles, key=lambda a: a.get("cited_by", {}).get("value", 0), reverse=True)[:5]
-            for art in sorted_articles:
-                citations_count = art.get("cited_by", {}).get("value", 0)
-                if citations_count > 0:
-                    title = art.get("title", "Untitled")
-                    title_clean = " ".join(title.split())
-                    url = art.get("link", "")
-                    papers.append({
-                        "title": title_clean,
-                        "citations": citations_count,
-                        "url": url,
-                    })
-                    
-            print(f"Successfully fetched profile using SerpApi! Citations: {citations}, h-index: {h_index}, i10-index: {i10_index}")
-            return {
-                "citations": citations,
-                "h_index": h_index,
-                "i10_index": i10_index,
-                "papers": papers
-            }
-    except Exception as e:
-        print(f"SerpApi fetch failed: {e}")
-        raise
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+
+    with urllib.request.urlopen(req, timeout=15) as response:
+        results = json.loads(response.read().decode("utf-8"))
+
+    cited_by_table = results.get("cited_by", {}).get("table", [])
+    citations = 0
+    h_index = 0
+    i10_index = 0
+    for row in cited_by_table:
+        if "citations" in row:
+            citations = row["citations"].get("all", 0)
+        elif "h_index" in row:
+            h_index = row["h_index"].get("all", 0)
+        elif "i10_index" in row:
+            i10_index = row["i10_index"].get("all", 0)
+
+    articles = results.get("articles", [])
+    papers = []
+    sorted_articles = sorted(
+        articles,
+        key=lambda a: a.get("cited_by", {}).get("value", 0),
+        reverse=True,
+    )[:5]
+    for art in sorted_articles:
+        citations_count = art.get("cited_by", {}).get("value", 0)
+        if citations_count > 0:
+            title = art.get("title", "Untitled")
+            title_clean = " ".join(title.split())
+            url = art.get("link", "")
+            papers.append({
+                "title": title_clean,
+                "citations": citations_count,
+                "url": url,
+            })
+
+    return {
+        "citations": citations,
+        "h_index": h_index,
+        "i10_index": i10_index,
+        "papers": papers,
+    }
+
+def read_existing_data():
+    """Read the current scholar.yml if present."""
+    if os.path.exists(OUTPUT_FILE):
+        try:
+            with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
+                return yaml.safe_load(f) or {}
+        except Exception as e:
+            print(f"Warning: could not read existing {OUTPUT_FILE}: {e}")
+    return {}
 
 def main():
-    import os
-    print(f"Fetching Google Scholar profile for ID: {GOOGLE_SCHOLAR_ID}")
-    
-    serpapi_key = os.environ.get("SERPAPI_KEY")
+    print(f"Starting Google Scholar metric update for author ID: {GOOGLE_SCHOLAR_ID}")
+    existing = read_existing_data()
+    existing_citations = existing.get("citations", 0)
+    print(f"Current recorded citations in {OUTPUT_FILE}: {existing_citations}")
+
     data = None
-    
+
+    # Method 1: Check if SerpApi key is provided
+    serpapi_key = os.environ.get("SERPAPI_KEY", "").strip()
     if serpapi_key:
         try:
             data = fetch_profile_with_serpapi(serpapi_key)
-        except Exception as err:
-            print(f"SerpApi failed, falling back to direct/proxy scraping: {err}")
-            
+            print("Successfully fetched metrics via SerpApi.")
+        except Exception as e:
+            print(f"SerpApi fetch failed: {e}. Falling back to direct fetch.")
+
+    # Method 2: Direct profile page scraping
     if data is None:
         try:
-            author = fetch_profile_with_retry()
-            citations = author.get("citedby", author.get("cited_by", 0))
-            h_index = author.get("hindex", author.get("h_index", 0))
-            i10_index = author.get("i10index", author.get("i10_index", 0))
-            print(f"Citations: {citations}, h-index: {h_index}, i10-index: {i10_index}")
+            data = fetch_profile_direct()
+            print("Successfully fetched metrics via direct profile scrape.")
+        except Exception as e:
+            print(f"Direct profile fetch failed: {e}.")
 
-            pubs = author.get("publications", [])
-            papers = []
-            sorted_pubs = sorted(pubs, key=lambda p: p.get("num_citations", 0), reverse=True)[:5]
-            
-            for pub in sorted_pubs:
-                citations_count = pub.get("num_citations", 0)
-                if citations_count > 0:
-                    bib = pub.get("bib", {})
-                    cid = pub.get("author_pub_id", "")
-                    url = (
-                        f"https://scholar.google.com/citations?view_op=view_citation"
-                        f"&hl=en&user={GOOGLE_SCHOLAR_ID}&citation_for_view={cid}"
-                    )
-                    title = bib.get("title", "Untitled")
-                    title_clean = " ".join(title.split())
-                    
-                    papers.append({
-                        "title": title_clean,
-                        "citations": citations_count,
-                        "url": url,
-                    })
-            data = {
-                "citations": citations,
-                "h_index": h_index,
-                "i10_index": i10_index,
-                "papers": papers,
-            }
-        except Exception as err:
-            print(f"Failed to fetch profile after multiple attempts: {err}")
-            print("Exiting gracefully to prevent breaking CI workflows.")
-            return
+    # Method 3: If direct fetch failed to get papers, try POST endpoint
+    if data is not None and not data.get("papers"):
+        try:
+            papers = fetch_profile_post_endpoint()
+            if papers:
+                data["papers"] = papers
+                print(f"Retrieved {len(papers)} papers via POST endpoint fallback.")
+        except Exception as e:
+            print(f"POST endpoint fallback failed: {e}.")
+
+    # Validation
+    if not data or data.get("citations", 0) == 0:
+        print("ERROR: Failed to retrieve valid Google Scholar metrics.")
+        # If we failed to get new data, fail with error code so CI registers failure
+        # rather than silently continuing.
+        sys.exit(1)
+
+    print(f"Fetched Metrics -> Citations: {data['citations']}, h-index: {data['h_index']}, i10-index: {data['i10_index']}")
+    print(f"Fetched {len(data.get('papers', []))} top papers.")
+
+    # Safety check: prevent overwriting with significantly lower citations (e.g. scrape glitch)
+    if data["citations"] < existing_citations:
+        print(f"WARNING: Fetched citations ({data['citations']}) is less than existing citations ({existing_citations}). Skipping update to preserve data integrity.")
+        sys.exit(0)
 
     data["last_updated"] = date.today().isoformat()
 
@@ -193,13 +282,11 @@ def main():
     try:
         with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             f.write(header)
-            # Use width=1000 to prevent YAML from wrapping long titles
             yaml.dump(data, f, default_flow_style=False, allow_unicode=True, sort_keys=False, width=1000)
-        print(f"Updated {OUTPUT_FILE}")
+        print(f"Successfully updated {OUTPUT_FILE}!")
     except Exception as write_err:
         print(f"Error writing to output file: {write_err}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
-
-

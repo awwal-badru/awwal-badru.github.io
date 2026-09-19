@@ -33,6 +33,7 @@ I will pursue a phased research program as a faculty member:
 - **Phase 1 (SE Deepening):** Longitudinal studies in advanced SE topics to measure retention, project performance, and long-term preference evolution.
 - **Phase 2 (CER Expansion):** Adapt the TS framework to foundational computing courses (e.g., programming, algorithms) to test generalizability across subdisciplines.
 - **Phase 3 (Open-Source Ecosystem):** Develop and release a modular, instructor-friendly ALP toolkit enabling contextual TS deployment with custom material libraries, prioritizing accessibility for under-resourced programs.
+- **Phase 4 (Explainable AI & Algorithmic Transparency):** Investigate Explainable AI (XAI) techniques to provide students and instructors with clear, interpretable rationales behind adaptive recommendations, evaluating how algorithmic transparency impacts learner trust, metacognitive reflection, and pedagogical agency.
 
 ### Impact, Funding, and Mentorship
 

@@ -1,8 +1,8 @@
 """
 Fetch Google Scholar metrics for Awwal Badru and update _data/scholar.yml.
 
-Uses robust direct scraping of the public Google Scholar profile with fallback
-to the Google Scholar pagination endpoint and optional SerpApi.
+Uses robust scraping of the public Google Scholar profile with fallback
+to proxy rotation, Google Scholar pagination endpoint, and optional SerpApi.
 This script is called by the GitHub Actions workflow (.github/workflows/update-scholar.yml).
 """
 
@@ -13,36 +13,33 @@ import yaml
 import json
 import urllib.request
 import urllib.parse
+import urllib.error
 from datetime import date
 
 GOOGLE_SCHOLAR_ID = "DW7LA8sAAAAJ"
 OUTPUT_FILE = "_data/scholar.yml"
-USER_AGENT = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
-)
+BASE_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Sec-Ch-Ua": '"Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"',
+    "Sec-Ch-Ua-Mobile": "?0",
+    "Sec-Ch-Ua-Platform": '"Windows"',
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1",
+}
 
-def fetch_profile_direct():
-    """
-    Fetch the public Google Scholar profile page directly with browser headers.
-    Extracts citation metrics (total citations, h-index, i10-index) and papers.
-    """
-    print("Attempting direct fetch of Google Scholar profile...")
-    url = f"https://scholar.google.com/citations?user={GOOGLE_SCHOLAR_ID}&hl=en"
-    headers = {
-        "User-Agent": USER_AGENT,
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-    }
-    req = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(req, timeout=15) as response:
-        html = response.read().decode("utf-8")
-
-    # Verify we didn't receive a CAPTCHA page
+def parse_profile_html(html):
+    """Parse profile HTML string and return metrics and top papers."""
     if "Please show you&#39;re not a robot" in html or "recaptcha" in html.lower():
         raise RuntimeError("Google Scholar presented a CAPTCHA challenge.")
 
-    # Citation table contains: Citations (All, Since), h-index (All, Since), i10-index (All, Since)
     matches = re.findall(r'<td class="gsc_rsb_std">(\d+)</td>', html)
     if not matches:
         raise ValueError("Could not find citation statistics in profile HTML.")
@@ -58,7 +55,6 @@ def fetch_profile_direct():
     else:
         raise ValueError(f"Unexpected number of stats matches: {len(matches)}")
 
-    # Extract papers from <tr class="gsc_a_tr">
     paper_rows = re.findall(r'<tr class="gsc_a_tr">(.*?)</tr>', html, re.DOTALL)
     papers = []
     for row in paper_rows:
@@ -77,7 +73,6 @@ def fetch_profile_direct():
             raw_url = title_match.group(1).replace("&amp;", "&")
             p_url = "https://scholar.google.com" + raw_url if raw_url.startswith("/") else raw_url
             p_title = re.sub(r"<[^>]+>", "", title_match.group(2)).strip()
-            # Normalize whitespace in title
             p_title = " ".join(p_title.split())
             p_cites = (
                 int(cites_match.group(1))
@@ -85,7 +80,6 @@ def fetch_profile_direct():
                 else 0
             )
 
-            # Only include papers with at least 1 citation in the most-cited list
             if p_cites > 0:
                 papers.append({
                     "title": p_title,
@@ -93,7 +87,6 @@ def fetch_profile_direct():
                     "url": p_url,
                 })
 
-    # Sort papers descending by citation count and take top 5
     papers = sorted(papers, key=lambda p: p["citations"], reverse=True)[:5]
 
     return {
@@ -103,6 +96,51 @@ def fetch_profile_direct():
         "papers": papers,
     }
 
+def fetch_profile_direct(proxy=None):
+    """
+    Fetch the public Google Scholar profile page directly (or via a proxy).
+    Extracts citation metrics (total citations, h-index, i10-index) and papers.
+    """
+    url = f"https://scholar.google.com/citations?user={GOOGLE_SCHOLAR_ID}&hl=en"
+    req = urllib.request.Request(url, headers=BASE_HEADERS)
+
+    if proxy:
+        opener = urllib.request.build_opener(
+            urllib.request.ProxyHandler({"http": f"http://{proxy}", "https": f"http://{proxy}"})
+        )
+        with opener.open(req, timeout=10) as response:
+            html = response.read().decode("utf-8", errors="replace")
+    else:
+        with urllib.request.urlopen(req, timeout=15) as response:
+            html = response.read().decode("utf-8", errors="replace")
+
+    return parse_profile_html(html)
+
+def fetch_profile_with_proxies():
+    """Attempt scraping through free public elite proxies if direct connection is blocked."""
+    print("Fetching proxy list from proxyscrape...")
+    try:
+        url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=3000&country=all&ssl=yes&anonymity=elite"
+        req = urllib.request.Request(url, headers={"User-Agent": BASE_HEADERS["User-Agent"]})
+        res = urllib.request.urlopen(req, timeout=8).read().decode("utf-8", errors="replace")
+        proxies = [line.strip() for line in res.splitlines() if line.strip()]
+        print(f"Retrieved {len(proxies)} proxies. Testing top candidates...")
+    except Exception as e:
+        print(f"Failed to retrieve proxies: {e}")
+        return None
+
+    for idx, proxy in enumerate(proxies[:10]):
+        try:
+            print(f"Trying proxy {idx + 1}/10: {proxy}...")
+            data = fetch_profile_direct(proxy=proxy)
+            if data and data.get("citations", 0) > 0:
+                print(f"Successfully fetched profile via proxy {proxy}!")
+                return data
+        except Exception as pe:
+            print(f"Proxy {proxy} failed: {pe}")
+
+    return None
+
 def fetch_profile_post_endpoint():
     """
     Fallback: Fetch papers via Google Scholar's POST pagination endpoint.
@@ -110,15 +148,15 @@ def fetch_profile_post_endpoint():
     """
     print("Attempting POST endpoint fetch of Google Scholar records...")
     url = f"https://scholar.google.com/citations?user={GOOGLE_SCHOLAR_ID}&cstart=0&pagesize=100"
-    headers = {
-        "User-Agent": USER_AGENT,
+    headers = dict(BASE_HEADERS)
+    headers.update({
         "Accept": "application/json, text/javascript, */*; q=0.01",
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
         "X-Requested-With": "XMLHttpRequest",
-    }
+    })
     req = urllib.request.Request(url, data=b"json=1", headers=headers)
     with urllib.request.urlopen(req, timeout=15) as response:
-        res = json.loads(response.read().decode("utf-8"))
+        res = json.loads(response.read().decode("utf-8", errors="replace"))
 
     html = res.get("B", "")
     if not html:
@@ -158,9 +196,7 @@ def fetch_profile_post_endpoint():
     return papers
 
 def fetch_profile_with_serpapi(api_key):
-    """
-    Fetch the author profile and citation details using SerpApi (if configured).
-    """
+    """Fetch the author profile and citation details using SerpApi (if configured)."""
     print("Attempting to fetch profile using SerpApi...")
     params = {
         "engine": "google_scholar_author",
@@ -168,10 +204,10 @@ def fetch_profile_with_serpapi(api_key):
         "api_key": api_key,
     }
     url = f"https://serpapi.com/search.json?{urllib.parse.urlencode(params)}"
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    req = urllib.request.Request(url, headers={"User-Agent": BASE_HEADERS["User-Agent"]})
 
     with urllib.request.urlopen(req, timeout=15) as response:
-        results = json.loads(response.read().decode("utf-8"))
+        results = json.loads(response.read().decode("utf-8", errors="replace"))
 
     cited_by_table = results.get("cited_by", {}).get("table", [])
     citations = 0
@@ -244,9 +280,16 @@ def main():
             data = fetch_profile_direct()
             print("Successfully fetched metrics via direct profile scrape.")
         except Exception as e:
-            print(f"Direct profile fetch failed: {e}.")
+            print(f"Direct profile fetch failed: {e}. Moving to proxy rotation fallback.")
 
-    # Method 3: If direct fetch failed to get papers, try POST endpoint
+    # Method 3: Proxy rotation fallback
+    if data is None:
+        try:
+            data = fetch_profile_with_proxies()
+        except Exception as e:
+            print(f"Proxy fetch fallback failed: {e}.")
+
+    # Method 4: If papers are missing, try POST endpoint
     if data is not None and not data.get("papers"):
         try:
             papers = fetch_profile_post_endpoint()
@@ -256,12 +299,18 @@ def main():
         except Exception as e:
             print(f"POST endpoint fallback failed: {e}.")
 
-    # Validation
+    # Validation and graceful fallback
     if not data or data.get("citations", 0) == 0:
-        print("ERROR: Failed to retrieve valid Google Scholar metrics.")
-        # If we failed to get new data, fail with error code so CI registers failure
-        # rather than silently continuing.
-        sys.exit(1)
+        if existing_citations > 0:
+            print(
+                f"WARNING: Could not fetch fresh metrics from Google Scholar at this time "
+                f"(request challenged or rate-limited). Preserving existing metrics "
+                f"({existing_citations} citations). Exiting gracefully."
+            )
+            sys.exit(0)
+        else:
+            print("ERROR: Failed to retrieve valid Google Scholar metrics and no existing data found.")
+            sys.exit(1)
 
     print(f"Fetched Metrics -> Citations: {data['citations']}, h-index: {data['h_index']}, i10-index: {data['i10_index']}")
     print(f"Fetched {len(data.get('papers', []))} top papers.")

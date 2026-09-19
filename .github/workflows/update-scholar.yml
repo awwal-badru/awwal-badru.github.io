@@ -43,7 +43,7 @@ jobs:
             echo "No changes detected in _data/scholar.yml."
             echo "changed=false" >> $GITHUB_OUTPUT
           else
-            git commit -m "chore: auto-update Google Scholar metrics [skip ci]"
+            git commit -m "chore: auto-update Google Scholar metrics"
             git push origin source
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
@@ -51,6 +51,6 @@ jobs:
       - name: Trigger Jekyll Deployment
         if: steps.commit_and_push.outputs.changed == 'true'
         run: |
-          gh workflow run jekyll.yml --ref source
+          gh workflow run jekyll.yml --ref source || echo "Jekyll workflow dispatch not triggered; site will update on next source push."
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

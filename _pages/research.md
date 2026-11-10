@@ -36,6 +36,7 @@ I view research as a natural extension of undergraduate education. My projects p
 - **User Studies & Empirical Evaluation:** Involving students in protocol design, IRB preparation, data collection, usability testing, and qualitative analysis.
 - **Applied System Development:** Mentoring undergraduates in full-stack engineering, cloud architecture, software engineering best practices, and open-source software development.
 
+{% comment %}
 ### 10-Year Strategic Research & Undergraduate Mentorship Roadmap
 
 My long-term research vision follows a structured 10-year trajectory designed to scale from platform deployment to nationwide dissemination, with **undergraduate researchers actively involved at every stage**:
@@ -261,3 +262,4 @@ A strategic, multi-tiered funding roadmap ensures the long-term sustainability o
 </div>
 
 </div>
+{% endcomment %}

@@ -1,6 +1,7 @@
 ---
 title: "Research"
 layout: gridlay
+wide: true
 sitemap: false
 permalink: /research/
 ---
@@ -26,14 +27,6 @@ A central component of my research is translating empirical insights into practi
 - **ALP (Adaptive Learning Platform):** A lightweight adaptive platform that uses **contextual Thompson sampling** to personalize explanation selection in real time. Rather than relying on black-box generative models that risk hallucinations and algorithmic bias, ALP curates from vetted, high-quality material pools using live student feedback to match individual preferences, prior knowledge, and topic difficulty.
 - **GenAI Pedagogical Analyzer:** An automated evaluation tool that evaluates learning materials across essential educational dimensions, including clarity, cognitive load, prerequisite alignment, and conceptual coherence. This system provides actionable diagnostics to help instructors refine materials and guide students more effectively.
 
-### Empirical Validation & Key Findings
-
-My research is validated through multi-institution classroom studies:
-
-- **Adaptive Selection vs. Randomization:** Demonstrated that contextual multi-armed bandit algorithms significantly outperform static and randomized material delivery in student satisfaction and usefulness ratings.
-- **Personalization Factors & Learning Dimensions:** Investigated how individual learner preferences, visual/verbal tendencies, and gender influence perceived material usefulness. Learner preferences emerged as the dominant predictor of usefulness (mediated by relevance, clarity, and worked examples), while strict visual/verbal mode-matching showed minimal effect, providing empirical nuance to contemporary learning-style debates.
-- **Systematic Analysis of Material Design:** Surveyed and analyzed student navigation behaviors to establish concrete guidelines for authoring effective technical explanations and project scaffolds.
-
 ### Undergraduate Research Integration & Mentorship
 
 I view research as a natural extension of undergraduate education. My projects provide accessible entry points for students at all levels to engage in meaningful, publishable research:
@@ -52,10 +45,10 @@ My long-term research vision follows a structured 10-year trajectory designed to
 <div class="pipeline-node">
 <div>
 <span class="node-years">Years 1–2</span>
-<div class="node-title">Cloud ALP & Expansion</div>
-<div class="node-focus">Web platform & Dynamic arms (&gt;3 candidate resources)</div>
+<div class="node-title">Cloud ALP &amp; Experiments</div>
+<div class="node-focus">Multi-course deployment, adaptive experiments &amp; dynamic arms (&gt;3 candidate resources)</div>
 </div>
-<div class="node-undergrad-badge"><i class="fa fa-users"></i> Full-Stack & Cloud Setup</div>
+<div class="node-undergrad-badge"><i class="fa fa-users"></i> Platform &amp; Experiments</div>
 </div>
 <div class="pipeline-connector"><i class="fa fa-angle-right"></i></div>
 <div class="pipeline-node">
@@ -101,14 +94,14 @@ My long-term research vision follows a structured 10-year trajectory designed to
 <div class="roadmap-phase-card">
 <div class="phase-header">
 <span class="phase-tag">Phase 1 • Years 1–2</span>
-<span class="phase-funding-pill"><i class="fa fa-bank"></i> Target: Startup & NSF CRII</span>
+<span class="phase-funding-pill"><i class="fa fa-bank"></i> Target: Startup &amp; NSF CRII</span>
 </div>
-<div class="phase-title">Cloud-Based ALP Platform & Dynamic Arms Expansion</div>
+<div class="phase-title">Cloud-Based ALP Platform, Multi-Course Deployment &amp; Adaptive Experiments</div>
 <div class="phase-desc">
-Architect and deploy a production-ready, cloud-hosted web version of the Adaptive Learning Platform (ALP). Deploy across foundational and advanced computing courses while engineering dynamic arms expansion to scale candidate supplementary materials beyond small fixed sets, accommodating arbitrarily rich resource pools per technical concept.
+Architect and deploy a production-ready, cloud-hosted web version of the Adaptive Learning Platform (ALP). Deploy across foundational and advanced computing courses (including CS1/CS2, Data Structures, Software Engineering, and Database Systems) to conduct controlled adaptive experiments in live classroom environments. Simultaneously engineer dynamic arms expansion to scale candidate supplementary materials beyond small fixed sets, accommodating arbitrarily rich resource pools (more than 3 candidate explanations) per technical concept.
 </div>
 <div class="undergrad-highlight-box">
-<strong><i class="fa fa-users"></i> Undergraduate Researcher Role:</strong> Students directly engineer full-stack web interfaces, configure cloud deployment pipelines, develop REST APIs, and curate/benchmark candidate technical explanations and instructional artifacts.
+<strong><i class="fa fa-users"></i> Undergraduate Researcher Role:</strong> Students directly engineer full-stack web interfaces, configure cloud deployment pipelines, develop REST APIs, assist in coordinating classroom adaptive experiments across diverse courses, and curate/benchmark candidate technical explanations and instructional artifacts.
 </div>
 </div>
 

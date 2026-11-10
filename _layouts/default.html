@@ -7,7 +7,7 @@
 
     {% include header.html %}
 
-    <div class="container-fluid">
+    <div class="container-fluid{% if page.wide or page.permalink == '/research/' %} container-wide{% endif %}">
       <div class="row">
         {{ content }}
       </div>

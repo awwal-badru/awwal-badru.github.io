@@ -5,38 +5,64 @@ sitemap: false
 permalink: /research/
 ---
 
+### Overview & Research Vision
 
-### Overview
+My research explores how undergraduate software engineering (SE) students learn and how adaptive, evidence-based tools can support their learning across diverse classroom and project contexts. Modern software engineering curricula move rapidly, and static lectures or generic resources frequently leave students underserved when navigating complex technical concepts. I investigate how students interact with supplementary instructional materials, interpret conceptual explanations, and make decisions about self-directed study.
 
-The complexity of modern software engineering (SE) curricula increasingly outpaces traditional lecture-based instruction, leaving students underserved by generic supplementary materials. My research introduces context-aware, real-time adaptive personalization of supplementary resources using lightweight, interpretable algorithms (explicitly avoiding the biases, costs, and opacity of AI-generated content). Anchored in my PhD dissertation, *Learning Beyond the Lecture: Rethinking Software Engineering Education with Supplementary Materials in the Generative AI Era*, I develop evidence-based systems that optimize student engagement and comprehension in SE courses. My vision is to establish a scalable, preference-driven framework for adaptive learning support that originates in SE and extends to computing education research (CER), transforming how technical concepts are reinforced in diverse classroom settings.
+My overarching goal is to design, deploy, and evaluate human-centered learning systems that provide clearer guidance, accessible explanations, and personalized support—fostering deeper comprehension, student confidence, and self-efficacy in computing.
 
-### Dissertation Summary
+### Interdisciplinary Methodology
 
-My dissertation confronted the limitations of static or randomized supplementary materials in SE education, where individual differences in preferences and context lead to inconsistent learning outcomes. Most adaptive learning platforms (ALPs) rely on generative AI and open educational resources (OER), introducing algorithmic bias, high implementation costs, and reduced instructor control. I proposed contextual Thompson Sampling (TS), a bandit algorithm that personalizes material selection using live student ratings from a curated, high-quality resource pool, requiring no AI content generation.
+My work bridges **empirical software engineering**, **applied artificial intelligence**, and **human-centered computing**. Grounded in computing education research (CER), I employ rigorous mixed methods:
 
-### Empirical Validation
+- **Controlled Classroom Experiments:** Measuring comprehension, engagement, and retention across alternative instructional interventions.
+- **Behavioral & Interaction Analytics:** Analyzing how students navigate digital materials, where misconceptions arise, and how pacing affects outcomes.
+- **Surveys & Qualitative Inquiries:** Capturing student perceptions, self-reported learning preferences, cognitive load, and preference dynamics.
 
-I validated this approach through three rigorous classroom-based studies:
+### Core Systems & Pedagogical Platforms
 
-- **Study 1 — TS vs Randomization:** Compared TS-driven adaptation to random selection in an SE course, showing superior median usefulness and improved positive/negative rating ratios across topics and quizzes.
-- **Study 2 — Personalization Factors:** Examined learner preferences, visual/verbal tendencies, and gender via adaptive experiments with IRB-approved protocols. Learner preferences were the strongest predictor of perceived usefulness; relevance, clarity, detail, and examples emerged as key mediators. Visual learners rated personalized materials higher when aligned with preferences; verbal learners assigned lower ratings overall. Aligning delivery mode by learning style had minimal effect on perceived usefulness, reinforcing critiques of strict learning-style matching. Gender showed no significant effects.
-- **Study 3 — Student Preferences SLR & Survey:** A comprehensive survey of SE students identified nuanced preferences for material design (e.g., concise examples, structured explanations), which directly informed algorithm refinement. All studies included thorough validity assessments (internal, construct, external).
+A central component of my research is translating empirical insights into practical, instructor-friendly software tools:
 
-### Current Platform Work
+- **ALP (Adaptive Learning Platform):** A lightweight adaptive platform that uses **contextual Thompson sampling** to personalize explanation selection in real time. Rather than relying on black-box generative models that risk hallucinations and algorithmic bias, ALP curates from vetted, high-quality material pools using live student feedback to match individual preferences, prior knowledge, and topic difficulty.
+- **GenAI Pedagogical Analyzer:** An automated evaluation tool that evaluates learning materials across essential educational dimensions, including clarity, cognitive load, prerequisite alignment, and conceptual coherence. This system provides actionable diagnostics to help instructors refine materials and guide students more effectively.
 
-I am developing a digital platform that deploys contextual TS to deliver real-time, preference-aligned supplementary materials in SE courses. The system uses live student feedback (not AI) to recommend from vetted resources, addressing common criticisms of ALPs. Generative AI is used only for ancillary tasks—producing concise concept summaries and quiz items to support assessment—not for creating core supplementary content.
+### Empirical Validation & Key Findings
 
-### Research Phases
+My research is validated through multi-institution classroom studies:
 
-I will pursue a phased research program as a faculty member:
+- **Adaptive Selection vs. Randomization:** Demonstrated that contextual multi-armed bandit algorithms significantly outperform static and randomized material delivery in student satisfaction and usefulness ratings.
+- **Personalization Factors & Learning Dimensions:** Investigated how individual learner preferences, visual/verbal tendencies, and gender influence perceived material usefulness. Learner preferences emerged as the dominant predictor of usefulness (mediated by relevance, clarity, and worked examples), while strict visual/verbal mode-matching showed minimal effect, providing empirical nuance to contemporary learning-style debates.
+- **Systematic Analysis of Material Design:** Surveyed and analyzed student navigation behaviors to establish concrete guidelines for authoring effective technical explanations and project scaffolds.
 
-- **Phase 1 (SE Deepening):** Longitudinal studies in advanced SE topics to measure retention, project performance, and long-term preference evolution.
-- **Phase 2 (CER Expansion):** Adapt the TS framework to foundational computing courses (e.g., programming, algorithms) to test generalizability across subdisciplines.
-- **Phase 3 (Open-Source Ecosystem):** Develop and release a modular, instructor-friendly ALP toolkit enabling contextual TS deployment with custom material libraries, prioritizing accessibility for under-resourced programs.
-- **Phase 4 (Explainable AI & Algorithmic Transparency):** Investigate Explainable AI (XAI) techniques to provide students and instructors with clear, interpretable rationales behind adaptive recommendations, evaluating how algorithmic transparency impacts learner trust, metacognitive reflection, and pedagogical agency.
+### Undergraduate Research Integration & Mentorship
 
-### Impact, Funding, and Mentorship
+I view research as a natural extension of undergraduate education. My projects provide accessible entry points for students at all levels to engage in meaningful, publishable research:
 
-This agenda aligns with Computer Science Department priorities in computing education research and human-centered systems. I plan to pursue both internal and external funding, mentor students in mixed-methods education research, and integrate adaptive tools into SE pedagogy.
+- **User Interface & Interaction Design:** Designing accessible, intuitive web interfaces and dashboards for educational platforms.
+- **Algorithmic Evaluation:** Benchmarking recommendation and bandit algorithms with simulated and real classroom telemetry.
+- **User Studies & Empirical Evaluation:** Involving students in protocol design, IRB preparation, data collection, usability testing, and qualitative analysis.
+- **Applied System Development:** Mentoring undergraduates in full-stack engineering, cloud architecture, software engineering best practices, and open-source software development.
 
-My research reimagines supplementary learning in SE education through transparent, preference-driven, real-time personalization—offering a robust, scalable alternative to AI-heavy platforms. By joining as a faculty, I will advance a sustainable, inclusive model for computing education that empowers students, equips instructors, and evolves with classroom needs.
+### 10-Year Strategic Research & Undergraduate Mentorship Roadmap
+
+My long-term research vision follows a structured 10-year trajectory designed to scale from platform deployment to nationwide dissemination, with **undergraduate researchers actively involved at every stage**:
+
+- **Years 1–2: Cloud-Based ALP Deployment & Dynamic Arms Expansion**
+  - *Research Focus:* Architect and deploy a robust, cloud-hosted web version of the Adaptive Learning Platform (ALP). Deploy across multiple core computing courses and implement dynamic arms expansion to scale candidate supplementary materials beyond small subsets (accommodating more than 3 candidate resources per topic).
+  - *Undergraduate Role:* Students contribute directly to full-stack web engineering, cloud infrastructure setup, API development, and candidate resource curation and benchmarking.
+
+- **Years 2–3: Federated Learning Integration for Privacy-Preserving Personalization**
+  - *Research Focus:* Integrate federated learning into the contextual Thompson sampling architecture. This enables multi-course and cross-departmental models to collaboratively learn student preference patterns without centralizing or exposing sensitive learner data.
+  - *Undergraduate Role:* Students participate in distributed algorithm prototyping, local client simulation, data privacy evaluations, and benchmarking model convergence rates.
+
+- **Years 4–5: Cross-Institutional Scaling & Multi-Campus Evaluation**
+  - *Research Focus:* Scale ALP deployments to partner colleges and universities across diverse institutional contexts to test the generalizability of adaptive material recommendations across varied student cohorts.
+  - *Undergraduate Role:* Students co-lead cross-institutional user studies, survey administration, usability testing, and multi-site telemetry data analysis.
+
+- **Years 5–6: Longitudinal Learning & Trajectory Tracking**
+  - *Research Focus:* Conduct multi-semester longitudinal tracking to investigate how adaptive supplementary support impacts long-term concept retention, project execution in upper-division courses, and career readiness.
+  - *Undergraduate Role:* Students assist with cohort tracking, qualitative interview analysis, statistical modeling of long-term learning gains, and co-authoring conference manuscripts.
+
+- **Years 7–10: Explainable AI (XAI) Integration & National Dissemination**
+  - *Research Focus:* Once rich, multi-institutional datasets have accumulated sufficient data points at scale, integrate **Explainable AI (XAI)** models into ALP. XAI provides transparent, human-centered rationales for adaptive recommendations, helping students reflect metacognitively on their learning gaps and empowering instructors with clear diagnostic reasoning. Release a mature, modular open-source toolkit for nationwide adoption.
+  - *Undergraduate Role:* Students lead algorithmic transparency evaluations, co-author peer-reviewed publications, present findings at premier venues (e.g., SIGCSE, ICSE/SEET, Learning@Scale), and build developer documentation for national distribution.

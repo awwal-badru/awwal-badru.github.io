@@ -5,38 +5,65 @@ sitemap: false
 permalink: /teaching/
 ---
 
+### Teaching Philosophy
 
-### Teaching Statement
+My teaching philosophy is grounded in **clarity, patience, and a genuine commitment to helping every student grow**. I believe that computing education thrives when instruction is well-structured, expectations are transparent, and students feel supported as they tackle challenging technical concepts. My goal as an educator is to help students build strong technical foundations while fostering curiosity, confidence, and an enduring sense of belonging in computer science.
 
-My teaching philosophy centers on the belief that students learn most effectively when they experience clarity, structure, relevance, and personalized support. As an instructor and researcher in software engineering education, I design learning environments that help students build conceptual understanding, practice professional skills, and gain confidence as emerging software engineers.
+### Classroom Experience & Pedagogical Approach
 
-### Teaching Approach: Clear Foundations and Applied Learning
+With over three years of university-level teaching experience, I have taught programming, mathematics, and information systems to first-generation learners and students with widely varied academic preparation. These experiences have shaped core principles in my instructional practice:
 
-I emphasize strong conceptual foundations before introducing tools. In introductory programming courses I scaffold learning through concrete examples, guided practice, and formative assessments that help students identify misconceptions early. I pair this with project-based learning that connects fundamental computing principles to authentic software engineering tasks. Across the courses I have taught (including assembly language, object-oriented programming, management information systems, and applied mathematics) I use structured progression, frequent feedback, and active learning to keep students engaged and supported.
+- **Meeting Students Where They Are:** Breaking complex computational problems into manageable, scaffolded steps through worked examples and guided practice.
+- **Active Learning & Conceptual Reasoning:** Emphasizing both the *mechanics* of coding (syntax, debugging, execution) and the *reasoning* behind core ideas (design choices, efficiency, trade-offs).
+- **Formative Feedback:** Using frequent low-stakes assessments, live coding exercises, and timely feedback to help students monitor their progress and address misconceptions early.
+- **Collaborative Problem-Solving:** Structuring peer programming and team projects so students learn from diverse viewpoints and develop interpersonal communication skills essential for industry.
 
-### Inclusive Pedagogy and Evidence-Based Practice
+### Connecting Theory to Authentic Systems
 
-My instructional approach is shaped by research on adaptive supplementary materials and adaptive learning platforms. I treat diversity in preparation and learning preferences as an opportunity to build more inclusive learning environments. I use low-stakes assessments, data-informed feedback, and multiple representations of key concepts to reach students with varied learning profiles. I adjust instruction based on class performance patterns, student feedback, and systematic analysis of learning artifacts.
+Curiosity plays a central role in my classroom. I want students to view computing not merely as abstract exercises, but as a discipline full of creative possibilities and societal impact. 
 
-### Teaching in the Generative AI Era
+Drawing on my background as a full-stack software engineer—having engineered applied systems including a statewide **Education Management Information System (EMIS)**, a **Financial Management Information System (FMIS)**, and a **real-time emergency alert platform**—I bring authentic system architectures into the classroom:
+- Grounding data structures, database design, and web development in real-world use cases.
+- Designing project-based assignments that mirror professional software development workflows (version control, modular architecture, code review, and testing).
+- Helping students understand how foundational computing topics directly impact end users and real-world communities.
 
-Students should develop both technical mastery and responsible judgment when using generative AI tools. I integrate AI-literate practices that demonstrate when and how AI can support debugging, design, and testing, while reinforcing individual problem-solving skills to avoid overreliance. I teach students to evaluate AI-generated code for correctness, bias, and security risks, and to apply ethical reasoning in development workflows.
+### Mentorship & Student-Centered Growth
+
+Mentoring is an integral part of my identity as an educator. I have advised and mentored more than **100 students** through academic advising, professional career guidance, and applied software projects. 
+
+I enjoy working closely with students to:
+- Guide independent study and capstone projects from initial problem formulation to working, tested systems.
+- Coach students on managing project complexity, system debugging, and technical documentation.
+- Prepare students for internships, graduate study, and software engineering careers through technical interview preparation and portfolio development.
+
+### Inclusive Pedagogy & Broadening Participation
+
+I am deeply committed to creating welcoming, equitable learning environments where students from all backgrounds thrive. Having taught diverse cohorts of learners, I intentionally incorporate inclusive teaching strategies:
+- Designing accessible instructional materials using multiple representations (visual diagrams, code walkthroughs, conceptual analogies, and interactive demos).
+- Structuring transparent grading criteria and rubrics so all students understand what success looks like.
+- Cultivating classroom norms that encourage curiosity, questions, and mutual respect, ensuring that every learner feels valued and empowered to contribute.
+
+### Responsible Computing in the AI Era
+
+As generative AI tools reshape software engineering, I teach students to be both technically proficient and thoughtfully critical:
+- Leveraging AI productively for brainstorming, test generation, and debugging assistance while safeguarding independent problem-solving skills.
+- Teaching rigorous code evaluation: verifying correctness, auditing for security vulnerabilities, identifying biases, and recognizing when AI-generated code fails.
+- Fostering ethical awareness around software reliability, data privacy, and intellectual property.
 
 ### Courses Prepared to Teach
 
-Prepared to teach a range of courses from introductory to advanced, including:
-- Introductory programming and computer science fundamentals
-- Data structures and algorithms (introductory-level)
-- Core software engineering courses: requirements engineering, software architecture and design, software testing and verification, software project planning and management
-- Web and mobile application development
-- Specialized or forward-looking offerings such as software security in the AI era and software supply chain and defensive coding
+**Foundational & Core CS:**
+- CS 1 / CS 2: Introduction to Computer Science & Programming (Python, Java, C++)
+- Object-Oriented Programming & Design
+- Data Structures and Algorithms
+- Discrete Mathematics & Applied Mathematics for Computing
 
-### Commitment to Mentorship and Student Success
+**Software Engineering & Systems:**
+- Software Engineering (Requirements, Architecture, Agile Methodologies, Testing)
+- Software Design & System Architecture
+- Web and Mobile Application Development (Full-Stack, REST APIs, Cloud Systems)
+- Management Information Systems (Database Design, Information Architecture)
 
-I prioritize mentoring students to develop technical competence, professional identity, and long-term academic confidence. I have supervised undergraduate and graduate projects and supported capstone teams focused on real-world software engineering challenges. I aim to foster opportunities for student research, industry collaboration, and experiential learning.
-
-### Conclusion
-
-I am committed to creating rigorous, inclusive, and forward-looking learning experiences in computing education. By combining evidence-based teaching practices, adaptive supplementary resources, and careful integration of AI-literate skills, I prepare students to succeed as thoughtful and capable software engineers.
-
-
+**Advanced & Specialized Topics:**
+- Software Security and Defensive Coding in the AI Era
+- Human-Centered Computing & Educational Technologies

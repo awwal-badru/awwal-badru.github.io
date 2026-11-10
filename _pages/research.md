@@ -47,44 +47,224 @@ I view research as a natural extension of undergraduate education. My projects p
 
 My long-term research vision follows a structured 10-year trajectory designed to scale from platform deployment to nationwide dissemination, with **undergraduate researchers actively involved at every stage**:
 
-- **Years 1–2: Cloud-Based ALP Deployment & Dynamic Arms Expansion**
-  - *Research Focus:* Architect and deploy a robust, cloud-hosted web version of the Adaptive Learning Platform (ALP). Deploy across multiple core computing courses and implement dynamic arms expansion to scale candidate supplementary materials beyond small subsets (accommodating more than 3 candidate resources per topic).
-  - *Undergraduate Role:* Students contribute directly to full-stack web engineering, cloud infrastructure setup, API development, and candidate resource curation and benchmarking.
+<div class="roadmap-pipeline-wrapper" markdown="0">
+<div class="roadmap-pipeline">
+<div class="pipeline-node">
+<div>
+<span class="node-years">Years 1–2</span>
+<div class="node-title">Cloud ALP & Expansion</div>
+<div class="node-focus">Web platform & Dynamic arms (&gt;3 candidate resources)</div>
+</div>
+<div class="node-undergrad-badge"><i class="fa fa-users"></i> Full-Stack & Cloud Setup</div>
+</div>
+<div class="pipeline-connector"><i class="fa fa-angle-right"></i></div>
+<div class="pipeline-node">
+<div>
+<span class="node-years">Years 2–3</span>
+<div class="node-title">Federated Learning</div>
+<div class="node-focus">Decentralized, privacy-preserving learner models</div>
+</div>
+<div class="node-undergrad-badge"><i class="fa fa-users"></i> Algorithm Prototyping</div>
+</div>
+<div class="pipeline-connector"><i class="fa fa-angle-right"></i></div>
+<div class="pipeline-node">
+<div>
+<span class="node-years">Years 4–5</span>
+<div class="node-title">Multi-Campus Scaling</div>
+<div class="node-focus">Cross-institutional deployment & validation</div>
+</div>
+<div class="node-undergrad-badge"><i class="fa fa-users"></i> Multi-Site User Studies</div>
+</div>
+<div class="pipeline-connector"><i class="fa fa-angle-right"></i></div>
+<div class="pipeline-node">
+<div>
+<span class="node-years">Years 5–6</span>
+<div class="node-title">Longitudinal Impact</div>
+<div class="node-focus">Multi-semester retention & capstone tracking</div>
+</div>
+<div class="node-undergrad-badge"><i class="fa fa-users"></i> Cohort Data Modeling</div>
+</div>
+<div class="pipeline-connector"><i class="fa fa-angle-right"></i></div>
+<div class="pipeline-node">
+<div>
+<span class="node-years">Years 7–10</span>
+<div class="node-title">XAI & Dissemination</div>
+<div class="node-focus">Explainable AI models & National open toolkit</div>
+</div>
+<div class="node-undergrad-badge"><i class="fa fa-users"></i> Lead Co-Authorship</div>
+</div>
+</div>
+</div>
 
-- **Years 2–3: Federated Learning Integration for Privacy-Preserving Personalization**
-  - *Research Focus:* Integrate federated learning into the contextual Thompson sampling architecture. This enables multi-course and cross-departmental models to collaboratively learn student preference patterns without centralizing or exposing sensitive learner data.
-  - *Undergraduate Role:* Students participate in distributed algorithm prototyping, local client simulation, data privacy evaluations, and benchmarking model convergence rates.
+<div class="roadmap-cards-grid" markdown="0">
 
-- **Years 4–5: Cross-Institutional Scaling & Multi-Campus Evaluation**
-  - *Research Focus:* Scale ALP deployments to partner colleges and universities across diverse institutional contexts to test the generalizability of adaptive material recommendations across varied student cohorts.
-  - *Undergraduate Role:* Students co-lead cross-institutional user studies, survey administration, usability testing, and multi-site telemetry data analysis.
+<div class="roadmap-phase-card">
+<div class="phase-header">
+<span class="phase-tag">Phase 1 • Years 1–2</span>
+<span class="phase-funding-pill"><i class="fa fa-bank"></i> Target: Startup & NSF CRII</span>
+</div>
+<div class="phase-title">Cloud-Based ALP Platform & Dynamic Arms Expansion</div>
+<div class="phase-desc">
+Architect and deploy a production-ready, cloud-hosted web version of the Adaptive Learning Platform (ALP). Deploy across foundational and advanced computing courses while engineering dynamic arms expansion to scale candidate supplementary materials beyond small fixed sets, accommodating arbitrarily rich resource pools per technical concept.
+</div>
+<div class="undergrad-highlight-box">
+<strong><i class="fa fa-users"></i> Undergraduate Researcher Role:</strong> Students directly engineer full-stack web interfaces, configure cloud deployment pipelines, develop REST APIs, and curate/benchmark candidate technical explanations and instructional artifacts.
+</div>
+</div>
 
-- **Years 5–6: Longitudinal Learning & Trajectory Tracking**
-  - *Research Focus:* Conduct multi-semester longitudinal tracking to investigate how adaptive supplementary support impacts long-term concept retention, project execution in upper-division courses, and career readiness.
-  - *Undergraduate Role:* Students assist with cohort tracking, qualitative interview analysis, statistical modeling of long-term learning gains, and co-authoring conference manuscripts.
+<div class="roadmap-phase-card">
+<div class="phase-header">
+<span class="phase-tag">Phase 2 • Years 2–3</span>
+<span class="phase-funding-pill"><i class="fa fa-bank"></i> Target: NSF CRII & Campus URCA</span>
+</div>
+<div class="phase-title">Federated Learning Integration for Privacy-Preserving Personalization</div>
+<div class="phase-desc">
+Integrate decentralized federated learning into the contextual Thompson sampling architecture. This allows distinct course sections and academic departments to collaboratively learn student preference patterns and material efficacy without centralizing or exposing sensitive learner telemetry or institutional data.
+</div>
+<div class="undergrad-highlight-box">
+<strong><i class="fa fa-users"></i> Undergraduate Researcher Role:</strong> Students participate in distributed algorithm prototyping, local client simulation testing, differential privacy audits, and convergence rate benchmarking across synthetic classroom datasets.
+</div>
+</div>
 
-- **Years 7–10: Explainable AI (XAI) Integration & National Dissemination**
-  - *Research Focus:* Once rich, multi-institutional datasets have accumulated sufficient data points at scale, integrate **Explainable AI (XAI)** models into ALP. XAI provides transparent, human-centered rationales for adaptive recommendations, helping students reflect metacognitively on their learning gaps and empowering instructors with clear diagnostic reasoning. Release a mature, modular open-source toolkit for nationwide adoption.
-  - *Undergraduate Role:* Students lead algorithmic transparency evaluations, co-author peer-reviewed publications, present findings at premier venues (e.g., SIGCSE, ICSE/SEET, Learning@Scale), and build developer documentation for national distribution.
+<div class="roadmap-phase-card">
+<div class="phase-header">
+<span class="phase-tag">Phase 3 • Years 4–5</span>
+<span class="phase-funding-pill"><i class="fa fa-bank"></i> Target: NSF IUSE: Computing & Industry</span>
+</div>
+<div class="phase-title">Cross-Institutional Scaling & Multi-Campus Empirical Studies</div>
+<div class="phase-desc">
+Scale ALP deployments to partner colleges and universities across diverse institutional classifications (community colleges, liberal arts colleges, and research universities) to rigorously assess the generalizability of adaptive material recommendations across heterogeneous student preparation levels and demographic cohorts.
+</div>
+<div class="undergrad-highlight-box">
+<strong><i class="fa fa-users"></i> Undergraduate Researcher Role:</strong> Students co-lead cross-institutional protocol execution, administer survey instruments, conduct participant usability sessions, and analyze multi-site telemetry logs.
+</div>
+</div>
 
-### Funding Strategy: External, Internal, and Undergraduate Support
+<div class="roadmap-phase-card">
+<div class="phase-header">
+<span class="phase-tag">Phase 4 • Years 5–6</span>
+<span class="phase-funding-pill"><i class="fa fa-bank"></i> Target: NSF IUSE / CAREER & Curricular Grants</span>
+</div>
+<div class="phase-title">Longitudinal Learning Trajectory & Retention Tracking</div>
+<div class="phase-desc">
+Conduct multi-semester longitudinal tracking to measure how exposure to personalized supplementary materials influences long-term knowledge retention, capstone project execution, self-efficacy, and career outcomes as students advance into upper-division software engineering courses.
+</div>
+<div class="undergrad-highlight-box">
+<strong><i class="fa fa-users"></i> Undergraduate Researcher Role:</strong> Students assist with longitudinal cohort tracking, qualitative interview coding, statistical modeling of multi-term retention, and co-authoring peer-reviewed conference manuscripts.
+</div>
+</div>
 
-To sustain this 10-year research agenda and support continuous undergraduate research involvement, I have established a multifaceted funding roadmap targeting federal agencies, professional computing societies, industry initiatives, and institutional programs:
+<div class="roadmap-phase-card">
+<div class="phase-header">
+<span class="phase-tag">Phase 5 • Years 7–10</span>
+<span class="phase-funding-pill"><i class="fa fa-bank"></i> Target: NSF CAREER & Open-Source Foundations</span>
+</div>
+<div class="phase-title">Explainable AI (XAI) Integration & National Dissemination</div>
+<div class="phase-desc">
+Once rich, multi-institutional datasets have reached sufficient statistical power and scale, train and integrate <strong>Explainable AI (XAI)</strong> models into ALP. XAI provides transparent, human-centered rationales for why specific materials are recommended, supporting metacognitive self-regulation for students and actionable diagnostic reasoning for instructors. Release a mature, modular open-source toolkit for nationwide institutional adoption.
+</div>
+<div class="undergrad-highlight-box">
+<strong><i class="fa fa-users"></i> Undergraduate Researcher Role:</strong> Students lead algorithmic transparency evaluations, co-author peer-reviewed publications, present findings at premier venues (ACM SIGCSE, IEEE/ACM ICSE-SEET, Learning@Scale), and author developer documentation for national distribution.
+</div>
+</div>
 
-#### 1. External Federal Grants (National Science Foundation — NSF)
-- **NSF CRII (Computer and Information Science and Engineering Research Initiation Initiative):** Targeted in Years 1–3 to fund preliminary platform infrastructure, algorithmic validation of contextual bandits in computing education, and summer undergraduate research stipends.
-- **NSF IUSE: Computing (Improving Undergraduate STEM Education):** Primary vehicle for Years 3–6 to fund cross-institutional scaling, pedagogical telemetry analysis, and rigorous curriculum integration of adaptive supplementary platforms.
-- **NSF CAREER (Faculty Early Career Development Program):** A core long-term priority combining adaptive systems research (federated contextual bandits, explainable AI) with comprehensive undergraduate education and broadening participation in software engineering.
-- **NSF REU (Research Experiences for Undergraduates) Supplements:** Integrated into all federal grant proposals to fund dedicated semester and summer stipends, housing, and conference travel for undergraduate student researchers.
-- **NSF SaTC-EDU (Secure and Trustworthy Cyberspace Education):** Supporting the development of adaptive learning modules for software security, vulnerability auditing, and defensive coding in the AI era.
+</div>
 
-#### 2. Professional Societies & Industry Foundations
-- **ACM SIGCSE Special Projects Grants:** Seed grants to pilot innovative instructional interventions and create open-access course materials for computing educators.
-- **ACM & IEEE Student Travel Grants:** Enabling undergraduate student authors to travel, network, and present their peer-reviewed papers at premier venues (ACM SIGCSE, IEEE/ACM ICSE-SEET, Learning@Scale).
-- **Industry Academic Research Awards (Google, Microsoft, Amazon AWS Educate):** Seeking cloud computing credits, digital education awards, and applied AI research grants to power large-scale ALP cloud infrastructure and hosting.
+### Funding Architecture: Federal, Industry, and Institutional Matrix
 
-#### 3. Internal Institutional & Campus Funding
-- **Faculty Startup & Seed Grants:** Leveraging initial departmental startup funds for server hosting, software licensing, lab workstations, and initial pilot data collection.
-- **Campus Undergraduate Research & Creative Activity (URCA / UGR) Fellowships:** Tapping campus-wide competitive programs to provide competitive student research fellowships, summer research stipends, and academic-year credit.
-- **Curricular Innovation & Teaching Improvement Grants:** Internal instructional grants to support redesigning foundational and upper-division software engineering courses to integrate adaptive learning technology.
-- **Departmental Student Travel & Research Funds:** University matching funds to support undergraduate travel and registration for academic conference presentations.
+A strategic, multi-tiered funding roadmap ensures the long-term sustainability of this research program while continuously supporting undergraduate research stipends, lab hardware, and conference travel:
+
+<div class="funding-matrix-grid" markdown="0">
+
+<div class="funding-tier-card">
+<div class="funding-tier-header">
+<div class="funding-tier-icon"><i class="fa fa-institution"></i></div>
+<h4 class="funding-tier-title">Federal Grants</h4>
+<div class="funding-tier-subtitle">National Science Foundation (NSF)</div>
+</div>
+<ul class="funding-items-list">
+<li class="funding-item">
+<span class="funding-tag">NSF CRII (Years 1–3)</span>
+<span class="funding-item-desc">Initial cloud infrastructure, multi-armed bandit validation, and student summer stipends.</span>
+</li>
+<li class="funding-item">
+<span class="funding-tag">NSF IUSE: Computing (Years 3–6)</span>
+<span class="funding-item-desc">Cross-institutional scaling, multi-site telemetry data, and curriculum integration.</span>
+</li>
+<li class="funding-item">
+<span class="funding-tag">NSF CAREER (Long-Term)</span>
+<span class="funding-item-desc">Core early-career priority combining federated contextual bandits, XAI, and broadening participation.</span>
+</li>
+<li class="funding-item">
+<span class="funding-tag">NSF REU Supplements</span>
+<span class="funding-item-desc">Integrated into all federal proposals to secure dedicated student stipends, housing, and conference travel.</span>
+</li>
+<li class="funding-item">
+<span class="funding-tag">NSF SaTC-EDU</span>
+<span class="funding-item-desc">Modules for AI-era software security, vulnerability auditing, and defensive coding pedagogy.</span>
+</li>
+</ul>
+<div class="funding-undergrad-footer">
+<strong><i class="fa fa-check-circle"></i> Student Impact:</strong> Full semester & summer research stipends, on-campus housing, and travel awards.
+</div>
+</div>
+
+<div class="funding-tier-card">
+<div class="funding-tier-header">
+<div class="funding-tier-icon"><i class="fa fa-globe"></i></div>
+<h4 class="funding-tier-title">Industry & Societies</h4>
+<div class="funding-tier-subtitle">Professional Computing Foundations</div>
+</div>
+<ul class="funding-items-list">
+<li class="funding-item">
+<span class="funding-tag">ACM SIGCSE Special Projects</span>
+<span class="funding-item-desc">Seed grants to pilot classroom interventions and develop open-access curricular repositories.</span>
+</li>
+<li class="funding-item">
+<span class="funding-tag">ACM & IEEE Travel Awards</span>
+<span class="funding-item-desc">Competitive student travel grants to present peer-reviewed papers at SIGCSE, ICER, and ICSE-SEET.</span>
+</li>
+<li class="funding-item">
+<span class="funding-tag">Google & Microsoft Research</span>
+<span class="funding-item-desc">Digital learning platform grants, responsible AI education awards, and inclusive computing funding.</span>
+</li>
+<li class="funding-item">
+<span class="funding-tag">AWS Educate & Cloud Credits</span>
+<span class="funding-item-desc">Cloud computing allocations powering distributed multi-course ALP hosting and database clusters.</span>
+</li>
+</ul>
+<div class="funding-undergrad-footer">
+<strong><i class="fa fa-check-circle"></i> Student Impact:</strong> National conference networking, industry mentors, and hands-on enterprise cloud experience.
+</div>
+</div>
+
+<div class="funding-tier-card">
+<div class="funding-tier-header">
+<div class="funding-tier-icon"><i class="fa fa-graduation-cap"></i></div>
+<h4 class="funding-tier-title">Institutional Funds</h4>
+<div class="funding-tier-subtitle">Internal Campus & Student Grants</div>
+</div>
+<ul class="funding-items-list">
+<li class="funding-item">
+<span class="funding-tag">Faculty Startup & Seed Grants</span>
+<span class="funding-item-desc">Lab workstations, local testing hardware, server provisioning, and preliminary pilot studies.</span>
+</li>
+<li class="funding-item">
+<span class="funding-tag">Campus URCA / UGR Fellowships</span>
+<span class="funding-item-desc">University-wide competitive student fellowships for summer research and academic-year credit.</span>
+</li>
+<li class="funding-item">
+<span class="funding-tag">Curricular Innovation Grants</span>
+<span class="funding-item-desc">Internal grants to redesign foundational CS and upper-division software engineering courses.</span>
+</li>
+<li class="funding-item">
+<span class="funding-tag">Departmental Travel Matching</span>
+<span class="funding-item-desc">Institutional matching funds supporting undergraduate travel for national paper presentations.</span>
+</li>
+</ul>
+<div class="funding-undergrad-footer">
+<strong><i class="fa fa-check-circle"></i> Student Impact:</strong> Academic-year research credit, campus fellowships, and departmental publication awards.
+</div>
+</div>
+
+</div>

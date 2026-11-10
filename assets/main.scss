@@ -1589,3 +1589,346 @@ html[data-theme="dark"] body {
     background: var(--card-bg) !important;
   }
 }
+
+
+/* ==========================================================================
+   Research Roadmap & Funding Visualizations
+   ========================================================================== */
+
+.roadmap-pipeline-wrapper {
+  background: rgba(158, 27, 50, 0.03);
+  border: 1px solid rgba(158, 27, 50, 0.12);
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
+  margin: 1.5rem 0 2rem 0;
+  overflow-x: auto;
+}
+
+.roadmap-pipeline {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 760px;
+}
+
+.pipeline-node {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid rgba(158, 27, 50, 0.15);
+  border-top: 4px solid var(--ua-crimson);
+  border-radius: 8px;
+  padding: 0.85rem 0.65rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pipeline-node:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(158, 27, 50, 0.12);
+}
+
+.pipeline-node .node-years {
+  display: inline-block;
+  background: rgba(158, 27, 50, 0.1);
+  color: var(--ua-crimson);
+  font-weight: 800;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pipeline-node .node-title {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #1a1a1a;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+}
+
+.pipeline-node .node-focus {
+  font-size: 0.75rem;
+  color: #666;
+  line-height: 1.3;
+}
+
+.pipeline-node .node-undergrad-badge {
+  margin-top: 0.5rem;
+  padding-top: 0.4rem;
+  border-top: 1px dashed rgba(158, 27, 50, 0.15);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ua-crimson);
+}
+
+.pipeline-connector {
+  display: flex;
+  align-items: center;
+  color: rgba(158, 27, 50, 0.4);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Phase Detail Cards */
+.roadmap-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+  margin: 1.5rem 0 2.5rem 0;
+}
+
+.roadmap-phase-card {
+  background: #ffffff;
+  border: 1px solid rgba(158, 27, 50, 0.12);
+  border-left: 5px solid var(--ua-crimson);
+  border-radius: 0 10px 10px 0;
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.roadmap-phase-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 6px 18px rgba(158, 27, 50, 0.08);
+}
+
+.phase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.phase-tag {
+  background: var(--ua-crimson);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.phase-funding-pill {
+  background: rgba(158, 27, 50, 0.08);
+  color: var(--ua-crimson);
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  border: 1px solid rgba(158, 27, 50, 0.15);
+}
+
+.phase-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.phase-desc {
+  font-size: 0.92rem;
+  color: #444;
+  line-height: 1.55;
+  margin-bottom: 0.75rem;
+}
+
+.undergrad-highlight-box {
+  background: rgba(158, 27, 50, 0.04);
+  border-radius: 6px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: #2b2b2b;
+}
+
+.undergrad-highlight-box strong {
+  color: var(--ua-crimson);
+}
+
+/* Funding Matrix Cards */
+.funding-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0 2rem 0;
+}
+
+.funding-tier-card {
+  background: #ffffff;
+  border: 1px solid rgba(158, 27, 50, 0.12);
+  border-radius: 10px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.funding-tier-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(158, 27, 50, 0.1);
+}
+
+.funding-tier-header {
+  border-bottom: 2px solid rgba(158, 27, 50, 0.1);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.funding-tier-icon {
+  font-size: 1.8rem;
+  color: var(--ua-crimson);
+  margin-bottom: 0.4rem;
+}
+
+.funding-tier-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ua-crimson);
+  margin: 0;
+}
+
+.funding-tier-subtitle {
+  font-size: 0.78rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.funding-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.funding-item {
+  padding: 0.55rem 0;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.funding-item:last-child {
+  border-bottom: none;
+}
+
+.funding-tag {
+  font-weight: 700;
+  color: var(--ua-crimson);
+  display: block;
+}
+
+.funding-item-desc {
+  color: #555;
+  font-size: 0.82rem;
+}
+
+.funding-undergrad-footer {
+  background: rgba(158, 27, 50, 0.05);
+  border-radius: 6px;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.funding-undergrad-footer strong {
+  color: var(--ua-crimson);
+}
+
+/* Dark Mode Adaptations */
+[data-theme="dark"] {
+  .roadmap-pipeline-wrapper {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  .pipeline-node {
+    background: #1e1e1e;
+    border-color: rgba(255, 255, 255, 0.1);
+    border-top-color: #ff6b81;
+  }
+  .pipeline-node .node-years {
+    background: rgba(255, 107, 129, 0.15);
+    color: #ff6b81;
+  }
+  .pipeline-node .node-title {
+    color: #f0f0f0;
+  }
+  .pipeline-node .node-focus {
+    color: #aaa;
+  }
+  .pipeline-node .node-undergrad-badge {
+    border-top-color: rgba(255, 255, 255, 0.1);
+    color: #ff6b81;
+  }
+  .pipeline-connector {
+    color: rgba(255, 255, 255, 0.25);
+  }
+  .roadmap-phase-card {
+    background: #1e1e1e;
+    border-color: rgba(255, 255, 255, 0.1);
+    border-left-color: #ff6b81;
+  }
+  .phase-tag {
+    background: #ff6b81;
+    color: #121212;
+  }
+  .phase-funding-pill {
+    background: rgba(255, 107, 129, 0.15);
+    color: #ff6b81;
+    border-color: rgba(255, 107, 129, 0.3);
+  }
+  .phase-title {
+    color: #f5f5f5;
+  }
+  .phase-desc {
+    color: #ccc;
+  }
+  .undergrad-highlight-box {
+    background: rgba(255, 255, 255, 0.05);
+    color: #e0e0e0;
+  }
+  .undergrad-highlight-box strong {
+    color: #ff6b81;
+  }
+  .funding-tier-card {
+    background: #1e1e1e;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  .funding-tier-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+  .funding-tier-icon,
+  .funding-tier-title,
+  .funding-tag {
+    color: #ff6b81;
+  }
+  .funding-tier-subtitle {
+    color: #aaa;
+  }
+  .funding-item {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+  .funding-item-desc {
+    color: #bbb;
+  }
+  .funding-undergrad-footer {
+    background: rgba(255, 255, 255, 0.04);
+    color: #ddd;
+  }
+  .funding-undergrad-footer strong {
+    color: #ff6b81;
+  }
+}

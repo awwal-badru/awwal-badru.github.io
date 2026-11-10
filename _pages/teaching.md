@@ -65,5 +65,5 @@ As generative AI tools reshape software engineering, I teach students to be both
 - Management Information Systems (Database Design, Information Architecture)
 
 **Advanced & Specialized Topics:**
-- Software Security and Defensive Coding in the AI Era
+- Software Security/Cybersecurity and Defensive Coding in the AI Era
 - Human-Centered Computing & Educational Technologies

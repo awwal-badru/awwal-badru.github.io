@@ -66,3 +66,25 @@ My long-term research vision follows a structured 10-year trajectory designed to
 - **Years 7–10: Explainable AI (XAI) Integration & National Dissemination**
   - *Research Focus:* Once rich, multi-institutional datasets have accumulated sufficient data points at scale, integrate **Explainable AI (XAI)** models into ALP. XAI provides transparent, human-centered rationales for adaptive recommendations, helping students reflect metacognitively on their learning gaps and empowering instructors with clear diagnostic reasoning. Release a mature, modular open-source toolkit for nationwide adoption.
   - *Undergraduate Role:* Students lead algorithmic transparency evaluations, co-author peer-reviewed publications, present findings at premier venues (e.g., SIGCSE, ICSE/SEET, Learning@Scale), and build developer documentation for national distribution.
+
+### Funding Strategy: External, Internal, and Undergraduate Support
+
+To sustain this 10-year research agenda and support continuous undergraduate research involvement, I have established a multifaceted funding roadmap targeting federal agencies, professional computing societies, industry initiatives, and institutional programs:
+
+#### 1. External Federal Grants (National Science Foundation — NSF)
+- **NSF CRII (Computer and Information Science and Engineering Research Initiation Initiative):** Targeted in Years 1–3 to fund preliminary platform infrastructure, algorithmic validation of contextual bandits in computing education, and summer undergraduate research stipends.
+- **NSF IUSE: Computing (Improving Undergraduate STEM Education):** Primary vehicle for Years 3–6 to fund cross-institutional scaling, pedagogical telemetry analysis, and rigorous curriculum integration of adaptive supplementary platforms.
+- **NSF CAREER (Faculty Early Career Development Program):** A core long-term priority combining adaptive systems research (federated contextual bandits, explainable AI) with comprehensive undergraduate education and broadening participation in software engineering.
+- **NSF REU (Research Experiences for Undergraduates) Supplements:** Integrated into all federal grant proposals to fund dedicated semester and summer stipends, housing, and conference travel for undergraduate student researchers.
+- **NSF SaTC-EDU (Secure and Trustworthy Cyberspace Education):** Supporting the development of adaptive learning modules for software security, vulnerability auditing, and defensive coding in the AI era.
+
+#### 2. Professional Societies & Industry Foundations
+- **ACM SIGCSE Special Projects Grants:** Seed grants to pilot innovative instructional interventions and create open-access course materials for computing educators.
+- **ACM & IEEE Student Travel Grants:** Enabling undergraduate student authors to travel, network, and present their peer-reviewed papers at premier venues (ACM SIGCSE, IEEE/ACM ICSE-SEET, Learning@Scale).
+- **Industry Academic Research Awards (Google, Microsoft, Amazon AWS Educate):** Seeking cloud computing credits, digital education awards, and applied AI research grants to power large-scale ALP cloud infrastructure and hosting.
+
+#### 3. Internal Institutional & Campus Funding
+- **Faculty Startup & Seed Grants:** Leveraging initial departmental startup funds for server hosting, software licensing, lab workstations, and initial pilot data collection.
+- **Campus Undergraduate Research & Creative Activity (URCA / UGR) Fellowships:** Tapping campus-wide competitive programs to provide competitive student research fellowships, summer research stipends, and academic-year credit.
+- **Curricular Innovation & Teaching Improvement Grants:** Internal instructional grants to support redesigning foundational and upper-division software engineering courses to integrate adaptive learning technology.
+- **Departmental Student Travel & Research Funds:** University matching funds to support undergraduate travel and registration for academic conference presentations.

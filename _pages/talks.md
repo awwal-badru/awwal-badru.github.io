@@ -5,7 +5,7 @@ sitemap: false
 permalink: /talks/
 ---
 
-<!-- Protected Candidate Presentations (Hidden by default; unlocked via passcode 8487 or ?auth=8487) -->
+<!-- Protected Candidate Presentations (Hidden by default; unlocked via passcode or secret access link) -->
 <div id="private-talks-section" class="private-talks-container" style="display: none;" markdown="0">
   <div class="private-header">
     <div class="private-title-group">
@@ -25,7 +25,7 @@ permalink: /talks/
     </div>
     <h4 class="talk-title">When Things Go Wrong: From Python If-Statements to Reliable Software Systems</h4>
     <p class="talk-desc">
-      An interactive 23-slide pedagogical lecture designed for undergraduate computer science students. Bridges foundational conditional logic and debugging with defensive software engineering, structured exception handling (try-except blocks), and robust system reliability patterns through progressive code refactoring.
+      An interactive 23-slide pedagogical lecture designed for undergraduate computer science students. Bridges foundational conditional logic, structured exception handling (try-except blocks), and robust system reliability patterns.
     </p>
     <div class="talk-actions">
       <a href="{{ '/talks/franklin-teaching-demo/' | relative_url }}" target="_blank" class="talk-btn-primary">
@@ -93,16 +93,25 @@ permalink: /talks/
 </div>
 
 <script>
-  const SECRET_PASSCODE = "8487";
+  const AUTH_HASH = "a325d2b1c02a0f957b78702a10d8cf29819c2bb6ed7202953015368b017c5f84";
 
-  function isUnlocked() {
+  async function computeHash(str) {
+    const buffer = new TextEncoder().encode(str);
+    const digest = await crypto.subtle.digest('SHA-256', buffer);
+    return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function isUnlocked() {
     const params = new URLSearchParams(window.location.search);
     const key = params.get('auth') || params.get('key') || params.get('passcode');
-    if (key === SECRET_PASSCODE) {
-      localStorage.setItem('talks_auth', SECRET_PASSCODE);
-      return true;
+    if (key) {
+      const h = await computeHash(key);
+      if (h === AUTH_HASH) {
+        localStorage.setItem('talks_auth_hash', AUTH_HASH);
+        return true;
+      }
     }
-    return localStorage.getItem('talks_auth') === SECRET_PASSCODE;
+    return localStorage.getItem('talks_auth_hash') === AUTH_HASH;
   }
 
   function showPrivateSection() {
@@ -120,6 +129,7 @@ permalink: /talks/
   }
 
   function lockPrivateSection() {
+    localStorage.removeItem('talks_auth_hash');
     localStorage.removeItem('talks_auth');
     const section = document.getElementById('private-talks-section');
     if (section) section.style.display = 'none';
@@ -132,8 +142,8 @@ permalink: /talks/
     }
   }
 
-  function triggerPasscodeModal() {
-    if (isUnlocked()) {
+  async function triggerPasscodeModal() {
+    if (await isUnlocked()) {
       lockPrivateSection();
     } else {
       const modal = document.getElementById('talks-passcode-modal');
@@ -149,20 +159,23 @@ permalink: /talks/
     }
   }
 
-  function submitModalPasscode() {
+  async function submitModalPasscode() {
     const input = document.getElementById('modal-passcode-input');
     const val = input ? input.value.trim() : '';
-    if (val === SECRET_PASSCODE) {
-      localStorage.setItem('talks_auth', SECRET_PASSCODE);
-      closePasscodeModal();
-      showPrivateSection();
-    } else {
-      const err = document.getElementById('modal-passcode-error');
-      if (err) err.style.display = 'block';
-      if (input) {
-        input.value = '';
-        input.focus();
+    if (val) {
+      const h = await computeHash(val);
+      if (h === AUTH_HASH) {
+        localStorage.setItem('talks_auth_hash', AUTH_HASH);
+        closePasscodeModal();
+        showPrivateSection();
+        return;
       }
+    }
+    const err = document.getElementById('modal-passcode-error');
+    if (err) err.style.display = 'block';
+    if (input) {
+      input.value = '';
+      input.focus();
     }
   }
 
@@ -171,7 +184,7 @@ permalink: /talks/
     if (modal) modal.style.display = 'none';
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', async function() {
     const input = document.getElementById('modal-passcode-input');
     if (input) {
       input.addEventListener('keydown', function(e) {
@@ -186,7 +199,7 @@ permalink: /talks/
       }
     });
 
-    if (isUnlocked()) {
+    if (await isUnlocked()) {
       showPrivateSection();
     }
   });

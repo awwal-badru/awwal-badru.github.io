@@ -15,12 +15,12 @@ permalink: /talks/franklin-teaching-demo/
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f1117;
+            --bg: #0b0c10;
             --fg: #e6edf3;
             --accent: #9e1b32; /* UA Crimson */
             --accent-hover: #b8203c;
-            --glass: rgba(22, 27, 34, 0.85);
-            --border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(18, 22, 28, 0.88);
+            --border: rgba(255, 255, 255, 0.12);
         }
         * {
             box-sizing: border-box;
@@ -39,44 +39,75 @@ permalink: /talks/franklin-teaching-demo/
             justify-content: center;
         }
 
-        /* Top Header Bar */
+        /* Full Screen Viewer Container */
+        #viewerContainer {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg);
+            transition: opacity 0.15s ease-in-out;
+        }
+        .pdfViewer {
+            margin: 0 !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        .pdfViewer .page {
+            margin: 0 auto !important;
+            border: none !important;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7) !important;
+        }
+
+        /* Top Header Bar - Floating Overlay */
         .top-bar {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 52px;
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
+            height: 54px;
+            background: linear-gradient(180deg, rgba(11, 12, 16, 0.95) 0%, rgba(11, 12, 16, 0) 100%);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
+            padding: 0 24px;
             z-index: 40;
-            transition: transform 0.3s ease;
+            transform: translateY(0);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            pointer-events: auto;
         }
-        .top-bar.hidden {
+        body:not(.ui-active) .top-bar {
+            opacity: 0;
             transform: translateY(-100%);
+            pointer-events: none;
         }
         .top-title {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 600;
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         .top-tag {
-            background: rgba(158, 27, 50, 0.3);
-            border: 1px solid rgba(158, 27, 50, 0.6);
+            background: rgba(158, 27, 50, 0.35);
+            border: 1px solid rgba(158, 27, 50, 0.7);
             color: #ff8a9e;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            padding: 2px 8px;
+            padding: 2px 9px;
             border-radius: 6px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -84,46 +115,35 @@ permalink: /talks/franklin-teaching-demo/
         .top-actions {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .top-link {
-            color: #8b949e;
+            color: #c9d1d9;
             text-decoration: none;
             font-size: 0.85rem;
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 5px 10px;
-            border-radius: 6px;
+            gap: 7px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(8px);
             transition: all 0.2s;
         }
         .top-link:hover {
             color: #fff;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.25);
         }
 
-        #viewerContainer {
-            width: 100vw;
-            height: calc(100vh - 52px);
-            margin-top: 52px;
-            position: absolute;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.2s ease-in-out;
-        }
-        .pdfViewer {
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-        }
-        
-        /* Navigation Zones */
+        /* Navigation Click Zones */
         #nav-left, #nav-right {
             position: absolute;
-            top: 52px;
+            top: 0;
             bottom: 0;
             width: 15%;
-            z-index: 10;
+            z-index: 20;
             cursor: pointer;
         }
         #nav-left { left: 0; }
@@ -132,12 +152,19 @@ permalink: /talks/franklin-teaching-demo/
         /* Control Bar */
         .controls {
             position: absolute;
-            bottom: 25px;
-            right: 25px;
+            bottom: 22px;
+            right: 24px;
             display: flex;
             align-items: center;
             gap: 10px;
             z-index: 30;
+            transition: opacity 0.35s ease;
+        }
+        body:not(.ui-active) .controls {
+            opacity: 0.25;
+        }
+        .controls:hover, body.ui-active .controls {
+            opacity: 1 !important;
         }
 
         .control-item {
@@ -159,10 +186,10 @@ permalink: /talks/franklin-teaching-demo/
         }
         
         .control-item:hover {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.15);
             color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
         }
 
         .control-item.btn-nav {
@@ -317,7 +344,7 @@ permalink: /talks/franklin-teaching-demo/
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.js"></script>
 </head>
-<body>
+<body class="ui-active">
 
     <!-- Access Gate -->
     <div id="auth-gate">
@@ -334,7 +361,7 @@ permalink: /talks/franklin-teaching-demo/
         </div>
     </div>
 
-    <!-- Top Bar -->
+    <!-- Top Floating Header Bar (Overlay) -->
     <header class="top-bar" id="top-bar">
         <div class="top-title">
             <span class="top-tag">Teaching Demo</span>
@@ -359,6 +386,7 @@ permalink: /talks/franklin-teaching-demo/
     <div id="nav-left" title="Previous Slide (Arrow Left)"></div>
     <div id="nav-right" title="Next Slide (Arrow Right / Space)"></div>
     
+    <!-- 100vw x 100vh Viewer Container -->
     <div id="viewerContainer">
         <div id="viewer" class="pdfViewer"></div>
     </div>
@@ -371,7 +399,7 @@ permalink: /talks/franklin-teaching-demo/
         </div>
         <div class="control-item btn-nav" id="btn-next" title="Next Slide (→)"><i class="fa fa-chevron-right"></i></div>
         <div class="control-item" id="fullscreen-btn" title="Toggle Fullscreen (F)">
-            <i class="fa fa-expand"></i>
+            <i class="fa fa-expand"></i> Fullscreen
         </div>
     </div>
 
@@ -380,7 +408,7 @@ permalink: /talks/franklin-teaching-demo/
     </div>
 
     <script>
-        const AUTH_HASH = "a325d2b1c02a0f957b78702a10d8cf29819c2bb6ed7202953015368b017c5f84";
+        const AUTH_HASH = "a3ee76bc34cc901c001c6d6ca332c0eb14d6ad825ebe529a531482859344d885";
         const pdfUrl = '{{ "/assets/files/Awwal_Badru_Teaching_Demo_FRA.pdf" | relative_url }}?v={{ site.time | date: "%s" }}';
 
         async function computeHash(str) {
@@ -426,8 +454,15 @@ permalink: /talks/franklin-teaching-demo/
             }
         });
 
-        // Initialize presentation
+        // Presentation controller
         let presentationLoaded = false;
+        let pdfViewer = null;
+
+        function fitToScreen() {
+            if (!pdfViewer) return;
+            pdfViewer.currentScaleValue = 'page-fit';
+        }
+
         function initPresentation() {
             if (presentationLoaded) return;
             presentationLoaded = true;
@@ -445,7 +480,7 @@ permalink: /talks/franklin-teaching-demo/
                 eventBus: eventBus
             });
 
-            const pdfViewer = new pdfjsViewer.PDFSinglePageViewer({
+            pdfViewer = new pdfjsViewer.PDFSinglePageViewer({
                 container: container,
                 eventBus: eventBus,
                 linkService: pdfLinkService,
@@ -455,7 +490,7 @@ permalink: /talks/franklin-teaching-demo/
             pdfLinkService.setViewer(pdfViewer);
 
             eventBus.on('pagesinit', function () {
-                pdfViewer.currentScaleValue = 'page-fit';
+                fitToScreen();
             });
 
             eventBus.on('pagechanging', function (evt) {
@@ -468,10 +503,10 @@ permalink: /talks/franklin-teaching-demo/
                 }
 
                 // Smooth fade transition
-                container.style.opacity = '0.4';
+                container.style.opacity = '0.5';
                 setTimeout(() => {
                     container.style.opacity = '1';
-                }, 80);
+                }, 70);
             });
 
             // Load Document
@@ -484,41 +519,37 @@ permalink: /talks/franklin-teaching-demo/
                 
                 // Initial progress
                 progressBar.style.width = `${(1 / pageCount) * 100}%`;
+                setTimeout(fitToScreen, 80);
             }).catch(err => {
                 loading.innerHTML = '<span style="color:#ff7b72;"><i class="fa fa-exclamation-circle"></i> Error loading slides: ' + err.message + '</span>';
             });
 
             // Navigation functions
             const showPrevPage = () => {
-                if (pdfViewer.currentPageNumber <= 1) return;
+                if (!pdfViewer || pdfViewer.currentPageNumber <= 1) return;
                 pdfViewer.currentPageNumber--;
             };
 
             const showNextPage = () => {
-                if (pdfViewer.currentPageNumber >= pdfViewer.pagesCount) return;
+                if (!pdfViewer || pdfViewer.currentPageNumber >= pdfViewer.pagesCount) return;
                 pdfViewer.currentPageNumber++;
             };
 
             // Fullscreen logic
             const toggleFullscreen = () => {
-                const topBar = document.getElementById('top-bar');
                 if (!document.fullscreenElement) {
-                    document.documentElement.requestFullscreen();
-                    document.getElementById('fullscreen-btn').innerHTML = '<i class="fa fa-compress"></i>';
-                    topBar.classList.add('hidden');
-                    container.style.height = '100vh';
-                    container.style.marginTop = '0';
-                    document.getElementById('nav-left').style.top = '0';
-                    document.getElementById('nav-right').style.top = '0';
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen();
+                    } else if (document.documentElement.webkitRequestFullscreen) {
+                        document.documentElement.webkitRequestFullscreen();
+                    } else if (document.documentElement.msRequestFullscreen) {
+                        document.documentElement.msRequestFullscreen();
+                    }
                 } else {
                     if (document.exitFullscreen) {
                         document.exitFullscreen();
-                        document.getElementById('fullscreen-btn').innerHTML = '<i class="fa fa-expand"></i>';
-                        topBar.classList.remove('hidden');
-                        container.style.height = 'calc(100vh - 52px)';
-                        container.style.marginTop = '52px';
-                        document.getElementById('nav-left').style.top = '52px';
-                        document.getElementById('nav-right').style.top = '52px';
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
                     }
                 }
             };
@@ -530,34 +561,66 @@ permalink: /talks/franklin-teaching-demo/
             document.getElementById('btn-next').addEventListener('click', showNextPage);
             document.getElementById('fullscreen-btn').addEventListener('click', toggleFullscreen);
             
+            // Recalculate slide scale on window resize
+            window.addEventListener('resize', () => {
+                fitToScreen();
+            });
+
+            // Update fullscreen button & recalibrate scale
+            document.addEventListener('fullscreenchange', () => {
+                const isFs = !!document.fullscreenElement;
+                document.getElementById('fullscreen-btn').innerHTML = isFs ? 
+                    '<i class="fa fa-compress"></i> Exit' : 
+                    '<i class="fa fa-expand"></i> Fullscreen';
+                setTimeout(fitToScreen, 120);
+            });
+
             // Keyboard navigation
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
                     showPrevPage();
-                } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
                     showNextPage();
                 } else if (e.key === 'Home') {
-                    pdfViewer.currentPageNumber = 1;
+                    if (pdfViewer) pdfViewer.currentPageNumber = 1;
                 } else if (e.key === 'End') {
-                    pdfViewer.currentPageNumber = pdfViewer.pagesCount;
+                    if (pdfViewer) pdfViewer.currentPageNumber = pdfViewer.pagesCount;
                 } else if (e.key === 'f' || e.key === 'F') {
                     toggleFullscreen();
                 }
             });
 
-            // Update fullscreen icon if escaped via ESC key
-            document.addEventListener('fullscreenchange', () => {
-                const topBar = document.getElementById('top-bar');
-                if (!document.fullscreenElement) {
-                    document.getElementById('fullscreen-btn').innerHTML = '<i class="fa fa-expand"></i>';
-                    topBar.classList.remove('hidden');
-                    container.style.height = 'calc(100vh - 52px)';
-                    container.style.marginTop = '52px';
-                    document.getElementById('nav-left').style.top = '52px';
-                    document.getElementById('nav-right').style.top = '52px';
+            // Touch swipe gesture support for tablets & touchscreen devices
+            let touchStartX = 0;
+            let touchStartY = 0;
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+                wakeUI();
+            }, { passive: true });
+
+            document.addEventListener('touchend', (e) => {
+                const diffX = e.changedTouches[0].screenX - touchStartX;
+                const diffY = e.changedTouches[0].screenY - touchStartY;
+                if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+                    if (diffX < 0) showNextPage();
+                    else showPrevPage();
                 }
-            });
+            }, { passive: true });
         }
+
+        // Auto-dim UI during presentation mode for distraction-free viewing
+        let uiTimer = null;
+        function wakeUI() {
+            document.body.classList.add('ui-active');
+            clearTimeout(uiTimer);
+            uiTimer = setTimeout(() => {
+                document.body.classList.remove('ui-active');
+            }, 3000);
+        }
+        document.addEventListener('mousemove', wakeUI);
+        document.addEventListener('keydown', wakeUI);
+        wakeUI();
 
         // On page load: check auth immediately
         window.addEventListener('DOMContentLoaded', async () => {

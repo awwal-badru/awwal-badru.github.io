@@ -93,7 +93,7 @@ permalink: /talks/
 </div>
 
 <script>
-  const AUTH_HASH = "a325d2b1c02a0f957b78702a10d8cf29819c2bb6ed7202953015368b017c5f84";
+  const AUTH_HASH = "a3ee76bc34cc901c001c6d6ca332c0eb14d6ad825ebe529a531482859344d885";
 
   async function computeHash(str) {
     const buffer = new TextEncoder().encode(str);

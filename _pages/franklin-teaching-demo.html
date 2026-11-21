@@ -1,0 +1,562 @@
+---
+layout: none
+permalink: /talks/franklin-teaching-demo/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching Demo: When Things Go Wrong | Awwal Badru</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f1117;
+            --fg: #e6edf3;
+            --accent: #9e1b32; /* UA Crimson */
+            --accent-hover: #b8203c;
+            --glass: rgba(22, 27, 34, 0.85);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            color: var(--fg);
+            overflow: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Top Header Bar */
+        .top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 52px;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 40;
+            transition: transform 0.3s ease;
+        }
+        .top-bar.hidden {
+            transform: translateY(-100%);
+        }
+        .top-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .top-tag {
+            background: rgba(158, 27, 50, 0.3);
+            border: 1px solid rgba(158, 27, 50, 0.6);
+            color: #ff8a9e;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .top-link {
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .top-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        #viewerContainer {
+            width: 100vw;
+            height: calc(100vh - 52px);
+            margin-top: 52px;
+            position: absolute;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s ease-in-out;
+        }
+        .pdfViewer {
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Navigation Zones */
+        #nav-left, #nav-right {
+            position: absolute;
+            top: 52px;
+            bottom: 0;
+            width: 15%;
+            z-index: 10;
+            cursor: pointer;
+        }
+        #nav-left { left: 0; }
+        #nav-right { right: 0; }
+        
+        /* Control Bar */
+        .controls {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 30;
+        }
+
+        .control-item {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            color: var(--fg);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .control-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+
+        .control-item.btn-nav {
+            padding: 8px 12px;
+        }
+
+        /* Progress Bar */
+        #progress-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            z-index: 35;
+        }
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        /* Loading Indicator */
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1rem;
+            font-weight: 500;
+            color: #8b949e;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Password Gate Modal */
+        #auth-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 12, 16, 0.96);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .auth-card {
+            background: #161b22;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 2.2rem 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+        .auth-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(158, 27, 50, 0.2);
+            color: #ff6b81;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1.25rem auto;
+        }
+        .auth-card h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.25rem;
+            color: #fff;
+        }
+        .auth-card p {
+            margin: 0 0 1.5rem 0;
+            font-size: 0.88rem;
+            color: #8b949e;
+            line-height: 1.4;
+        }
+        .auth-input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+        .auth-input {
+            flex: 1;
+            background: #0d1117;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #fff;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 2px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .auth-input:focus {
+            border-color: var(--accent);
+        }
+        .auth-btn {
+            background: var(--accent);
+            border: none;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .auth-btn:hover {
+            background: var(--accent-hover);
+        }
+        .auth-error {
+            color: #ff7b72;
+            font-size: 0.82rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .auth-back-link {
+            display: inline-block;
+            margin-top: 1.25rem;
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.82rem;
+            transition: color 0.2s;
+        }
+        .auth-back-link:hover {
+            color: #fff;
+        }
+    </style>
+    <!-- PDF.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.js"></script>
+</head>
+<body>
+
+    <!-- Access Gate -->
+    <div id="auth-gate">
+        <div class="auth-card">
+            <div class="auth-icon"><i class="fa fa-lock"></i></div>
+            <h3>Teaching Demonstration</h3>
+            <p>This presentation deck is private. Please enter the access passcode to continue.</p>
+            <div class="auth-input-group">
+                <input type="password" id="passcode-input" class="auth-input" placeholder="Passcode" maxlength="12" autofocus>
+                <button id="auth-submit-btn" class="auth-btn" onclick="checkPasscode()">Unlock</button>
+            </div>
+            <div id="auth-error-msg" class="auth-error"><i class="fa fa-exclamation-triangle"></i> Incorrect passcode. Try again.</div>
+            <a href="{{ '/talks/' | relative_url }}" class="auth-back-link"><i class="fa fa-arrow-left"></i> Return to Talks page</a>
+        </div>
+    </div>
+
+    <!-- Top Bar -->
+    <header class="top-bar" id="top-bar">
+        <div class="top-title">
+            <span class="top-tag">Teaching Demo</span>
+            <span>When Things Go Wrong: From Python If-Statements to Reliable Software Systems</span>
+        </div>
+        <div class="top-actions">
+            <a href="{{ '/assets/files/Awwal_Badru_Teaching_Demo_FRA.pdf' | relative_url }}" download class="top-link" title="Download PDF">
+                <i class="fa fa-download"></i> Download PDF
+            </a>
+            <a href="{{ '/talks/' | relative_url }}" class="top-link" title="Back to Talks">
+                <i class="fa fa-arrow-left"></i> Talks
+            </a>
+        </div>
+    </header>
+
+    <div id="loading">
+        <div class="spinner"></div>
+        <span>Loading slides...</span>
+    </div>
+
+    <!-- Left & Right Click Navigation Zones -->
+    <div id="nav-left" title="Previous Slide (Arrow Left)"></div>
+    <div id="nav-right" title="Next Slide (Arrow Right / Space)"></div>
+    
+    <div id="viewerContainer">
+        <div id="viewer" class="pdfViewer"></div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="controls">
+        <div class="control-item btn-nav" id="btn-prev" title="Previous Slide (←)"><i class="fa fa-chevron-left"></i></div>
+        <div class="control-item" id="slide-counter">
+            <span id="page_num">1</span> / <span id="page_count">-</span>
+        </div>
+        <div class="control-item btn-nav" id="btn-next" title="Next Slide (→)"><i class="fa fa-chevron-right"></i></div>
+        <div class="control-item" id="fullscreen-btn" title="Toggle Fullscreen (F)">
+            <i class="fa fa-expand"></i>
+        </div>
+    </div>
+
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <script>
+        const SECRET_CODE = "8487";
+        const pdfUrl = '{{ "/assets/files/Awwal_Badru_Teaching_Demo_FRA.pdf" | relative_url }}?v={{ site.time | date: "%s" }}';
+
+        // Check authentication
+        function isAuthenticated() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const keyParam = urlParams.get('key') || urlParams.get('auth') || urlParams.get('passcode');
+            if (keyParam === SECRET_CODE) {
+                localStorage.setItem('talks_auth', SECRET_CODE);
+                return true;
+            }
+            return localStorage.getItem('talks_auth') === SECRET_CODE;
+        }
+
+        function checkPasscode() {
+            const inputVal = document.getElementById('passcode-input').value.trim();
+            const errorMsg = document.getElementById('auth-error-msg');
+            if (inputVal === SECRET_CODE) {
+                localStorage.setItem('talks_auth', SECRET_CODE);
+                document.getElementById('auth-gate').style.display = 'none';
+                initPresentation();
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('passcode-input').value = '';
+                document.getElementById('passcode-input').focus();
+            }
+        }
+
+        document.getElementById('passcode-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                checkPasscode();
+            }
+        });
+
+        // Initialize presentation
+        let presentationLoaded = false;
+        function initPresentation() {
+            if (presentationLoaded) return;
+            presentationLoaded = true;
+
+            // Configure PDF.js worker
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+            const container = document.getElementById('viewerContainer');
+            const loading = document.getElementById('loading');
+            const progressBar = document.getElementById('progress-bar');
+            
+            const eventBus = new pdfjsViewer.EventBus();
+
+            const pdfLinkService = new pdfjsViewer.PDFLinkService({
+                eventBus: eventBus
+            });
+
+            const pdfViewer = new pdfjsViewer.PDFSinglePageViewer({
+                container: container,
+                eventBus: eventBus,
+                linkService: pdfLinkService,
+                removePageBorders: true
+            });
+
+            pdfLinkService.setViewer(pdfViewer);
+
+            eventBus.on('pagesinit', function () {
+                pdfViewer.currentScaleValue = 'page-fit';
+            });
+
+            eventBus.on('pagechanging', function (evt) {
+                document.getElementById('page_num').textContent = evt.pageNumber;
+                
+                // Update progress bar
+                if (pdfViewer.pagesCount) {
+                    const progress = (evt.pageNumber / pdfViewer.pagesCount) * 100;
+                    progressBar.style.width = `${progress}%`;
+                }
+
+                // Smooth fade transition
+                container.style.opacity = '0.4';
+                setTimeout(() => {
+                    container.style.opacity = '1';
+                }, 80);
+            });
+
+            // Load Document
+            pdfjsLib.getDocument(pdfUrl).promise.then(function(pdfDocument) {
+                const pageCount = pdfDocument.numPages;
+                document.getElementById('page_count').textContent = pageCount;
+                pdfViewer.setDocument(pdfDocument);
+                pdfLinkService.setDocument(pdfDocument, null);
+                loading.style.display = 'none';
+                
+                // Initial progress
+                progressBar.style.width = `${(1 / pageCount) * 100}%`;
+            }).catch(err => {
+                loading.innerHTML = '<span style="color:#ff7b72;"><i class="fa fa-exclamation-circle"></i> Error loading slides: ' + err.message + '</span>';
+            });
+
+            // Navigation functions
+            const showPrevPage = () => {
+                if (pdfViewer.currentPageNumber <= 1) return;
+                pdfViewer.currentPageNumber--;
+            };
+
+            const showNextPage = () => {
+                if (pdfViewer.currentPageNumber >= pdfViewer.pagesCount) return;
+                pdfViewer.currentPageNumber++;
+            };
+
+            // Fullscreen logic
+            const toggleFullscreen = () => {
+                const topBar = document.getElementById('top-bar');
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                    document.getElementById('fullscreen-btn').innerHTML = '<i class="fa fa-compress"></i>';
+                    topBar.classList.add('hidden');
+                    container.style.height = '100vh';
+                    container.style.marginTop = '0';
+                    document.getElementById('nav-left').style.top = '0';
+                    document.getElementById('nav-right').style.top = '0';
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                        document.getElementById('fullscreen-btn').innerHTML = '<i class="fa fa-expand"></i>';
+                        topBar.classList.remove('hidden');
+                        container.style.height = 'calc(100vh - 52px)';
+                        container.style.marginTop = '52px';
+                        document.getElementById('nav-left').style.top = '52px';
+                        document.getElementById('nav-right').style.top = '52px';
+                    }
+                }
+            };
+
+            // Event Listeners
+            document.getElementById('nav-left').addEventListener('click', showPrevPage);
+            document.getElementById('nav-right').addEventListener('click', showNextPage);
+            document.getElementById('btn-prev').addEventListener('click', showPrevPage);
+            document.getElementById('btn-next').addEventListener('click', showNextPage);
+            document.getElementById('fullscreen-btn').addEventListener('click', toggleFullscreen);
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    showPrevPage();
+                } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                    showNextPage();
+                } else if (e.key === 'Home') {
+                    pdfViewer.currentPageNumber = 1;
+                } else if (e.key === 'End') {
+                    pdfViewer.currentPageNumber = pdfViewer.pagesCount;
+                } else if (e.key === 'f' || e.key === 'F') {
+                    toggleFullscreen();
+                }
+            });
+
+            // Update fullscreen icon if escaped via ESC key
+            document.addEventListener('fullscreenchange', () => {
+                const topBar = document.getElementById('top-bar');
+                if (!document.fullscreenElement) {
+                    document.getElementById('fullscreen-btn').innerHTML = '<i class="fa fa-expand"></i>';
+                    topBar.classList.remove('hidden');
+                    container.style.height = 'calc(100vh - 52px)';
+                    container.style.marginTop = '52px';
+                    document.getElementById('nav-left').style.top = '52px';
+                    document.getElementById('nav-right').style.top = '52px';
+                }
+            });
+        }
+
+        // On page load: check auth immediately
+        window.addEventListener('DOMContentLoaded', () => {
+            if (isAuthenticated()) {
+                document.getElementById('auth-gate').style.display = 'none';
+                initPresentation();
+            } else {
+                document.getElementById('auth-gate').style.display = 'flex';
+                document.getElementById('passcode-input').focus();
+            }
+        });
+    </script>
+</body>
+</html>
